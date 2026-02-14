@@ -1,0 +1,16 @@
+.\p02_remote_hal\tasks.o: freeRTOS\tasks.c
+.\p02_remote_hal\tasks.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\p02_remote_hal\tasks.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\p02_remote_hal\tasks.o: ./freeRTOS/include/FreeRTOS.h
+.\p02_remote_hal\tasks.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+.\p02_remote_hal\tasks.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\p02_remote_hal\tasks.o: ./freeRTOS/FreeRTOSConfig.h
+.\p02_remote_hal\tasks.o: ./freeRTOS/include/projdefs.h
+.\p02_remote_hal\tasks.o: ./freeRTOS/include/portable.h
+.\p02_remote_hal\tasks.o: ./freeRTOS/include/deprecated_definitions.h
+.\p02_remote_hal\tasks.o: ./freeRTOS/portable/portmacro.h
+.\p02_remote_hal\tasks.o: ./freeRTOS/include/mpu_wrappers.h
+.\p02_remote_hal\tasks.o: ./freeRTOS/include/task.h
+.\p02_remote_hal\tasks.o: ./freeRTOS/include/list.h
+.\p02_remote_hal\tasks.o: ./freeRTOS/include/timers.h
+.\p02_remote_hal\tasks.o: ./freeRTOS/include/stack_macros.h

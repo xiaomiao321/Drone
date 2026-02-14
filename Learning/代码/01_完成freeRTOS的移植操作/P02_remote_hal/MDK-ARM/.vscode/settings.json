@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "com_debug.h": "c",
+        "stdio.h": "c",
+        "stdarg.h": "c",
+        "usart.h": "c",
+        "app_freertos_task.h": "c"
+    }
+}

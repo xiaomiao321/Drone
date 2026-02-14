@@ -1,0 +1,14 @@
+p01_flight_hal\heap_4.o: freeRTOS\portable\heap_4.c
+p01_flight_hal\heap_4.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+p01_flight_hal\heap_4.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+p01_flight_hal\heap_4.o: ./freeRTOS/include/FreeRTOS.h
+p01_flight_hal\heap_4.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+p01_flight_hal\heap_4.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+p01_flight_hal\heap_4.o: ./freeRTOS/FreeRTOSConfig.h
+p01_flight_hal\heap_4.o: ./freeRTOS/include/projdefs.h
+p01_flight_hal\heap_4.o: ./freeRTOS/include/portable.h
+p01_flight_hal\heap_4.o: ./freeRTOS/include/deprecated_definitions.h
+p01_flight_hal\heap_4.o: ./freeRTOS/portable/portmacro.h
+p01_flight_hal\heap_4.o: ./freeRTOS/include/mpu_wrappers.h
+p01_flight_hal\heap_4.o: ./freeRTOS/include/task.h
+p01_flight_hal\heap_4.o: ./freeRTOS/include/list.h

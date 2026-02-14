@@ -1,0 +1,7 @@
+D:/files/25_26_winter/plane/Test_Timer/build/Debug/CMakeFiles/drivers.dir
+D:/files/25_26_winter/plane/Test_Timer/build/Debug/CMakeFiles/HW1.dir
+D:/files/25_26_winter/plane/Test_Timer/build/Debug/CMakeFiles/edit_cache.dir
+D:/files/25_26_winter/plane/Test_Timer/build/Debug/CMakeFiles/rebuild_cache.dir
+D:/files/25_26_winter/plane/Test_Timer/build/Debug/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir
+D:/files/25_26_winter/plane/Test_Timer/build/Debug/cmake/stm32cubemx/CMakeFiles/edit_cache.dir
+D:/files/25_26_winter/plane/Test_Timer/build/Debug/cmake/stm32cubemx/CMakeFiles/rebuild_cache.dir

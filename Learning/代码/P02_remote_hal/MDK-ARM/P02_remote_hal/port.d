@@ -1,0 +1,12 @@
+.\p02_remote_hal\port.o: freeRTOS\portable\port.c
+.\p02_remote_hal\port.o: ./freeRTOS/include/FreeRTOS.h
+.\p02_remote_hal\port.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+.\p02_remote_hal\port.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\p02_remote_hal\port.o: ./freeRTOS/FreeRTOSConfig.h
+.\p02_remote_hal\port.o: ./freeRTOS/include/projdefs.h
+.\p02_remote_hal\port.o: ./freeRTOS/include/portable.h
+.\p02_remote_hal\port.o: ./freeRTOS/include/deprecated_definitions.h
+.\p02_remote_hal\port.o: ./freeRTOS/portable/portmacro.h
+.\p02_remote_hal\port.o: ./freeRTOS/include/mpu_wrappers.h
+.\p02_remote_hal\port.o: ./freeRTOS/include/task.h
+.\p02_remote_hal\port.o: ./freeRTOS/include/list.h
