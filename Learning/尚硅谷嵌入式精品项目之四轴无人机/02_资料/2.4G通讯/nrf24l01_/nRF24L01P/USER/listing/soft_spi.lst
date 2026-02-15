@@ -1,0 +1,84 @@
+C51 COMPILER V9.52.0.0   SOFT_SPI                                                          05/17/2017 10:28:06 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE SOFT_SPI
+OBJECT MODULE PLACED IN .\output\soft_spi.obj
+COMPILER INVOKED BY: D:\Keil\C51\BIN\C51.EXE ..\FWLib\soft_spi.c BROWSE INCDIR(..\24L01;..\FWLib) DEBUG OBJECTEXTEND PRI
+                    -NT(.\listing\soft_spi.lst) TABS(2) OBJECT(.\output\soft_spi.obj)
+
+line level    source
+
+   1          #include "soft_spi.h"
+   2          
+   3          /***************************************************************************************
+   4                                        SPI PIN CONTROL FUNCTIONS
+   5          ***************************************************************************************/
+   6          void CSN_Pin(u8 state)                                // Set/reset CSN pin
+   7          {
+   8   1        if(state)
+   9   1          CSN = 1;
+  10   1        else
+  11   1          CSN = 0;
+  12   1      }
+  13          
+  14          void SCK_Pin(u8 state)                                // Set/reset SCK pin
+  15          {
+  16   1        if(state)
+  17   1          SCK = 1;
+  18   1        else
+  19   1          SCK = 0;
+  20   1      }
+  21          
+  22          void MOSI_Pin(u8 state)                               // Set/reset MOSI pin
+  23          {
+  24   1        if(state)
+  25   1          MOSI = 1;
+  26   1        else
+  27   1          MOSI = 0;
+  28   1      }
+  29          
+  30          u8 MISO_Pin(void)                                     // Read MISO pin
+  31          {
+  32   1        return MISO;
+  33   1      }
+  34          
+  35          /***************************************************************************************
+  36                                          SPI API FUCNTIONS
+  37          ***************************************************************************************/
+  38          void SPI_Init(void)
+  39          {
+  40   1        SCK = 0;
+  41   1        CSN = 1;
+  42   1      }
+  43          
+  44          //SPI Read/Write API
+  45          u8 SPI_RW(u8 byte)
+  46          {
+  47   1        u8 bit_ctr;
+  48   1        for(bit_ctr=0;bit_ctr<8;bit_ctr++)
+  49   1        {
+  50   2          MOSI_Pin(byte & 0x80);                      // output 'byte', MSB to MOSI
+  51   2          byte = (byte << 1);                         // shift next bit into MSB..
+  52   2          SCK_Pin(1);                                 // Set SCK high..
+  53   2          byte |= MISO_Pin();                         // capture current MISO bit
+  54   2          SCK_Pin(0);                                 // ..then set SCK low again
+C51 COMPILER V9.52.0.0   SOFT_SPI                                                          05/17/2017 10:28:06 PAGE 2   
+
+  55   2        }
+  56   1        MOSI_Pin(0);                                  // MOSI pin low before return
+  57   1        return(byte);                                 // return 'read' byte
+  58   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     81    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

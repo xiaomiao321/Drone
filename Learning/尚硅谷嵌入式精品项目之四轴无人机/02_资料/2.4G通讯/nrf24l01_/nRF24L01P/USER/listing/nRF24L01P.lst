@@ -1,0 +1,243 @@
+C51 COMPILER V9.52.0.0   NRF24L01P                                                         05/18/2017 11:31:03 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE NRF24L01P
+OBJECT MODULE PLACED IN .\output\nRF24L01P.obj
+COMPILER INVOKED BY: D:\Keil\C51\BIN\C51.EXE ..\24L01\nRF24L01P.c BROWSE INCDIR(..\24L01;..\FWLib) DEBUG OBJECTEXTEND PR
+                    -INT(.\listing\nRF24L01P.lst) TABS(2) OBJECT(.\output\nRF24L01P.obj)
+
+line level    source
+
+   1          #include "nRF24L01P.h"
+   2          
+   3          u8 code TX_ADDRESS[TX_ADR_WIDTH] = {0x0A,0x01,0x07,0x0E,0x01};  // ∂®“Â“ª∏ˆæ≤Ã¨∑¢ÀÕµÿ÷∑
+   4          
+   5          
+   6          static u8 SPI_RW(u8 byte)
+   7          {
+   8   1        u8 bit_ctr;
+   9   1        for(bit_ctr=0; bit_ctr<8; bit_ctr++)
+  10   1        {
+  11   2          if(byte & 0x80)
+  12   2            MOSI = 1;
+  13   2          else
+  14   2            MOSI = 0;                                
+  15   2          byte = (byte << 1);                      
+  16   2          SCK = 1;                                   
+  17   2          byte |= MISO;                             
+  18   2          SCK = 0;                                
+  19   2        }
+  20   1        return(byte);                              
+  21   1      }
+  22          
+  23          
+  24          /********************************************************
+  25          ∫Ø ˝π¶ƒ‹£∫nRF24L01+“˝Ω≈≥ı ºªØ                
+  26          »Îø⁄≤Œ ˝£∫Œﬁ
+  27          ∑µªÿ  ÷µ£∫Œﬁ
+  28          *********************************************************/
+  29          void nRF24L01P_Init(void)
+  30          {
+  31   1        SCK = 0;                          //SPI ±÷”œﬂ¿≠µÕ
+  32   1        CSN = 1;        
+  33   1        CE  = 0;        
+  34   1        IRQ = 1;
+  35   1      }
+  36          
+  37          
+  38          /********************************************************
+  39          ∫Ø ˝π¶ƒ‹£∫–¥ºƒ¥Ê∆˜µƒ÷µ£®µ•◊÷Ω⁄£©                
+  40          »Îø⁄≤Œ ˝£∫reg:ºƒ¥Ê∆˜”≥…‰µÿ÷∑£®∏Ò Ω£∫WRITE_REG£¸reg£©
+  41                    value:ºƒ¥Ê∆˜µƒ÷µ
+  42          ∑µªÿ  ÷µ£∫◊¥Ã¨ºƒ¥Ê∆˜µƒ÷µ
+  43          *********************************************************/
+  44          u8 nRF24L01P_Write_Reg(u8 reg, u8 value)
+  45          {
+  46   1        u8 status;
+  47   1      
+  48   1        CSN = 0;                 
+  49   1        status = SPI_RW(reg);       
+  50   1        SPI_RW(value);
+  51   1        CSN = 1;  
+  52   1        
+  53   1        return(status);
+  54   1      }
+C51 COMPILER V9.52.0.0   NRF24L01P                                                         05/18/2017 11:31:03 PAGE 2   
+
+  55          
+  56          
+  57          /********************************************************
+  58          ∫Ø ˝π¶ƒ‹£∫–¥ºƒ¥Ê∆˜µƒ÷µ£®∂‡◊÷Ω⁄£©                  
+  59          »Îø⁄≤Œ ˝£∫reg:ºƒ¥Ê∆˜”≥…‰µÿ÷∑£®∏Ò Ω£∫WRITE_REG£¸reg£©
+  60                    pBuf:–¥ ˝æ› ◊µÿ÷∑
+  61                    bytes:–¥ ˝æ›◊÷Ω⁄ ˝
+  62          ∑µªÿ  ÷µ£∫◊¥Ã¨ºƒ¥Ê∆˜µƒ÷µ
+  63          *********************************************************/
+  64          u8 nRF24L01P_Write_Buf(u8 reg, const u8 *pBuf, u8 bytes)
+  65          {
+  66   1        u8 status,byte_ctr;
+  67   1      
+  68   1        CSN = 0;                                        
+  69   1        status = SPI_RW(reg);                          
+  70   1        for(byte_ctr=0; byte_ctr<bytes; byte_ctr++)     
+  71   1          SPI_RW(*pBuf++);
+  72   1        CSN = 1;                                        
+  73   1      
+  74   1        return(status);       
+  75   1      }                            
+  76          
+  77          
+  78          /********************************************************
+  79          ∫Ø ˝π¶ƒ‹£∫∂¡»°ºƒ¥Ê∆˜µƒ÷µ£®µ•◊÷Ω⁄£©                  
+  80          »Îø⁄≤Œ ˝£∫reg:ºƒ¥Ê∆˜”≥…‰µÿ÷∑£®∏Ò Ω£∫READ_REG£¸reg£©
+  81          ∑µªÿ  ÷µ£∫ºƒ¥Ê∆˜÷µ
+  82          *********************************************************/
+  83          u8 nRF24L01P_Read_Reg(u8 reg)
+  84          {
+  85   1        u8 value;
+  86   1      
+  87   1        CSN = 0;    
+  88   1        SPI_RW(reg);      
+  89   1        value = SPI_RW(0);
+  90   1        CSN = 1;              
+  91   1      
+  92   1        return(value);
+  93   1      }
+  94          
+  95          
+  96          /********************************************************
+  97          ∫Ø ˝π¶ƒ‹£∫∂¡»°ºƒ¥Ê∆˜µƒ÷µ£®∂‡◊÷Ω⁄£©                  
+  98          »Îø⁄≤Œ ˝£∫reg:ºƒ¥Ê∆˜”≥…‰µÿ÷∑£®READ_REG£¸reg£©
+  99                    pBuf:Ω” ’ª∫≥Â«¯µƒ ◊µÿ÷∑
+ 100                    bytes:∂¡»°◊÷Ω⁄ ˝
+ 101          ∑µªÿ  ÷µ£∫◊¥Ã¨ºƒ¥Ê∆˜µƒ÷µ
+ 102          *********************************************************/
+ 103          u8 nRF24L01P_Read_Buf(u8 reg, u8 *pBuf, u8 bytes)
+ 104          {
+ 105   1        u8 status,byte_ctr;
+ 106   1      
+ 107   1        CSN = 0;                                        
+ 108   1        status = SPI_RW(reg);                           
+ 109   1        for(byte_ctr=0;byte_ctr<bytes;byte_ctr++)
+ 110   1          pBuf[byte_ctr] = SPI_RW(0);                   //∂¡»° ˝æ›£¨µÕ◊÷Ω⁄‘⁄«∞
+ 111   1        CSN = 1;                                        
+ 112   1      
+ 113   1        return(status);    
+ 114   1      }
+ 115          
+ 116          
+C51 COMPILER V9.52.0.0   NRF24L01P                                                         05/18/2017 11:31:03 PAGE 3   
+
+ 117          /********************************************************
+ 118          ∫Ø ˝π¶ƒ‹£∫nRF24L01+Ω” ’ƒ£ Ω≥ı ºªØ                      
+ 119          »Îø⁄≤Œ ˝£∫Œﬁ
+ 120          ∑µªÿ  ÷µ£∫Œﬁ
+ 121          *********************************************************/
+ 122          void nRF24L01P_RX_Mode(void)
+ 123          {
+ 124   1        CE = 0;
+ 125   1        nRF24L01P_Write_Buf(WRITE_REG + RX_ADDR_P0, TX_ADDRESS, TX_ADR_WIDTH);  // Ω” ’…Ë±∏Ω” ’Õ®µ¿0 π”√∫Õ∑¢ÀÕ…Ë±
+             -∏œ‡Õ¨µƒ∑¢ÀÕµÿ÷∑
+ 126   1        nRF24L01P_Write_Reg(WRITE_REG + EN_AA, 0x01);                           //  πƒ‹Ω” ’Õ®µ¿0◊‘∂Ø”¶¥
+ 127   1        nRF24L01P_Write_Reg(WRITE_REG + EN_RXADDR, 0x01);                       //  πƒ‹Ω” ’Õ®µ¿0
+ 128   1        nRF24L01P_Write_Reg(WRITE_REG + RF_CH, 40);                             // —°‘Ò…‰∆µÕ®µ¿0x40
+ 129   1        nRF24L01P_Write_Reg(WRITE_REG + RX_PW_P0, TX_PLOAD_WIDTH);              // Ω” ’Õ®µ¿0—°‘Ò∫Õ∑¢ÀÕÕ®µ¿œ‡Õ¨”––ß ˝æ›ø
+             -Ì∂»
+ 130   1        nRF24L01P_Write_Reg(WRITE_REG + RF_SETUP, 0x0f);                        //  ˝æ›¥´ ‰¬ 2Mbps£¨∑¢…‰π¶¬ 0dBm£¨µÕ‘Î…
+             -˘∑≈¥Û∆˜‘ˆ“Ê(nRF24L01+∫ˆ¬‘∏√Œª£©
+ 131   1        nRF24L01P_Write_Reg(WRITE_REG + CONFIG, 0x0f);                          // CRC πƒ‹£¨16ŒªCRC–£—È£¨…œµÁ£¨Ω” ’ƒ£ Ω
+ 132   1        nRF24L01P_Write_Reg(WRITE_REG + STATUS, 0xff);                          //«Â≥˝À˘”–µƒ÷–∂œ±Í÷æŒª
+ 133   1        CE = 1;                                                                 // ¿≠∏ﬂCE∆Ù∂ØΩ” ’…Ë±∏
+ 134   1      }           
+ 135          
+ 136          
+ 137          /********************************************************
+ 138          ∫Ø ˝π¶ƒ‹£∫nRF24L01+∑¢ÀÕƒ£ Ω≥ı ºªØ                      
+ 139          »Îø⁄≤Œ ˝£∫Œﬁ
+ 140          ∑µªÿ  ÷µ£∫Œﬁ
+ 141          *********************************************************/
+ 142          void nRF24L01P_TX_Mode(void)
+ 143          {
+ 144   1        CE = 0;
+ 145   1        nRF24L01P_Write_Buf(WRITE_REG + TX_ADDR, TX_ADDRESS, TX_ADR_WIDTH);     // –¥»Î∑¢ÀÕµÿ÷∑
+ 146   1        nRF24L01P_Write_Buf(WRITE_REG + RX_ADDR_P0, TX_ADDRESS, TX_ADR_WIDTH);  // Œ™¡À”¶¥Ω” ’…Ë±∏£¨Ω” ’Õ®µ¿0µÿ÷
+             -∑∫Õ∑¢ÀÕµÿ÷∑œ‡Õ¨
+ 147   1      
+ 148   1        nRF24L01P_Write_Reg(WRITE_REG + EN_AA, 0x01);                           //  πƒ‹Ω” ’Õ®µ¿0◊‘∂Ø”¶¥
+ 149   1        nRF24L01P_Write_Reg(WRITE_REG + EN_RXADDR, 0x01);                       //  πƒ‹Ω” ’Õ®µ¿0
+ 150   1        nRF24L01P_Write_Reg(WRITE_REG + SETUP_RETR, 0x0a);                      // ◊‘∂Ø÷ÿ∑¢—” ±µ»¥˝250us+86us£¨◊‘∂Ø÷ÿ∑¢10¥Œ
+ 151   1        nRF24L01P_Write_Reg(WRITE_REG + RF_CH, 40);                             // —°‘Ò…‰∆µÕ®µ¿0x40
+ 152   1        nRF24L01P_Write_Reg(WRITE_REG + RF_SETUP, 0x0f);                        //  ˝æ›¥´ ‰¬ 2Mbps£¨∑¢…‰π¶¬ 0dBm£¨µÕ‘Î…˘∑≈¥
+             -Û∆˜‘ˆ“Ê(nRF24L01+∫ˆ¬‘∏√Œª£©
+ 153   1        nRF24L01P_Write_Reg(WRITE_REG + CONFIG, 0x0e);                          // CRC πƒ‹£¨16ŒªCRC–£—È£¨…œµÁ
+ 154   1        //CE = 1;
+ 155   1      }
+ 156          
+ 157          
+ 158          /********************************************************
+ 159          ∫Ø ˝π¶ƒ‹£∫∂¡»°Ω” ’ ˝æ›                       
+ 160          »Îø⁄≤Œ ˝£∫rxbuf:Ω” ’ ˝æ›¥Ê∑≈ ◊µÿ÷∑
+ 161          ∑µªÿ  ÷µ£∫0:Ω” ’µΩ ˝æ›
+ 162                    1:√ª”–Ω” ’µΩ ˝æ›
+ 163          *********************************************************/
+ 164          u8 nRF24L01P_RxPacket(u8 *rxbuf)
+ 165          {
+ 166   1        u8 state;
+ 167   1        state = nRF24L01P_Read_Reg(STATUS);                        //∂¡»°◊¥Ã¨ºƒ¥Ê∆˜µƒ÷µ       
+ 168   1        nRF24L01P_Write_Reg(WRITE_REG+STATUS,state);               //«Â≥˝RX_DS÷–∂œ±Í÷æ
+ 169   1      
+ 170   1        if(state & RX_DR)                                          //Ω” ’µΩ ˝æ›
+ 171   1        {
+ 172   2          nRF24L01P_Read_Buf(RD_RX_PLOAD,rxbuf,TX_PLOAD_WIDTH);     //∂¡»° ˝æ›
+ 173   2          nRF24L01P_Write_Reg(FLUSH_RX,0xff);                       //«Â≥˝RX FIFOºƒ¥Ê∆˜
+C51 COMPILER V9.52.0.0   NRF24L01P                                                         05/18/2017 11:31:03 PAGE 4   
+
+ 174   2          return 0; 
+ 175   2        }    
+ 176   1        return 1;                                                   //√ª ’µΩ»Œ∫Œ ˝æ›
+ 177   1      }
+ 178          
+ 179          
+ 180          /********************************************************
+ 181          ∫Ø ˝π¶ƒ‹£∫∑¢ÀÕ“ª∏ˆ ˝æ›∞¸                      
+ 182          »Îø⁄≤Œ ˝£∫txbuf:“™∑¢ÀÕµƒ ˝æ›
+ 183          ∑µªÿ  ÷µ£∫0x10:¥ÔµΩ◊Ó¥Û÷ÿ∑¢¥Œ ˝£¨∑¢ÀÕ ß∞‹ 
+ 184                    0x20:∑¢ÀÕ≥…π¶            
+ 185                    0xff:∑¢ÀÕ ß∞‹                  
+ 186          *********************************************************/
+ 187          u8 nRF24L01P_TxPacket(u8 *txbuf)
+ 188          {
+ 189   1        u8 state;
+ 190   1        CE=0;                                                   //CE¿≠µÕ£¨ πƒ‹24L01≈‰÷√
+ 191   1        nRF24L01P_Write_Buf(WR_TX_PLOAD,txbuf,TX_PLOAD_WIDTH);  //–¥ ˝æ›µΩTX FIFO,32∏ˆ◊÷Ω⁄
+ 192   1        CE=1;                                                   //CE÷√∏ﬂ£¨ πƒ‹∑¢ÀÕ     
+ 193   1        
+ 194   1        while(IRQ == 1);                                        //µ»¥˝∑¢ÀÕÕÍ≥…
+ 195   1        state=nRF24L01P_Read_Reg(STATUS);                       //∂¡»°◊¥Ã¨ºƒ¥Ê∆˜µƒ÷µ     
+ 196   1        nRF24L01P_Write_Reg(WRITE_REG+STATUS,state);            //«Â≥˝TX_DSªÚMAX_RT÷–∂œ±Í÷æ
+ 197   1        if(state&MAX_RT)                                        //¥ÔµΩ◊Ó¥Û÷ÿ∑¢¥Œ ˝
+ 198   1        {
+ 199   2          nRF24L01P_Write_Reg(FLUSH_TX,0xff);                   //«Â≥˝TX FIFOºƒ¥Ê∆˜ 
+ 200   2          return MAX_RT; 
+ 201   2        }
+ 202   1        if(state&TX_DS)                                         //∑¢ÀÕÕÍ≥…
+ 203   1        {
+ 204   2          return TX_DS;
+ 205   2        }
+ 206   1        return 0XFF;                                            //∑¢ÀÕ ß∞‹
+ 207   1      }
+ 208          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    384    ----
+   CONSTANT SIZE    =      5    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      13
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

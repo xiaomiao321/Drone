@@ -3,17 +3,17 @@
         {
             "name": "ANO_Remoter_V2.0",
             "includePath": [
-                "d:\\files\\25_26_winter\\project\\drone\\OpenSource\\9-4、散件STM32四轴飞机资料-V3.1\\5、遥控器资料\\遥控右手油门程序V3.6\\遥控右手油门程序V3.6\\Remoter_Ctrl3.6\\ANO_Remoter",
-                "d:\\files\\25_26_winter\\project\\drone\\OpenSource\\9-4、散件STM32四轴飞机资料-V3.1\\5、遥控器资料\\遥控右手油门程序V3.6\\遥控右手油门程序V3.6\\Remoter_Ctrl3.6\\Driver",
-                "d:\\files\\25_26_winter\\project\\drone\\OpenSource\\9-4、散件STM32四轴飞机资料-V3.1\\5、遥控器资料\\遥控右手油门程序V3.6\\遥控右手油门程序V3.6\\Remoter_Ctrl3.6\\STM32_LIB\\CMSIS",
-                "d:\\files\\25_26_winter\\project\\drone\\OpenSource\\9-4、散件STM32四轴飞机资料-V3.1\\5、遥控器资料\\遥控右手油门程序V3.6\\遥控右手油门程序V3.6\\Remoter_Ctrl3.6\\USB_hid",
-                "d:\\files\\25_26_winter\\project\\drone\\OpenSource\\9-4、散件STM32四轴飞机资料-V3.1\\5、遥控器资料\\遥控右手油门程序V3.6\\遥控右手油门程序V3.6\\Remoter_Ctrl3.6\\USB_library",
-                "d:\\files\\25_26_winter\\project\\drone\\OpenSource\\9-4、散件STM32四轴飞机资料-V3.1\\5、遥控器资料\\遥控右手油门程序V3.6\\遥控右手油门程序V3.6\\Remoter_Ctrl3.6\\STM32_LIB\\LIB\\inc",
-                "d:\\files\\25_26_winter\\project\\drone\\OpenSource\\9-4、散件STM32四轴飞机资料-V3.1\\5、遥控器资料\\遥控右手油门程序V3.6\\遥控右手油门程序V3.6\\Remoter_Ctrl3.6\\Driver\\OLED",
+                "d:\\files\\25_26_winter\\project\\drone\\SoftWare\\遥控器\\Remoter_Ctrl3.6\\ANO_Remoter",
+                "d:\\files\\25_26_winter\\project\\drone\\SoftWare\\遥控器\\Remoter_Ctrl3.6\\Driver",
+                "d:\\files\\25_26_winter\\project\\drone\\SoftWare\\遥控器\\Remoter_Ctrl3.6\\STM32_LIB\\CMSIS",
+                "d:\\files\\25_26_winter\\project\\drone\\SoftWare\\遥控器\\Remoter_Ctrl3.6\\USB_hid",
+                "d:\\files\\25_26_winter\\project\\drone\\SoftWare\\遥控器\\Remoter_Ctrl3.6\\USB_library",
+                "d:\\files\\25_26_winter\\project\\drone\\SoftWare\\遥控器\\Remoter_Ctrl3.6\\STM32_LIB\\LIB\\inc",
+                "d:\\files\\25_26_winter\\project\\drone\\SoftWare\\遥控器\\Remoter_Ctrl3.6\\Driver\\OLED",
                 "D:\\Keil5\\ARM\\ARMCC\\include",
                 "D:\\Keil5\\ARM\\ARMCC\\include\\rw",
-                "d:\\files\\25_26_winter\\project\\drone\\OpenSource\\9-4、散件STM32四轴飞机资料-V3.1\\5、遥控器资料\\遥控右手油门程序V3.6\\遥控右手油门程序V3.6\\Remoter_Ctrl3.6\\STM32_LIB\\LIB\\src",
-                "d:\\files\\25_26_winter\\project\\drone\\OpenSource\\9-4、散件STM32四轴飞机资料-V3.1\\5、遥控器资料\\遥控右手油门程序V3.6\\遥控右手油门程序V3.6\\Remoter_Ctrl3.6\\doc"
+                "d:\\files\\25_26_winter\\project\\drone\\SoftWare\\遥控器\\Remoter_Ctrl3.6\\STM32_LIB\\LIB\\src",
+                "d:\\files\\25_26_winter\\project\\drone\\SoftWare\\遥控器\\Remoter_Ctrl3.6\\doc"
             ],
             "defines": [
                 "USE_STDPERIPH_DRIVER",
