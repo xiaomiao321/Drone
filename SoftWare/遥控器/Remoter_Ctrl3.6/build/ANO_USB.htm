@@ -3,11 +3,11 @@
 <title>Static Call Graph - [.\build\ANO_USB.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\build\ANO_USB.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Sat Feb 14 11:39:41 2026
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Sun Feb 15 21:48:05 2026
 <BR><P>
-<H3>Maximum Stack Usage =        168 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =        200 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
-main &rArr; Show_Duty &rArr; oled_show &rArr; OLED_Show_progress_bar &rArr; OLED_Show_CH &rArr; OLED_ShowCH &rArr; OLED_DrawPoint
+SysTick_Handler &rArr; SysTick_IRQ &rArr; Loop_check &rArr; ANO_Loop &rArr; ANO_Loop_500Hz &rArr; oled_show &rArr; OLED_Show_progress_bar &rArr; OLED_Show_CH &rArr; OLED_ShowCH &rArr; OLED_DrawPoint
 <P>
 <H3>
 Mutually Recursive functions
@@ -158,8 +158,8 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> entry9a.o(.ARM.Collect$$$$0000000B)
 </UL>
-<P><STRONG><a name="[6c]"></a>ANO_Loop</STRONG> (Thumb, 114 bytes, Stack size 8 bytes, ano_scheduler.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 144<LI>Call Chain = ANO_Loop &rArr; ANO_Loop_500Hz &rArr; ANO_NRF_Check_Event &rArr; ANO_DT_NrfData_Anl &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
+<P><STRONG><a name="[6d]"></a>ANO_Loop</STRONG> (Thumb, 114 bytes, Stack size 8 bytes, ano_scheduler.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 176<LI>Call Chain = ANO_Loop &rArr; ANO_Loop_500Hz &rArr; oled_show &rArr; OLED_Show_progress_bar &rArr; OLED_Show_CH &rArr; OLED_ShowCH &rArr; OLED_DrawPoint
 </UL>
 <BR>[Calls]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Loop_500Hz
 <LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Loop_250Hz
@@ -168,53 +168,53 @@ Global Symbols
 <LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Loop_20Hz
 <LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Loop_1Hz
 </UL>
-<BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Loop_check
+<BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Loop_check
 </UL>
 
-<P><STRONG><a name="[6d]"></a>Loop_check</STRONG> (Thumb, 68 bytes, Stack size 8 bytes, ano_scheduler.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 152<LI>Call Chain = Loop_check &rArr; ANO_Loop &rArr; ANO_Loop_500Hz &rArr; ANO_NRF_Check_Event &rArr; ANO_DT_NrfData_Anl &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
+<P><STRONG><a name="[6e]"></a>Loop_check</STRONG> (Thumb, 68 bytes, Stack size 8 bytes, ano_scheduler.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 184<LI>Call Chain = Loop_check &rArr; ANO_Loop &rArr; ANO_Loop_500Hz &rArr; oled_show &rArr; OLED_Show_progress_bar &rArr; OLED_Show_CH &rArr; OLED_ShowCH &rArr; OLED_DrawPoint
 </UL>
-<BR>[Calls]<UL><LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Loop
+<BR>[Calls]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Loop
 </UL>
 <BR>[Called By]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_IRQ
 </UL>
 
-<P><STRONG><a name="[76]"></a>Mid_Limit</STRONG> (Thumb, 92 bytes, Stack size 0 bytes, ano_stick.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Stick_Scan
+<P><STRONG><a name="[77]"></a>Mid_Limit</STRONG> (Thumb, 92 bytes, Stack size 0 bytes, ano_stick.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Stick_Scan
 </UL>
 
-<P><STRONG><a name="[75]"></a>RC_Limit</STRONG> (Thumb, 310 bytes, Stack size 0 bytes, ano_stick.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Stick_Scan
+<P><STRONG><a name="[76]"></a>RC_Limit</STRONG> (Thumb, 310 bytes, Stack size 0 bytes, ano_stick.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Stick_Scan
 </UL>
 
-<P><STRONG><a name="[74]"></a>Window_Filter</STRONG> (Thumb, 502 bytes, Stack size 0 bytes, ano_stick.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Stick_Scan
+<P><STRONG><a name="[75]"></a>Window_Filter</STRONG> (Thumb, 502 bytes, Stack size 0 bytes, ano_stick.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Stick_Scan
 </UL>
 
-<P><STRONG><a name="[6e]"></a>Mid_Offset</STRONG> (Thumb, 248 bytes, Stack size 8 bytes, ano_stick.o(.text))
+<P><STRONG><a name="[6f]"></a>Mid_Offset</STRONG> (Thumb, 248 bytes, Stack size 8 bytes, ano_stick.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = Mid_Offset &rArr; ANO_Param_SAVE &rArr; ANO_Flash_Write &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
-<BR>[Calls]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Param_SAVE
+<BR>[Calls]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Param_SAVE
 </UL>
-<BR>[Called By]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Stick_Scan
+<BR>[Called By]<UL><LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Stick_Scan
 </UL>
 
-<P><STRONG><a name="[6b]"></a>ANO_Stick_Scan</STRONG> (Thumb, 356 bytes, Stack size 32 bytes, ano_stick.o(.text))
+<P><STRONG><a name="[6c]"></a>ANO_Stick_Scan</STRONG> (Thumb, 356 bytes, Stack size 32 bytes, ano_stick.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 92<LI>Call Chain = ANO_Stick_Scan &rArr; Mid_Offset &rArr; ANO_Param_SAVE &rArr; ANO_Flash_Write &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
-<BR>[Calls]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2f
-<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fmul
-<LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fdiv
-<LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2uiz
-<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Mid_Offset
-<LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Window_Filter
-<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RC_Limit
-<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Mid_Limit
+<BR>[Calls]<UL><LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2f
+<LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fmul
+<LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fdiv
+<LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2uiz
+<LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Mid_Offset
+<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Window_Filter
+<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RC_Limit
+<LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Mid_Limit
 </UL>
 <BR>[Called By]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Loop_500Hz
 </UL>
 
-<P><STRONG><a name="[77]"></a>ANO_DT_Send_Data</STRONG> (Thumb, 16 bytes, Stack size 16 bytes, ano_dt.o(.text))
+<P><STRONG><a name="[78]"></a>ANO_DT_Send_Data</STRONG> (Thumb, 16 bytes, Stack size 16 bytes, ano_dt.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = ANO_DT_Send_Data &rArr; ANO_NRF_TxPacket &rArr; ANO_NRF_Write_Buf &rArr; ANO_SPI_RW
 </UL>
 <BR>[Calls]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_NRF_TxPacket
@@ -226,7 +226,7 @@ Global Symbols
 <P><STRONG><a name="[66]"></a>ANO_DT_Send_RCData</STRONG> (Thumb, 358 bytes, Stack size 16 bytes, ano_dt.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = ANO_DT_Send_RCData &rArr; ANO_DT_Send_Data &rArr; ANO_NRF_TxPacket &rArr; ANO_NRF_Write_Buf &rArr; ANO_SPI_RW
 </UL>
-<BR>[Calls]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_DT_Send_Data
+<BR>[Calls]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_DT_Send_Data
 </UL>
 <BR>[Called By]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Loop_250Hz
 </UL>
@@ -240,12 +240,12 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Loop_100Hz
 </UL>
 
-<P><STRONG><a name="[78]"></a>ANO_DT_NrfData_Anl</STRONG> (Thumb, 334 bytes, Stack size 32 bytes, ano_dt.o(.text))
+<P><STRONG><a name="[79]"></a>ANO_DT_NrfData_Anl</STRONG> (Thumb, 334 bytes, Stack size 32 bytes, ano_dt.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 120<LI>Call Chain = ANO_DT_NrfData_Anl &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
 </UL>
-<BR>[Calls]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
-<LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
-<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
+<BR>[Calls]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
+<LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
 </UL>
 <BR>[Called By]<UL><LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_NRF_Check_Event
 </UL>
@@ -253,25 +253,25 @@ Global Symbols
 <P><STRONG><a name="[5d]"></a>ANO_DT_Send_Flag_To_Fly</STRONG> (Thumb, 144 bytes, Stack size 32 bytes, ano_dt.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = ANO_DT_Send_Flag_To_Fly &rArr; ANO_DT_Send_Data &rArr; ANO_NRF_TxPacket &rArr; ANO_NRF_Write_Buf &rArr; ANO_SPI_RW
 </UL>
-<BR>[Calls]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_DT_Send_Data
+<BR>[Calls]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_DT_Send_Data
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Loop_20Hz
 </UL>
 
-<P><STRONG><a name="[6f]"></a>ANO_Param_SAVE</STRONG> (Thumb, 12 bytes, Stack size 8 bytes, ano_param.o(.text))
+<P><STRONG><a name="[70]"></a>ANO_Param_SAVE</STRONG> (Thumb, 12 bytes, Stack size 8 bytes, ano_param.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 52<LI>Call Chain = ANO_Param_SAVE &rArr; ANO_Flash_Write &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Flash_Write
+<BR>[Calls]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Flash_Write
 </UL>
-<BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Param_Init
-<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Mid_Offset
+<BR>[Called By]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Param_Init
+<LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Mid_Offset
 <LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NRF_Check_Ch
 </UL>
 
-<P><STRONG><a name="[7d]"></a>ANO_Param_Init</STRONG> (Thumb, 28 bytes, Stack size 8 bytes, ano_param.o(.text))
+<P><STRONG><a name="[7e]"></a>ANO_Param_Init</STRONG> (Thumb, 28 bytes, Stack size 8 bytes, ano_param.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = ANO_Param_Init &rArr; ANO_Param_SAVE &rArr; ANO_Flash_Write &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
-<BR>[Calls]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Param_SAVE
+<BR>[Calls]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Param_SAVE
 </UL>
 <BR>[Called By]<UL><LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Param_READ
 </UL>
@@ -279,169 +279,170 @@ Global Symbols
 <P><STRONG><a name="[4e]"></a>ANO_Param_READ</STRONG> (Thumb, 24 bytes, Stack size 8 bytes, ano_param.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = ANO_Param_READ &rArr; ANO_Param_Init &rArr; ANO_Param_SAVE &rArr; ANO_Flash_Write &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Flash_Read
-<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Param_Init
+<BR>[Calls]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Flash_Read
+<LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Param_Init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[80]"></a>OLED_WR_Byte</STRONG> (Thumb, 96 bytes, Stack size 8 bytes, oled.o(.text))
+<P><STRONG><a name="[81]"></a>OLED_WR_Byte</STRONG> (Thumb, 96 bytes, Stack size 8 bytes, oled.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = OLED_WR_Byte
 </UL>
-<BR>[Called By]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Display_Off
-<LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Display_On
-<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Refresh_Gram
+<BR>[Called By]<UL><LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Display_Off
+<LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Display_On
+<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Refresh_Gram
 <LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Init
 </UL>
 
-<P><STRONG><a name="[7f]"></a>OLED_Refresh_Gram</STRONG> (Thumb, 70 bytes, Stack size 12 bytes, oled.o(.text))
+<P><STRONG><a name="[80]"></a>OLED_Refresh_Gram</STRONG> (Thumb, 70 bytes, Stack size 12 bytes, oled.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = OLED_Refresh_Gram &rArr; OLED_WR_Byte
 </UL>
-<BR>[Calls]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_WR_Byte
+<BR>[Calls]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_WR_Byte
 </UL>
 <BR>[Called By]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Show_Test
 <LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Show_Seting
-<LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_show
-<LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Clear
+<LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Clear
+<LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_show
 </UL>
 
-<P><STRONG><a name="[81]"></a>OLED_Display_On</STRONG> (Thumb, 28 bytes, Stack size 4 bytes, oled.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_WR_Byte
+<P><STRONG><a name="[82]"></a>OLED_Display_On</STRONG> (Thumb, 28 bytes, Stack size 4 bytes, oled.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_WR_Byte
 </UL>
 
-<P><STRONG><a name="[82]"></a>OLED_Display_Off</STRONG> (Thumb, 28 bytes, Stack size 4 bytes, oled.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_WR_Byte
+<P><STRONG><a name="[83]"></a>OLED_Display_Off</STRONG> (Thumb, 28 bytes, Stack size 4 bytes, oled.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_WR_Byte
 </UL>
 
-<P><STRONG><a name="[83]"></a>OLED_Clear</STRONG> (Thumb, 42 bytes, Stack size 12 bytes, oled.o(.text))
+<P><STRONG><a name="[84]"></a>OLED_Clear</STRONG> (Thumb, 42 bytes, Stack size 12 bytes, oled.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = OLED_Clear &rArr; OLED_Refresh_Gram &rArr; OLED_WR_Byte
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Refresh_Gram
+<BR>[Calls]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Refresh_Gram
 </UL>
 <BR>[Called By]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Show_Test
 <LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Show_Seting
-<LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_show
-<LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_ShowString_16
-<LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_ShowString
+<LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_ShowString_16
+<LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_ShowString
+<LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_show
 <LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Show_Duty
 <LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Init
 </UL>
 
-<P><STRONG><a name="[85]"></a>OLED_DrawPoint</STRONG> (Thumb, 100 bytes, Stack size 20 bytes, oled.o(.text))
+<P><STRONG><a name="[86]"></a>OLED_DrawPoint</STRONG> (Thumb, 100 bytes, Stack size 20 bytes, oled.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = OLED_DrawPoint
 </UL>
-<BR>[Called By]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Show_CH_String
-<LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_ShowCH
-<LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_ShowChar
+<BR>[Called By]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Show_CH_String
+<LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_ShowCH
+<LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_ShowChar
 </UL>
 
-<P><STRONG><a name="[84]"></a>OLED_ShowChar</STRONG> (Thumb, 158 bytes, Stack size 36 bytes, oled.o(.text))
+<P><STRONG><a name="[85]"></a>OLED_ShowChar</STRONG> (Thumb, 158 bytes, Stack size 36 bytes, oled.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = OLED_ShowChar &rArr; OLED_DrawPoint
 </UL>
-<BR>[Calls]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_DrawPoint
+<BR>[Calls]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_DrawPoint
 </UL>
-<BR>[Called By]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_ShowString_16
-<LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_ShowString
-<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_ShowNumber
+<BR>[Called By]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_ShowString_16
+<LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_ShowString
+<LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_ShowNumber
 </UL>
 
-<P><STRONG><a name="[86]"></a>OLED_ShowCH</STRONG> (Thumb, 132 bytes, Stack size 36 bytes, oled.o(.text))
+<P><STRONG><a name="[87]"></a>OLED_ShowCH</STRONG> (Thumb, 132 bytes, Stack size 36 bytes, oled.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = OLED_ShowCH &rArr; OLED_DrawPoint
 </UL>
-<BR>[Calls]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_DrawPoint
+<BR>[Calls]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_DrawPoint
 </UL>
-<BR>[Called By]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Show_CH
+<BR>[Called By]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Show_CH
 </UL>
 
-<P><STRONG><a name="[87]"></a>OLED_Show_CH</STRONG> (Thumb, 70 bytes, Stack size 32 bytes, oled.o(.text))
+<P><STRONG><a name="[88]"></a>OLED_Show_CH</STRONG> (Thumb, 70 bytes, Stack size 32 bytes, oled.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = OLED_Show_CH &rArr; OLED_ShowCH &rArr; OLED_DrawPoint
 </UL>
-<BR>[Calls]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_ShowCH
+<BR>[Calls]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_ShowCH
 </UL>
-<BR>[Called By]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_show
-<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Show_progress_bar
+<BR>[Called By]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Show_progress_bar
+<LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_show
 </UL>
 
-<P><STRONG><a name="[88]"></a>OLED_Show_CH_String</STRONG> (Thumb, 122 bytes, Stack size 36 bytes, oled.o(.text))
+<P><STRONG><a name="[89]"></a>OLED_Show_CH_String</STRONG> (Thumb, 122 bytes, Stack size 36 bytes, oled.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = OLED_Show_CH_String &rArr; OLED_DrawPoint
 </UL>
-<BR>[Calls]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_DrawPoint
+<BR>[Calls]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_DrawPoint
 </UL>
 <BR>[Called By]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Show_Test
 <LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Show_Seting
-<LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_show
+<LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_show
 </UL>
 
-<P><STRONG><a name="[8a]"></a>oled_pow</STRONG> (Thumb, 22 bytes, Stack size 8 bytes, oled.o(.text))
+<P><STRONG><a name="[8b]"></a>oled_pow</STRONG> (Thumb, 22 bytes, Stack size 8 bytes, oled.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = oled_pow
 </UL>
-<BR>[Called By]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_ShowNumber
+<BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_ShowNumber
 </UL>
 
-<P><STRONG><a name="[89]"></a>OLED_ShowNumber</STRONG> (Thumb, 168 bytes, Stack size 56 bytes, oled.o(.text))
+<P><STRONG><a name="[8a]"></a>OLED_ShowNumber</STRONG> (Thumb, 168 bytes, Stack size 56 bytes, oled.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = OLED_ShowNumber &rArr; OLED_ShowChar &rArr; OLED_DrawPoint
 </UL>
-<BR>[Calls]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_pow
-<LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_ShowChar
+<BR>[Calls]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_pow
+<LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_ShowChar
 </UL>
-<BR>[Called By]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_show
+<BR>[Called By]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_show
 </UL>
 
-<P><STRONG><a name="[8b]"></a>OLED_ShowString</STRONG> (Thumb, 78 bytes, Stack size 28 bytes, oled.o(.text))
+<P><STRONG><a name="[8c]"></a>OLED_ShowString</STRONG> (Thumb, 78 bytes, Stack size 28 bytes, oled.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 84<LI>Call Chain = OLED_ShowString &rArr; OLED_ShowChar &rArr; OLED_DrawPoint
 </UL>
-<BR>[Calls]<UL><LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_ShowChar
-<LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Clear
+<BR>[Calls]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_ShowChar
+<LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Clear
 </UL>
-<BR>[Called By]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_show
+<BR>[Called By]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_show
 </UL>
 
-<P><STRONG><a name="[8c]"></a>OLED_ShowString_16</STRONG> (Thumb, 68 bytes, Stack size 20 bytes, oled.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_ShowChar
-<LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Clear
+<P><STRONG><a name="[8d]"></a>OLED_ShowString_16</STRONG> (Thumb, 68 bytes, Stack size 20 bytes, oled.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_ShowChar
+<LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Clear
 </UL>
 
 <P><STRONG><a name="[56]"></a>OLED_Init</STRONG> (Thumb, 334 bytes, Stack size 8 bytes, oled.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = OLED_Init &rArr; OLED_Clear &rArr; OLED_Refresh_Gram &rArr; OLED_WR_Byte
 </UL>
-<BR>[Calls]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Init
-<LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay
-<LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Clear
-<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_WR_Byte
+<BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Init
+<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay
+<LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Clear
+<LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_WR_Byte
 <LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
 <LI><a href="#[4a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB2PeriphClockCmd
 </UL>
 <BR>[Called By]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[8f]"></a>OLED_Show_progress_bar</STRONG> (Thumb, 300 bytes, Stack size 40 bytes, show.o(.text))
+<P><STRONG><a name="[90]"></a>OLED_Show_progress_bar</STRONG> (Thumb, 300 bytes, Stack size 40 bytes, show.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = OLED_Show_progress_bar &rArr; OLED_Show_CH &rArr; OLED_ShowCH &rArr; OLED_DrawPoint
 </UL>
-<BR>[Calls]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Show_CH
+<BR>[Calls]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Show_CH
 </UL>
-<BR>[Called By]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_show
+<BR>[Called By]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_show
 </UL>
 
-<P><STRONG><a name="[90]"></a>oled_show</STRONG> (Thumb, 1976 bytes, Stack size 32 bytes, show.o(.text))
+<P><STRONG><a name="[6b]"></a>oled_show</STRONG> (Thumb, 1976 bytes, Stack size 32 bytes, show.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 160<LI>Call Chain = oled_show &rArr; OLED_Show_progress_bar &rArr; OLED_Show_CH &rArr; OLED_ShowCH &rArr; OLED_DrawPoint
 </UL>
-<BR>[Calls]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Show_progress_bar
-<LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_ShowString
-<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_ShowNumber
-<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Show_CH_String
-<LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Show_CH
-<LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Clear
-<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Refresh_Gram
+<BR>[Calls]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Show_progress_bar
+<LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_ShowString
+<LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_ShowNumber
+<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Show_CH_String
+<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Show_CH
+<LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Clear
+<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Refresh_Gram
 </UL>
-<BR>[Called By]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Show_Duty
+<BR>[Called By]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Loop_500Hz
+<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Show_Duty
 </UL>
 
 <P><STRONG><a name="[91]"></a>OLED_Show_Seting</STRONG> (Thumb, 1402 bytes, Stack size 32 bytes, show.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = OLED_Show_Seting &rArr; OLED_Show_CH_String &rArr; OLED_DrawPoint
 </UL>
-<BR>[Calls]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Show_CH_String
-<LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Clear
-<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Refresh_Gram
+<BR>[Calls]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Show_CH_String
+<LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Clear
+<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Refresh_Gram
 </UL>
 <BR>[Called By]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Show_Duty
 </UL>
@@ -449,9 +450,9 @@ Global Symbols
 <P><STRONG><a name="[92]"></a>OLED_Show_Test</STRONG> (Thumb, 1376 bytes, Stack size 32 bytes, show.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = OLED_Show_Test &rArr; OLED_Show_CH_String &rArr; OLED_DrawPoint
 </UL>
-<BR>[Calls]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Show_CH_String
-<LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Clear
-<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Refresh_Gram
+<BR>[Calls]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Show_CH_String
+<LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Clear
+<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Refresh_Gram
 </UL>
 <BR>[Called By]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Show_Duty
 </UL>
@@ -482,8 +483,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Show_Test
 <LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Show_Seting
-<LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_show
-<LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Clear
+<LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Clear
+<LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_show
 </UL>
 <BR>[Called By]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -492,7 +493,7 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_GetClocksFreq
 </UL>
 
-<P><STRONG><a name="[8e]"></a>Delay</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, board.o(.text))
+<P><STRONG><a name="[8f]"></a>Delay</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, board.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = Delay
 </UL>
 <BR>[Called By]<UL><LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USB_HID_Init
@@ -501,9 +502,9 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[97]"></a>SysTick_IRQ</STRONG> (Thumb, 8 bytes, Stack size 8 bytes, board.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 160<LI>Call Chain = SysTick_IRQ &rArr; Loop_check &rArr; ANO_Loop &rArr; ANO_Loop_500Hz &rArr; ANO_NRF_Check_Event &rArr; ANO_DT_NrfData_Anl &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
+<BR><BR>[Stack]<UL><LI>Max Depth = 192<LI>Call Chain = SysTick_IRQ &rArr; Loop_check &rArr; ANO_Loop &rArr; ANO_Loop_500Hz &rArr; oled_show &rArr; OLED_Show_progress_bar &rArr; OLED_Show_CH &rArr; OLED_ShowCH &rArr; OLED_DrawPoint
 </UL>
-<BR>[Calls]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Loop_check
+<BR>[Calls]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Loop_check
 </UL>
 <BR>[Called By]<UL><LI><a href="#[18]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Handler
 </UL>
@@ -516,7 +517,7 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_md.o(RESET)
 </UL>
 <P><STRONG><a name="[18]"></a>SysTick_Handler</STRONG> (Thumb, 8 bytes, Stack size 8 bytes, stm32f10x_it.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 168<LI>Call Chain = SysTick_Handler &rArr; SysTick_IRQ &rArr; Loop_check &rArr; ANO_Loop &rArr; ANO_Loop_500Hz &rArr; ANO_NRF_Check_Event &rArr; ANO_DT_NrfData_Anl &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
+<BR><BR>[Stack]<UL><LI>Max Depth = 200<LI>Call Chain = SysTick_Handler &rArr; SysTick_IRQ &rArr; Loop_check &rArr; ANO_Loop &rArr; ANO_Loop_500Hz &rArr; oled_show &rArr; OLED_Show_progress_bar &rArr; OLED_Show_CH &rArr; OLED_ShowCH &rArr; OLED_DrawPoint
 </UL>
 <BR>[Calls]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_IRQ
 </UL>
@@ -535,7 +536,7 @@ Global Symbols
 <P><STRONG><a name="[4d]"></a>ANO_LED_Init</STRONG> (Thumb, 110 bytes, Stack size 8 bytes, ano_drv_led.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = ANO_LED_Init &rArr; GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Init
+<BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Init
 <LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
 <LI><a href="#[4a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB2PeriphClockCmd
 </UL>
@@ -545,7 +546,7 @@ Global Symbols
 <P><STRONG><a name="[53]"></a>ANO_LED_0_FLASH</STRONG> (Thumb, 84 bytes, Stack size 8 bytes, ano_drv_led.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = ANO_LED_0_FLASH &rArr; Delay
 </UL>
-<BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay
+<BR>[Calls]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay
 <LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
 <LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
 </UL>
@@ -560,7 +561,7 @@ Global Symbols
 <LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 <LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2uiz
 <LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cfrcmple
-<LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sin
 </UL>
 
@@ -616,7 +617,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_NRF_Write_Buf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart1_IRQ
-<LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_DT_Send_Data
+<LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_DT_Send_Data
 <LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Loop_250Hz
 </UL>
 
@@ -628,7 +629,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = NRF_Check_Ch &rArr; ANO_Param_SAVE &rArr; ANO_Flash_Write &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_NRF_Write_Reg
-<LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Param_SAVE
+<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Param_SAVE
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Loop_20Hz
 </UL>
@@ -658,7 +659,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_NRF_Read_Buf
 <LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_NRF_Read_Reg
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_NRF_Write_Reg
-<LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_DT_NrfData_Anl
+<LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_DT_NrfData_Anl
 </UL>
 <BR>[Called By]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Loop_500Hz
 </UL>
@@ -669,7 +670,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Init
 <LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Cmd
 <LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_PinRemapConfig
-<LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Init
+<LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Init
 <LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
 <LI><a href="#[4a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB2PeriphClockCmd
 <LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB1PeriphClockCmd
@@ -720,7 +721,7 @@ Global Symbols
 <LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ClockInit
 <LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_Init
 <LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_PinRemapConfig
-<LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Init
+<LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Init
 <LI><a href="#[4a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB2PeriphClockCmd
 </UL>
 
@@ -765,7 +766,7 @@ Global Symbols
 <LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USB_GPIO_Configuration
 <LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USB_Connect
 <LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Set_USBClock
-<LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay
+<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay
 </UL>
 <BR>[Called By]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -787,27 +788,27 @@ Global Symbols
 <LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Loop_500Hz
 </UL>
 
-<P><STRONG><a name="[7e]"></a>ANO_Flash_Read</STRONG> (Thumb, 62 bytes, Stack size 12 bytes, ano_drv_flash.o(.text))
+<P><STRONG><a name="[7f]"></a>ANO_Flash_Read</STRONG> (Thumb, 62 bytes, Stack size 12 bytes, ano_drv_flash.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = ANO_Flash_Read
 </UL>
 <BR>[Called By]<UL><LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Param_READ
 </UL>
 
-<P><STRONG><a name="[7c]"></a>ANO_Flash_Write</STRONG> (Thumb, 100 bytes, Stack size 24 bytes, ano_drv_flash.o(.text))
+<P><STRONG><a name="[7d]"></a>ANO_Flash_Write</STRONG> (Thumb, 100 bytes, Stack size 24 bytes, ano_drv_flash.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = ANO_Flash_Write &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
 <BR>[Calls]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_Unlock
 <LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_ProgramHalfWord
 <LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_ErasePage
 </UL>
-<BR>[Called By]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Param_SAVE
+<BR>[Called By]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Param_SAVE
 </UL>
 
 <P><STRONG><a name="[55]"></a>KEY_Init</STRONG> (Thumb, 68 bytes, Stack size 8 bytes, key.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = KEY_Init &rArr; GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_PinRemapConfig
-<LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Init
+<LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Init
 <LI><a href="#[4a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB2PeriphClockCmd
 </UL>
 <BR>[Called By]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -1155,7 +1156,7 @@ Global Symbols
 <P><STRONG><a name="[173]"></a>FLASH_PrefetchBufferCmd</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, stm32f10x_flash.o(.text), UNUSED)
 
 <P><STRONG><a name="[dc]"></a>FLASH_Unlock</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, stm32f10x_flash.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Flash_Write
+<BR><BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Flash_Write
 </UL>
 
 <P><STRONG><a name="[174]"></a>FLASH_UnlockBank1</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, stm32f10x_flash.o(.text), UNUSED)
@@ -1190,7 +1191,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_WaitForLastOperation
 </UL>
-<BR>[Called By]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Flash_Write
+<BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Flash_Write
 </UL>
 
 <P><STRONG><a name="[e5]"></a>FLASH_EraseAllPages</STRONG> (Thumb, 68 bytes, Stack size 8 bytes, stm32f10x_flash.o(.text), UNUSED)
@@ -1225,7 +1226,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_WaitForLastOperation
 </UL>
-<BR>[Called By]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Flash_Write
+<BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Flash_Write
 </UL>
 
 <P><STRONG><a name="[eb]"></a>FLASH_ProgramOptionByteData</STRONG> (Thumb, 72 bytes, Stack size 16 bytes, stm32f10x_flash.o(.text), UNUSED)
@@ -1266,7 +1267,7 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB2PeriphResetCmd
 </UL>
 
-<P><STRONG><a name="[8d]"></a>GPIO_Init</STRONG> (Thumb, 278 bytes, Stack size 24 bytes, stm32f10x_gpio.o(.text))
+<P><STRONG><a name="[8e]"></a>GPIO_Init</STRONG> (Thumb, 278 bytes, Stack size 24 bytes, stm32f10x_gpio.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = GPIO_Init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC1_GPIO_Config
@@ -2369,18 +2370,18 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fadd
 </UL>
 
-<P><STRONG><a name="[71]"></a>__aeabi_fmul</STRONG> (Thumb, 100 bytes, Stack size 8 bytes, fmul.o(.text))
+<P><STRONG><a name="[72]"></a>__aeabi_fmul</STRONG> (Thumb, 100 bytes, Stack size 8 bytes, fmul.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = __aeabi_fmul
 </UL>
-<BR>[Called By]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Stick_Scan
+<BR>[Called By]<UL><LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Stick_Scan
 </UL>
 
-<P><STRONG><a name="[73]"></a>__aeabi_fdiv</STRONG> (Thumb, 124 bytes, Stack size 8 bytes, fdiv.o(.text))
+<P><STRONG><a name="[74]"></a>__aeabi_fdiv</STRONG> (Thumb, 124 bytes, Stack size 8 bytes, fdiv.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = __aeabi_fdiv
 </UL>
 <BR>[Calls]<UL><LI><a href="#[13b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_float_round
 </UL>
-<BR>[Called By]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Stick_Scan
+<BR>[Called By]<UL><LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Stick_Scan
 </UL>
 
 <P><STRONG><a name="[a6]"></a>__aeabi_dadd</STRONG> (Thumb, 322 bytes, Stack size 48 bytes, dadd.o(.text), UNUSED)
@@ -2413,13 +2414,13 @@ Global Symbols
 <LI><a href="#[149]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_cos
 </UL>
 
-<P><STRONG><a name="[7a]"></a>__aeabi_dmul</STRONG> (Thumb, 228 bytes, Stack size 48 bytes, dmul.o(.text))
+<P><STRONG><a name="[7b]"></a>__aeabi_dmul</STRONG> (Thumb, 228 bytes, Stack size 48 bytes, dmul.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[140]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
 </UL>
 <BR>[Called By]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Breath_LED
-<LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_DT_NrfData_Anl
+<LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_DT_NrfData_Anl
 <LI><a href="#[14b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_sin
 <LI><a href="#[147]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ieee754_rem_pio2
 <LI><a href="#[149]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_cos
@@ -2433,33 +2434,33 @@ Global Symbols
 <LI><a href="#[14f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_invalid
 </UL>
 
-<P><STRONG><a name="[70]"></a>__aeabi_ui2f</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, ffltui.o(.text))
+<P><STRONG><a name="[71]"></a>__aeabi_ui2f</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, ffltui.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = __aeabi_ui2f &rArr; _float_epilogue
 </UL>
 <BR>[Calls]<UL><LI><a href="#[13a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_float_epilogue
 </UL>
-<BR>[Called By]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Stick_Scan
+<BR>[Called By]<UL><LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Stick_Scan
 </UL>
 
-<P><STRONG><a name="[79]"></a>__aeabi_i2d</STRONG> (Thumb, 34 bytes, Stack size 16 bytes, dflti.o(.text))
+<P><STRONG><a name="[7a]"></a>__aeabi_i2d</STRONG> (Thumb, 34 bytes, Stack size 16 bytes, dflti.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = __aeabi_i2d &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[140]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
 </UL>
-<BR>[Called By]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_DT_NrfData_Anl
+<BR>[Called By]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_DT_NrfData_Anl
 <LI><a href="#[147]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ieee754_rem_pio2
 </UL>
 
-<P><STRONG><a name="[72]"></a>__aeabi_f2uiz</STRONG> (Thumb, 40 bytes, Stack size 0 bytes, ffixui.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Stick_Scan
+<P><STRONG><a name="[73]"></a>__aeabi_f2uiz</STRONG> (Thumb, 40 bytes, Stack size 0 bytes, ffixui.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Stick_Scan
 </UL>
 
-<P><STRONG><a name="[7b]"></a>__aeabi_d2iz</STRONG> (Thumb, 62 bytes, Stack size 16 bytes, dfixi.o(.text))
+<P><STRONG><a name="[7c]"></a>__aeabi_d2iz</STRONG> (Thumb, 62 bytes, Stack size 16 bytes, dfixi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = __aeabi_d2iz
 </UL>
 <BR>[Calls]<UL><LI><a href="#[144]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_llsr
 </UL>
-<BR>[Called By]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_DT_NrfData_Anl
+<BR>[Called By]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_DT_NrfData_Anl
 <LI><a href="#[147]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ieee754_rem_pio2
 <LI><a href="#[149]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_cos
 </UL>
@@ -2487,7 +2488,7 @@ Global Symbols
 
 <P><STRONG><a name="[144]"></a>__aeabi_llsr</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, llushr.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2uiz
-<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
+<LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
 <LI><a href="#[140]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
 </UL>
 
@@ -2503,14 +2504,14 @@ Global Symbols
 
 <P><STRONG><a name="[13b]"></a>_float_round</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, fepilogue.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fadd
-<LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fdiv
+<LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fdiv
 </UL>
 
 <P><STRONG><a name="[13a]"></a>_float_epilogue</STRONG> (Thumb, 92 bytes, Stack size 4 bytes, fepilogue.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = _float_epilogue
 </UL>
 <BR>[Called By]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fadd
-<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2f
+<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2f
 </UL>
 
 <P><STRONG><a name="[141]"></a>_double_round</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, depilogue.o(.text))
@@ -2529,8 +2530,8 @@ Global Symbols
 <LI><a href="#[13e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_llsl
 </UL>
 <BR>[Called By]<UL><LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
-<LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
-<LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
+<LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
 <LI><a href="#[146]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2d
 </UL>
 
@@ -2568,9 +2569,9 @@ Global Symbols
 
 <P><STRONG><a name="[147]"></a>__ieee754_rem_pio2</STRONG> (Thumb, 828 bytes, Stack size 128 bytes, rred.o(i.__ieee754_rem_pio2), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
-<LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
-<LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
-<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
+<LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
+<LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
 <LI><a href="#[146]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2d
 <LI><a href="#[148]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ARM_scalbn
 <LI><a href="#[143]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_drsub
@@ -2580,8 +2581,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[149]"></a>__kernel_cos</STRONG> (Thumb, 230 bytes, Stack size 48 bytes, cos_i.o(i.__kernel_cos), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
-<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
+<BR><BR>[Calls]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
+<LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
 <LI><a href="#[148]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ARM_scalbn
 <LI><a href="#[143]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_drsub
 <LI><a href="#[142]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
@@ -2592,7 +2593,7 @@ Global Symbols
 
 <P><STRONG><a name="[14a]"></a>__kernel_poly</STRONG> (Thumb, 170 bytes, Stack size 24 bytes, poly.o(i.__kernel_poly), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
-<LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
 </UL>
 <BR>[Called By]<UL><LI><a href="#[14b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_sin
 <LI><a href="#[149]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_cos
@@ -2600,7 +2601,7 @@ Global Symbols
 
 <P><STRONG><a name="[14b]"></a>__kernel_sin</STRONG> (Thumb, 224 bytes, Stack size 64 bytes, sin_i.o(i.__kernel_sin), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
-<LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
 <LI><a href="#[14d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_underflow
 <LI><a href="#[148]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ARM_scalbn
 <LI><a href="#[143]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_drsub
@@ -2659,7 +2660,7 @@ Local Symbols
 <BR>[Calls]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
 <LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
 </UL>
-<BR>[Called By]<UL><LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Loop
+<BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Loop
 </UL>
 
 <P><STRONG><a name="[5b]"></a>ANO_Loop_20Hz</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, ano_scheduler.o(.text))
@@ -2668,7 +2669,7 @@ Local Symbols
 <BR>[Calls]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NRF_Check_Ch
 <LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_DT_Send_Flag_To_Fly
 </UL>
-<BR>[Called By]<UL><LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Loop
+<BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Loop
 </UL>
 
 <P><STRONG><a name="[5e]"></a>ANO_Loop_50Hz</STRONG> (Thumb, 8 bytes, Stack size 8 bytes, ano_scheduler.o(.text))
@@ -2676,7 +2677,7 @@ Local Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_key
 </UL>
-<BR>[Called By]<UL><LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Loop
+<BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Loop
 </UL>
 
 <P><STRONG><a name="[60]"></a>ANO_Loop_100Hz</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, ano_scheduler.o(.text))
@@ -2686,7 +2687,7 @@ Local Symbols
 <LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gesture_Check
 <LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_DT_Send_RCData_To_Pc
 </UL>
-<BR>[Called By]<UL><LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Loop
+<BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Loop
 </UL>
 
 <P><STRONG><a name="[64]"></a>ANO_Loop_250Hz</STRONG> (Thumb, 42 bytes, Stack size 8 bytes, ano_scheduler.o(.text))
@@ -2695,18 +2696,19 @@ Local Symbols
 <BR>[Calls]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_NRF_TxPacket
 <LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_DT_Send_RCData
 </UL>
-<BR>[Called By]<UL><LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Loop
+<BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Loop
 </UL>
 
-<P><STRONG><a name="[67]"></a>ANO_Loop_500Hz</STRONG> (Thumb, 38 bytes, Stack size 8 bytes, ano_scheduler.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 136<LI>Call Chain = ANO_Loop_500Hz &rArr; ANO_NRF_Check_Event &rArr; ANO_DT_NrfData_Anl &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
+<P><STRONG><a name="[67]"></a>ANO_Loop_500Hz</STRONG> (Thumb, 42 bytes, Stack size 8 bytes, ano_scheduler.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 168<LI>Call Chain = ANO_Loop_500Hz &rArr; oled_show &rArr; OLED_Show_progress_bar &rArr; OLED_Show_CH &rArr; OLED_ShowCH &rArr; OLED_DrawPoint
 </UL>
-<BR>[Calls]<UL><LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Usb_Hid_Send
+<BR>[Calls]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_show
+<LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Usb_Hid_Send
 <LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Usb_Hid_Adddata
-<LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Stick_Scan
+<LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Stick_Scan
 <LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_NRF_Check_Event
 </UL>
-<BR>[Called By]<UL><LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Loop
+<BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ANO_Loop
 </UL>
 
 <P><STRONG><a name="[9a]"></a>Tim2_init</STRONG> (Thumb, 130 bytes, Stack size 32 bytes, ano_drv_led.o(.text), UNUSED)
@@ -2730,7 +2732,7 @@ Local Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = ADC1_GPIO_Config &rArr; GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_AHBPeriphClockCmd
-<LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Init
+<LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Init
 <LI><a href="#[4a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB2PeriphClockCmd
 </UL>
 <BR>[Called By]<UL><LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC1_Init
