@@ -1,8 +1,8 @@
 #include "App_freeRTOS_Task.h"
 #include "../Application/Init.h"
-#include "Int_SI24R1.h"
 #include "Int_led.h"
 #include "Int_motor.h"
+#include "Int_nRF24L01.h"
 // 外部引用在 Init.c 中定义的电机结构体
 extern Motor_Struct left_top_motor;
 extern Motor_Struct left_bottom_motor;
@@ -33,7 +33,7 @@ TaskHandle_t led_task_handle;
 
 // 通讯任务
 void com_task(void *args);
-#define COM_TASK_STACK_SIZE 128
+#define COM_TASK_STACK_SIZE 256
 #define COM_TASK_PRIORITY 2
 TaskHandle_t com_task_handle;
 // 任务周期
@@ -43,6 +43,9 @@ TaskHandle_t com_task_handle;
  *
  */
 void App_freeRTOS_start(void) {
+  // 0. 初始化 nRF24L01 模块（必须在创建通讯任务之前初始化）
+  Int_nRF24L01_Init();
+
   // 1. 创建任务
   // xTaskCreate(flight_task, "flight_task", FLIGHT_TASK_STACK_SIZE, NULL,
   //             FLIGHT_TASK_PRIORITY, &flight_task_handle);
@@ -195,28 +198,60 @@ void led_task(void *args) {
   }
 }
 
+// RC 通道数据结构
+typedef struct {
+  uint16_t thr;  // 油门
+  uint16_t yaw;  // 偏航（方向）
+  uint16_t rol;  // 横滚
+  uint16_t pit;  // 俯仰
+  uint16_t aux1;
+  uint16_t aux2;
+  uint16_t aux3;
+  uint16_t aux4;
+} RC_Data_t;
+
+RC_Data_t rc_data = {0};
 uint8_t com_data[TX_PLOAD_WIDTH] = {0};
 
+// 解析 ANO_DT 遥控器数据协议
+uint8_t ANO_DT_ParseRC(uint8_t *buf, uint8_t len, RC_Data_t *rc) {
+  if (buf[0] != 0xAA || buf[1] != 0xAF) return 0;
+  if (buf[2] != 0x03) return 0;
+  uint8_t data_len = buf[3];  // 数据区长度
+  if (data_len < 12) return 0;
+  // 总帧长度 = 4 字节头 + 数据区 + 1 字节校验和
+  uint8_t frame_len = 4 + data_len + 1;
+  if (frame_len > len) return 0;
+  // 校验和：从帧头到数据区末尾
+  uint8_t sum = 0;
+  for (uint8_t i = 0; i < frame_len - 1; i++) sum += buf[i];
+  if (sum != buf[frame_len - 1]) return 0;
+  rc->thr  = (uint16_t)((buf[4] << 8) | buf[5]);
+  rc->yaw  = (uint16_t)((buf[6] << 8) | buf[7]);
+  rc->rol  = (uint16_t)((buf[8] << 8) | buf[9]);
+  rc->pit  = (uint16_t)((buf[10] << 8) | buf[11]);
+  rc->aux1 = (uint16_t)((buf[12] << 8) | buf[13]);
+  rc->aux2 = (uint16_t)((buf[14] << 8) | buf[15]);
+  return 1;
+}
+
 void com_task(void *args) {
-  // 获取当前的基准时间
   TickType_t xLastWakeTime = xTaskGetTickCount();
   uint32_t rx_count = 0, err_count = 0;
   debug_printf("COM task started...\r\n");
   while (1) {
-    // 1. 接收数据到缓冲区
-    // debug_printf("Hello");
-    uint8_t res = Int_SI24R1_RxPacket(com_data);
+    uint8_t res = Int_nRF24L01_RxPacket(com_data);
     if (res == 0) {
       rx_count++;
-      debug_printf("[RX %lu] ", rx_count);
-      debug_printf("%s\n", com_data);
-      for (int i = 0; i < 16; i++) {
-        debug_printf("%02X ", com_data[i]);
+      if (ANO_DT_ParseRC(com_data, 32, &rc_data)) {
+        debug_printf("[RC %lu] THR:%4d YAW:%4d ROL:%4d PIT:%4d\r\n",
+                     rx_count, rc_data.thr, rc_data.yaw, rc_data.rol, rc_data.pit);
+      } else {
+        debug_printf("[RX %lu] Parse failed\r\n", rx_count);
       }
-      debug_printf("\r\n");
     } else {
       err_count++;
-      if (err_count % 100 == 0) {
+      if (err_count % 10000 == 0) {
         debug_printf("[NO DATA] %lu\r\n", err_count);
       }
     }

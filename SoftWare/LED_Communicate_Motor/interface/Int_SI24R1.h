@@ -37,6 +37,7 @@ typedef enum {
 // SPI(SI24R1) commands
 #define SI24R1_READ_REG 0x00  // Define read command to register
 #define SI24R1_WRITE_REG 0x20 // Define write command to register
+#define R_RX_PL_WID 0x60      // Define RX payload width register command
 #define RD_RX_PLOAD 0x61      // Define RX payload register address
 #define WR_TX_PLOAD 0xA0      // Define TX payload register address
 #define FLUSH_TX 0xE1         // Define flush TX register command

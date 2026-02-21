@@ -61,7 +61,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Interface sources
     interface/Int_led.c
     interface/Int_motor.c
-    interface/Int_SI24R1.c
+    interface/Int_nRF24L01.c
 # Add user sources here
 )
 
