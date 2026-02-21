@@ -15,7 +15,7 @@ set(CMAKE_C_EXTENSIONS ON)
 
 # Define the build type
 if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE "Debug")
+    set(CMAKE_BUILD_TYPE "Release")
 endif()
 
 # Set the project name
@@ -45,6 +45,9 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 # Add sources to executable
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     common/Com_debug.c
+    common/Com_pid.c
+    common/Com_filter.c
+    common/Com_imu.c
     # FreeRTOS sources
     FreeRTOS/croutine.c
     FreeRTOS/event_groups.c
@@ -58,10 +61,14 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Application sources
     Application/App_freeRTOS_Task.c
     Application/Init.c
+    Application/App_flight.c
+    Application/App_receive_data.c
     # Interface sources
     interface/Int_led.c
     interface/Int_motor.c
     interface/Int_nRF24L01.c
+    interface/Int_mpu6050.c
+    interface/Int_spl06.c
 # Add user sources here
 )
 
@@ -73,12 +80,19 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     FreeRTOS/portable
     Application
     interface
+    Core/Inc
     # Add user defined include paths
 )
 
 # Add project symbols (macros)
 target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined symbols
+)
+
+# Add compile options for optimization
+target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE
+    $<$<CONFIG:Release>:-Os>
+    $<$<CONFIG:Debug>:-Og>
 )
 
 # Remove wrong libob.a library dependency when using cpp files

@@ -12,6 +12,7 @@
 		[
 			"add_executable",
 			"target_link_libraries",
+			"target_compile_options",
 			"target_include_directories",
 			"target_sources"
 		],
@@ -43,17 +44,23 @@
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 69,
+				"line" : 93,
 				"parent" : 0
 			},
 			{
 				"command" : 3,
+				"file" : 0,
+				"line" : 76,
+				"parent" : 0
+			},
+			{
+				"command" : 4,
 				"file" : 1,
 				"line" : 82,
 				"parent" : 2
 			},
 			{
-				"command" : 3,
+				"command" : 4,
 				"file" : 0,
 				"line" : 46,
 				"parent" : 0
@@ -67,6 +74,10 @@
 			[
 				{
 					"fragment" : " -mcpu=cortex-m3  -Wall -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-Og"
 				}
 			],
 			"defines" : 
@@ -87,28 +98,32 @@
 			"includes" : 
 			[
 				{
-					"backtrace" : 4,
+					"backtrace" : 5,
 					"path" : "D:/files/25_26_winter/project/drone/SoftWare/LED_Communicate_Motor/common"
 				},
 				{
-					"backtrace" : 4,
+					"backtrace" : 5,
 					"path" : "D:/files/25_26_winter/project/drone/SoftWare/LED_Communicate_Motor/FreeRTOS"
 				},
 				{
-					"backtrace" : 4,
+					"backtrace" : 5,
 					"path" : "D:/files/25_26_winter/project/drone/SoftWare/LED_Communicate_Motor/FreeRTOS/include"
 				},
 				{
-					"backtrace" : 4,
+					"backtrace" : 5,
 					"path" : "D:/files/25_26_winter/project/drone/SoftWare/LED_Communicate_Motor/FreeRTOS/portable"
 				},
 				{
-					"backtrace" : 4,
+					"backtrace" : 5,
 					"path" : "D:/files/25_26_winter/project/drone/SoftWare/LED_Communicate_Motor/Application"
 				},
 				{
-					"backtrace" : 4,
+					"backtrace" : 5,
 					"path" : "D:/files/25_26_winter/project/drone/SoftWare/LED_Communicate_Motor/interface"
+				},
+				{
+					"backtrace" : 5,
+					"path" : "D:/files/25_26_winter/project/drone/SoftWare/LED_Communicate_Motor/Core/Inc"
 				},
 				{
 					"backtrace" : 3,
@@ -166,7 +181,14 @@
 				22,
 				23,
 				24,
-				25
+				25,
+				26,
+				27,
+				28,
+				29,
+				30,
+				31,
+				32
 			]
 		},
 		{
@@ -174,6 +196,10 @@
 			[
 				{
 					"fragment" : " -mcpu=cortex-m3  -x assembler-with-cpp -MMD -MP -g"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-Og"
 				}
 			],
 			"defines" : 
@@ -194,28 +220,32 @@
 			"includes" : 
 			[
 				{
-					"backtrace" : 4,
+					"backtrace" : 5,
 					"path" : "D:/files/25_26_winter/project/drone/SoftWare/LED_Communicate_Motor/common"
 				},
 				{
-					"backtrace" : 4,
+					"backtrace" : 5,
 					"path" : "D:/files/25_26_winter/project/drone/SoftWare/LED_Communicate_Motor/FreeRTOS"
 				},
 				{
-					"backtrace" : 4,
+					"backtrace" : 5,
 					"path" : "D:/files/25_26_winter/project/drone/SoftWare/LED_Communicate_Motor/FreeRTOS/include"
 				},
 				{
-					"backtrace" : 4,
+					"backtrace" : 5,
 					"path" : "D:/files/25_26_winter/project/drone/SoftWare/LED_Communicate_Motor/FreeRTOS/portable"
 				},
 				{
-					"backtrace" : 4,
+					"backtrace" : 5,
 					"path" : "D:/files/25_26_winter/project/drone/SoftWare/LED_Communicate_Motor/Application"
 				},
 				{
-					"backtrace" : 4,
+					"backtrace" : 5,
 					"path" : "D:/files/25_26_winter/project/drone/SoftWare/LED_Communicate_Motor/interface"
+				},
+				{
+					"backtrace" : 5,
+					"path" : "D:/files/25_26_winter/project/drone/SoftWare/LED_Communicate_Motor/Core/Inc"
 				},
 				{
 					"backtrace" : 3,
@@ -310,7 +340,14 @@
 				22,
 				23,
 				24,
-				25
+				25,
+				26,
+				27,
+				28,
+				29,
+				30,
+				31,
+				32
 			]
 		},
 		{
@@ -324,13 +361,6 @@
 			"name" : "Object Libraries",
 			"sourceIndexes" : 
 			[
-				26,
-				27,
-				28,
-				29,
-				30,
-				31,
-				32,
 				33,
 				34,
 				35,
@@ -340,166 +370,215 @@
 				39,
 				40,
 				41,
-				42
+				42,
+				43,
+				44,
+				45,
+				46,
+				47,
+				48,
+				49
 			]
 		}
 	],
 	"sources" : 
 	[
 		{
-			"backtrace" : 5,
+			"backtrace" : 6,
 			"compileGroupIndex" : 0,
 			"path" : "Core/Src/main.c",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 5,
+			"backtrace" : 6,
 			"compileGroupIndex" : 0,
 			"path" : "Core/Src/gpio.c",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 5,
+			"backtrace" : 6,
 			"compileGroupIndex" : 0,
 			"path" : "Core/Src/i2c.c",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 5,
+			"backtrace" : 6,
 			"compileGroupIndex" : 0,
 			"path" : "Core/Src/spi.c",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 5,
+			"backtrace" : 6,
 			"compileGroupIndex" : 0,
 			"path" : "Core/Src/tim.c",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 5,
+			"backtrace" : 6,
 			"compileGroupIndex" : 0,
 			"path" : "Core/Src/usart.c",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 5,
+			"backtrace" : 6,
 			"compileGroupIndex" : 0,
 			"path" : "Core/Src/stm32f1xx_it.c",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 5,
+			"backtrace" : 6,
 			"compileGroupIndex" : 0,
 			"path" : "Core/Src/stm32f1xx_hal_msp.c",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 5,
+			"backtrace" : 6,
 			"compileGroupIndex" : 0,
 			"path" : "Core/Src/sysmem.c",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 5,
+			"backtrace" : 6,
 			"compileGroupIndex" : 0,
 			"path" : "Core/Src/syscalls.c",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 5,
+			"backtrace" : 6,
 			"compileGroupIndex" : 1,
 			"path" : "startup_stm32f103xb.s",
 			"sourceGroupIndex" : 1
 		},
 		{
-			"backtrace" : 6,
+			"backtrace" : 7,
 			"compileGroupIndex" : 0,
 			"path" : "common/Com_debug.c",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 6,
+			"backtrace" : 7,
+			"compileGroupIndex" : 0,
+			"path" : "common/Com_pid.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 7,
+			"compileGroupIndex" : 0,
+			"path" : "common/Com_filter.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 7,
+			"compileGroupIndex" : 0,
+			"path" : "common/Com_imu.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 7,
 			"compileGroupIndex" : 0,
 			"path" : "FreeRTOS/croutine.c",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 6,
+			"backtrace" : 7,
 			"compileGroupIndex" : 0,
 			"path" : "FreeRTOS/event_groups.c",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 6,
+			"backtrace" : 7,
 			"compileGroupIndex" : 0,
 			"path" : "FreeRTOS/list.c",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 6,
+			"backtrace" : 7,
 			"compileGroupIndex" : 0,
 			"path" : "FreeRTOS/queue.c",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 6,
+			"backtrace" : 7,
 			"compileGroupIndex" : 0,
 			"path" : "FreeRTOS/stream_buffer.c",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 6,
+			"backtrace" : 7,
 			"compileGroupIndex" : 0,
 			"path" : "FreeRTOS/tasks.c",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 6,
+			"backtrace" : 7,
 			"compileGroupIndex" : 0,
 			"path" : "FreeRTOS/timers.c",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 6,
+			"backtrace" : 7,
 			"compileGroupIndex" : 0,
 			"path" : "FreeRTOS/portable/heap_4.c",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 6,
+			"backtrace" : 7,
 			"compileGroupIndex" : 0,
 			"path" : "FreeRTOS/portable/port.c",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 6,
+			"backtrace" : 7,
 			"compileGroupIndex" : 0,
 			"path" : "Application/App_freeRTOS_Task.c",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 6,
+			"backtrace" : 7,
 			"compileGroupIndex" : 0,
 			"path" : "Application/Init.c",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 6,
+			"backtrace" : 7,
+			"compileGroupIndex" : 0,
+			"path" : "Application/App_flight.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 7,
+			"compileGroupIndex" : 0,
+			"path" : "Application/App_receive_data.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 7,
 			"compileGroupIndex" : 0,
 			"path" : "interface/Int_led.c",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 6,
+			"backtrace" : 7,
 			"compileGroupIndex" : 0,
 			"path" : "interface/Int_motor.c",
 			"sourceGroupIndex" : 0
 		},
 		{
-			"backtrace" : 6,
+			"backtrace" : 7,
 			"compileGroupIndex" : 0,
 			"path" : "interface/Int_nRF24L01.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 7,
+			"compileGroupIndex" : 0,
+			"path" : "interface/Int_mpu6050.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 7,
+			"compileGroupIndex" : 0,
+			"path" : "interface/Int_spl06.c",
 			"sourceGroupIndex" : 0
 		},
 		{

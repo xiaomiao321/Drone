@@ -5,10 +5,10 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
-#include "../interface/Int_motor.h"
+#include "Int_motor.h"
 
 /**
- * @brief 启动freeRTOS操作系统
+ * @brief 鍚姩 freeRTOS 鎿嶄綔绯荤粺
  *
  */
 void App_freeRTOS_start(void);

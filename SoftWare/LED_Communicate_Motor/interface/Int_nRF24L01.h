@@ -3,18 +3,7 @@
 
 #include "Com_debug.h"
 #include "spi.h"
-
-typedef enum {
-  REMOTE_CONNECTED = 0,
-  REMOTE_DISCONNECTED,
-} Remote_State;
-
-typedef enum {
-  IDLE = 0,
-  NORMAL,
-  FIX_HEIGHT,
-  FAIL,
-} Flight_State;
+#include "Com_config.h"  // 包含 Remote_State 和 Flight_State 定义
 
 // 拉低片选
 #define CS_LOW                                                                 \
