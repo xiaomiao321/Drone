@@ -1,8 +1,8 @@
-# Install script for directory: D:/files/25_26_winter/project/drone/SoftWare/Test/FreeRTOS_STM32
+# Install script for directory: D:/files/25_26_winter/project/drone/SoftWare/FreeRTOS_STM32
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/FreeRTOS_STM32")
+  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/log")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -39,7 +39,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("D:/files/25_26_winter/project/drone/SoftWare/Test/FreeRTOS_STM32/build/Debug/cmake/stm32cubemx/cmake_install.cmake")
+  include("D:/files/25_26_winter/project/drone/SoftWare/FreeRTOS_STM32/build/Debug/cmake/stm32cubemx/cmake_install.cmake")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "D:/files/25_26_winter/project/drone/SoftWare/Test/FreeRTOS_STM32/build/Debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "D:/files/25_26_winter/project/drone/SoftWare/FreeRTOS_STM32/build/Debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

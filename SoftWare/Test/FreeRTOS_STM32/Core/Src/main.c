@@ -19,11 +19,13 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "gpio.h"
+#include "i2c.h"
 #include "usart.h"
-
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "../Application/App_freeRTOS_Task.h"
+#include "../common/Com_debug.h"
 
 /* USER CODE END Includes */
 
@@ -45,7 +47,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+uint8_t tx_buffer[1024];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -89,14 +91,29 @@ int main(void) {
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART2_UART_Init();
+  MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
+  debug_printf("Hello World!\n");
 
+  // 启动freeRTOS => 后续的代码都不再执行
+  App_freeRTOS_start();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1) {
-
+    // HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+    // HAL_Delay(1000);
+    // printf("Hello World\r\n");
+    // HAL_UART_Transmit(&huart2, (uint8_t *)"Hello World\r\n", 12, 1000);
+    // for (int i = 0; i < 1024; i++) {
+    //   tx_buffer[i] = i;
+    //   debug_printf("buffer[%d] = %d\r\n", (int)i, (int)tx_buffer[i]);
+    //   debug_printf("Hello World\r\n");
+    //   HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+    //   HAL_Delay(1000);
+    // }
+    // debug_printf("Hello World\r\n");
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
