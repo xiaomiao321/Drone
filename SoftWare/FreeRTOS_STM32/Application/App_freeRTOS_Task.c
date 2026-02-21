@@ -16,6 +16,13 @@ void task2(void *args);
 #define TASK2_PRIORITY 1
 TaskHandle_t task2_handle;
 
+void task3(void *args);
+// 最小推荐填写128 => 128*4 = 512B
+#define TASK3_STACK_SIZE 128
+// 任务优先级 => 数值越小 优先级越小  => 最大4  => 不推荐使用最小优先级0
+#define TASK3_PRIORITY 1
+TaskHandle_t task3_handle;
+
 /**
  * @brief 启动freeRTOS操作系统
  *
@@ -28,6 +35,9 @@ void App_freeRTOS_start(void) {
   // 创建多个任务
   xTaskCreate(task2, "task2", TASK2_STACK_SIZE, NULL, TASK2_PRIORITY,
               &task2_handle);
+
+  xTaskCreate(task3, "task3", TASK3_STACK_SIZE, NULL, TASK3_PRIORITY,
+              &task3_handle);
 
   // 2. 启动调度器
   vTaskStartScheduler();
@@ -46,5 +56,11 @@ void task2(void *args) {
   while (1) {
     debug_printf("task2\r\n");
     vTaskDelay(900); // 延迟900ms => 释放CPU占用
+  }
+}
+void task3(void *args) {
+  while (1) {
+    HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+    vTaskDelay(500);
   }
 }
