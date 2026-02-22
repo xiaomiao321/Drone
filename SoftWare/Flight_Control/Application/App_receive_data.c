@@ -257,8 +257,8 @@ uint8_t App_process_unlock(void)
  *
  * 状态机转换:
  * IDLE -> NORMAL: 解锁成功
- * NORMAL -> FIX_HEIGHT: AUX2 == 0 (遥控器未使用 AUX2，固定为 0)
- * FIX_HEIGHT -> NORMAL: AUX2 != 0
+ * NORMAL -> FIX_HEIGHT: AUX1 < 1450 或 AUX1 > 1550
+ * FIX_HEIGHT -> NORMAL: 1450 <= AUX1 <= 1550
  * ANY -> FAIL: 遥控器失联
  */
 void App_process_flight_state(void)
@@ -285,9 +285,9 @@ void App_process_flight_state(void)
                 Int_buzzer_short_beep();
             }
         }
-        
-        // 判断进入定高 (使用 AUX2 通道，遥控器端未使用，固定输出 0)
-        if (rc_data.aux2 == 0)
+
+        // 判断进入定高 (使用 AUX1 通道，< 1450 或 > 1550 进入定高)
+        if (rc_data.aux1 < 1450 || rc_data.aux1 > 1550)
         {
             flight_state = FIX_HEIGHT;
             // 记录当前高度 (使用气压计)
@@ -305,8 +305,8 @@ void App_process_flight_state(void)
         break;
 
     case FIX_HEIGHT:
-        // 取消定高
-        if (rc_data.aux2 != 0)
+        // 取消定高 (使用 AUX1 通道，1450 <= AUX1 <= 1550 退出定高)
+        if (rc_data.aux1 >= 1450 && rc_data.aux1 <= 1550)
         {
             flight_state = NORMAL;
             debug_printf("Flight: NORMAL\r\n");
