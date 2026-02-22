@@ -1,8 +1,8 @@
-# Install script for directory: D:/files/25_26_winter/project/drone/SoftWare/LED_Communicate_Motor/cmake/stm32cubemx
+# Install script for directory: D:/files/25_26_winter/project/drone/SoftWare/Flight_Control/cmake/stm32cubemx
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/log")
+  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/flight_control")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 

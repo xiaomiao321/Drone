@@ -50,6 +50,8 @@ TaskHandle_t baro_task_handle;
 #define COM_TASK_STACK_SIZE 128 // 512 字节 - 遥控器数据解析
 #define COM_TASK_PRIORITY 2
 #define COM_TASK_PERIOD 6
+#define COM_TASK_OUTPUT_INTERVAL 1000 // 通讯任务调试输出间隔 (次)
+#define COM_TASK_ERROR_OUTPUT_INTERVAL 1000
 
 #define BARO_TASK_STACK_SIZE 96 // 384 字节 - 气压计数据读取
 #define BARO_TASK_PRIORITY 2
@@ -225,15 +227,15 @@ void com_task(void *args) {
     // 2. 处理连接状态
     App_process_connect_state(res);
 
-    // 3. 调试输出 (每 100 次输出一次，避免刷屏)
+    // 3. 调试输出 (每 COM_TASK_OUTPUT_INTERVAL 次输出一次，避免刷屏)
     if (res == 0) {
       rx_count++;
-      if (rx_count % 100 == 0) {
+      if (rx_count % COM_TASK_OUTPUT_INTERVAL == 0) {
         LOG_INFO("[RC %lu] %s", rx_count, App_get_rc_string());
       }
     } else {
       err_count++;
-      if (err_count % 1000 == 0) {
+      if (err_count % COM_TASK_ERROR_OUTPUT_INTERVAL == 0) {
         LOG_WARN("[NO DATA] err=%lu", err_count);
       }
     }
