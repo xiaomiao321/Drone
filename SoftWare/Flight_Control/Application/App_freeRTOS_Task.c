@@ -71,15 +71,14 @@ void App_freeRTOS_start(void) {
   Int_nRF24L01_Init();
 
   // 1. 创建任务
-  // xTaskCreate(flight_task, "flight", FLIGHT_TASK_STACK_SIZE, NULL,
-  //             FLIGHT_TASK_PRIORITY, &flight_task_handle);
-  // xTaskCreate(led_task, "led", LED_TASK_STACK_SIZE, NULL, LED_TASK_PRIORITY,
-  //             &led_task_handle);
+  xTaskCreate(flight_task, "flight", FLIGHT_TASK_STACK_SIZE, NULL,
+              FLIGHT_TASK_PRIORITY, &flight_task_handle);
+  xTaskCreate(led_task, "led", LED_TASK_STACK_SIZE, NULL, LED_TASK_PRIORITY,
+              &led_task_handle);
   xTaskCreate(com_task, "com", COM_TASK_STACK_SIZE, NULL, COM_TASK_PRIORITY,
               &com_task_handle);
-  // xTaskCreate(baro_task, "baro", BARO_TASK_STACK_SIZE, NULL,
-  // BARO_TASK_PRIORITY,
-  //             &baro_task_handle);
+  xTaskCreate(baro_task, "baro", BARO_TASK_STACK_SIZE, NULL, BARO_TASK_PRIORITY,
+              &baro_task_handle);
 
   // 2. 启动调度器
   vTaskStartScheduler();

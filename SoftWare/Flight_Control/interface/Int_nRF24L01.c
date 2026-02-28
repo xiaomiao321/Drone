@@ -112,10 +112,10 @@ void Int_nRF24L01_RX_Mode(void) {
   Int_nRF24L01_Write_Reg(FLUSH_TX, 0xff);
   Int_nRF24L01_Write_Reg(FLUSH_RX, 0xff);
   // nRF24L01 特殊配置（匹配遥控器 TX2 模式）- 必须与遥控器一致
-  SPI_RW(0x50);  // 选择寄存器组
+  SPI_RW(0x50); // 选择寄存器组
   SPI_RW(0x73);
-  Int_nRF24L01_Write_Reg(NRF_WRITE_REG + 0x1c, 0x01);  // 兼容模式配置
-  Int_nRF24L01_Write_Reg(NRF_WRITE_REG + 0x1d, 0x06);  // 兼容模式配置
+  Int_nRF24L01_Write_Reg(NRF_WRITE_REG + 0x1c, 0x01); // 兼容模式配置
+  Int_nRF24L01_Write_Reg(NRF_WRITE_REG + 0x1d, 0x06); // 兼容模式配置
   CE_HIGH;
 }
 
@@ -127,19 +127,20 @@ void Int_nRF24L01_RX_Mode(void) {
 void Int_nRF24L01_TX_Mode(void) {
   CE_LOW;
   Int_nRF24L01_Write_Buf(NRF_WRITE_REG + TX_ADDR, TX_ADDRESS,
-                       TX_ADR_WIDTH); // 写入发送地址
+                         TX_ADR_WIDTH); // 写入发送地址
   Int_nRF24L01_Write_Buf(
       NRF_WRITE_REG + RX_ADDR_P0, TX_ADDRESS,
       TX_ADR_WIDTH); // 为了应答接收设备，接收通道 0 地址和发送地址相同
-  Int_nRF24L01_Write_Reg(NRF_WRITE_REG + EN_AA, 0x01); // 使能接收通道 0 自动应答
+  Int_nRF24L01_Write_Reg(NRF_WRITE_REG + EN_AA,
+                         0x01); // 使能接收通道 0 自动应答
   Int_nRF24L01_Write_Reg(NRF_WRITE_REG + EN_RXADDR, 0x01); // 使能接收通道 0
   Int_nRF24L01_Write_Reg(NRF_WRITE_REG + SETUP_RETR,
-                       0x1a); // 自动重发延时等待 250us+86us，自动重发 10 次
+                         0x1a); // 自动重发延时等待 250us+86us，自动重发 10 次
   Int_nRF24L01_Write_Reg(NRF_WRITE_REG + RF_CH, CHANNEL); // 选择射频通道 0x40
   Int_nRF24L01_Write_Reg(NRF_WRITE_REG + RF_SETUP,
-                       0x0f); // 数据传输率 2Mbps，发射功率 0dBm
+                         0x0f); // 数据传输率 2Mbps，发射功率 0dBm
   Int_nRF24L01_Write_Reg(NRF_WRITE_REG + CONFIG,
-                       0x0e); // CRC 使能，16 位 CRC 校验，上电
+                         0x0e); // CRC 使能，16 位 CRC 校验，上电
   CE_HIGH;
 }
 
@@ -154,6 +155,13 @@ uint8_t Int_nRF24L01_RxPacket(uint8_t *rxbuf) {
 
   // 读取状态寄存器
   state = Int_nRF24L01_Read_Reg(STATUS);
+
+  // 检查是否掉电或配置丢失 (STATUS=0x00 表示异常)
+  // if (state == 0x00) {
+  //   // 重新初始化 nRF24L01
+  //   Int_nRF24L01_RX_Mode();
+  //   return 1;
+  // }
 
   if (state & RX_DR) { // 接收到数据
     // 先读取有效数据长度
@@ -187,8 +195,8 @@ uint8_t Int_nRF24L01_TxPacket(uint8_t *txbuf) {
   uint8_t state;
   CE_LOW; // CE 拉低，使能 nRF24L01 配置
   Int_nRF24L01_Write_Buf(WR_TX_PLOAD, txbuf,
-                       TX_PLOAD_WIDTH); // 写数据到 TX FIFO,32 个字节
-  CE_HIGH;                              // CE 置高，使能发送
+                         TX_PLOAD_WIDTH); // 写数据到 TX FIFO,32 个字节
+  CE_HIGH;                                // CE 置高，使能发送
 
   state = Int_nRF24L01_Read_Reg(STATUS); // 读取状态寄存器的值
   while (((state & TX_DS) == 0) && ((state & MAX_RT) == 0)) {
@@ -196,8 +204,8 @@ uint8_t Int_nRF24L01_TxPacket(uint8_t *txbuf) {
   }
 
   Int_nRF24L01_Write_Reg(NRF_WRITE_REG + STATUS,
-                       state); // 清除 TX_DS 或 MAX_RT 中断标志
-  if (state & MAX_RT) { // 达到最大重发次数
+                         state);            // 清除 TX_DS 或 MAX_RT 中断标志
+  if (state & MAX_RT) {                     // 达到最大重发次数
     Int_nRF24L01_Write_Reg(FLUSH_TX, 0xff); // 清除 TX FIFO 寄存器
     return 1;
   }
@@ -237,13 +245,13 @@ void Int_nRF24L01_Print_Status(void) {
   uint8_t status = Int_nRF24L01_Read_Reg(STATUS);
   uint8_t fifo_status = Int_nRF24L01_Read_Reg(FIFO_STATUS);
   uint8_t obs_tx = Int_nRF24L01_Read_Reg(OBSERVE_TX);
-  
-  debug_printf("[NRF24L01] STATUS:0x%02X FIFO:0x%02X OBS:0x%02X\r\n", 
-               status, fifo_status, obs_tx);
-  debug_printf("  RX_DR:%d TX_DS:%d MAX_RT:%d\r\n", 
-               (status >> 6) & 1, (status >> 5) & 1, (status >> 4) & 1);
-  debug_printf("  TX_FULL:%d RX_EMPTY:%d\r\n", 
-               (fifo_status >> 5) & 1, (fifo_status >> 1) & 1);
+
+  debug_printf("[NRF24L01] STATUS:0x%02X FIFO:0x%02X OBS:0x%02X\r\n", status,
+               fifo_status, obs_tx);
+  debug_printf("  RX_DR:%d TX_DS:%d MAX_RT:%d\r\n", (status >> 6) & 1,
+               (status >> 5) & 1, (status >> 4) & 1);
+  debug_printf("  TX_FULL:%d RX_EMPTY:%d\r\n", (fifo_status >> 5) & 1,
+               (fifo_status >> 1) & 1);
 }
 
 /**

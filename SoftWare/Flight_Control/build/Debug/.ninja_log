@@ -112,3 +112,14 @@
 361	679	7939944575767645	flight_control.elf	157214a7f2fc84e3
 5	258	7939947929795634	CMakeFiles/flight_control.dir/Application/App_freeRTOS_Task.c.obj	b6d212d7df85eb8
 259	486	7939947932020188	flight_control.elf	157214a7f2fc84e3
+4	310	7939954780627403	CMakeFiles/flight_control.dir/Application/App_freeRTOS_Task.c.obj	b6d212d7df85eb8
+37	319	7939954780719237	CMakeFiles/flight_control.dir/interface/Int_nRF24L01.c.obj	ebb81b904c24d0a8
+26	322	7939954780764294	CMakeFiles/flight_control.dir/Application/App_receive_data.c.obj	b4d45a6314d913fa
+16	327	7939954780804460	CMakeFiles/flight_control.dir/Application/App_flight.c.obj	cc4efc11b5abcf04
+327	554	7939954783025374	flight_control.elf	157214a7f2fc84e3
+4	267	7939955319577912	CMakeFiles/flight_control.dir/Application/App_freeRTOS_Task.c.obj	b6d212d7df85eb8
+267	507	7939955321926373	flight_control.elf	157214a7f2fc84e3
+4	260	7939957532553989	CMakeFiles/flight_control.dir/interface/Int_nRF24L01.c.obj	ebb81b904c24d0a8
+260	494	7939957534834800	flight_control.elf	157214a7f2fc84e3
+5	249	7939958629936524	CMakeFiles/flight_control.dir/interface/Int_nRF24L01.c.obj	ebb81b904c24d0a8
+249	481	7939958632210726	flight_control.elf	157214a7f2fc84e3

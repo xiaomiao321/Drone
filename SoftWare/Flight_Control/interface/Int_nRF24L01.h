@@ -17,9 +17,10 @@
 // 拉高使能
 #define CE_HIGH HAL_GPIO_WritePin(SI_EN_GPIO_Port, SI_EN_Pin, GPIO_PIN_SET);
 
-// 选择使用的射频通道 => 必须与遥控器通道一致（遥控器默认通道 45）
-// 注意：Reference 代码使用通道 45，杜邦线测试时也使用 45
-#define CHANNEL 45
+// 选择使用的射频通道 => 必须与遥控器通道一致
+// 默认值 0，如果遥控器对过频，请修改为遥控器 OLED 显示的通道值
+// 范围：0-125
+#define CHANNEL 0
 #define TX_ADR_WIDTH 5    // 5 字节宽度的发送/接收地址
 #define TX_PLOAD_WIDTH 32 // 数据通道有效数据宽度
 
