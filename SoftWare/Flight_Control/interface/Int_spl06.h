@@ -5,10 +5,17 @@
 #include "Com_debug.h"
 #include "math.h"
 
-// SPL06-001 设备地址
-#define SPL06_ADDR 0x77        // 默认地址 (SDO 悬空或接 VDDIO)
-#define SPL06_ADDR_WRITE 0xEE  // 写地址
-#define SPL06_ADDR_READ 0xEF   // 读地址
+/* ============================================================================
+ * SPL06-001 设备地址
+ * 注意：SDO 引脚决定地址
+ * - SDO 接地 (GND):    7 位地址 0x76, 写 0xEC, 读 0xED
+ * - SDO 接电源 (VDDIO): 7 位地址 0x77, 写 0xEE, 读 0xEF
+ * 本模块 SDO 接地，使用 0x76
+ * ============================================================================
+ */
+#define SPL06_ADDR 0x76        // 7 位设备地址 (SDO 接地)
+#define SPL06_ADDR_WRITE 0xEC  // 写地址 (0x76 << 1)
+#define SPL06_ADDR_READ 0xED   // 读地址 (0x76 << 1 | 1)
 
 // 寄存器地址
 #define SPL06_PRS_B2 0x00      // 压力数据高 8 位

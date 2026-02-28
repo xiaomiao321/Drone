@@ -231,6 +231,22 @@ uint8_t Int_nRF24L01_Check(void) {
 }
 
 /**
+ * @brief 读取 nRF24L01 状态并打印调试信息
+ */
+void Int_nRF24L01_Print_Status(void) {
+  uint8_t status = Int_nRF24L01_Read_Reg(STATUS);
+  uint8_t fifo_status = Int_nRF24L01_Read_Reg(FIFO_STATUS);
+  uint8_t obs_tx = Int_nRF24L01_Read_Reg(OBSERVE_TX);
+  
+  debug_printf("[NRF24L01] STATUS:0x%02X FIFO:0x%02X OBS:0x%02X\r\n", 
+               status, fifo_status, obs_tx);
+  debug_printf("  RX_DR:%d TX_DS:%d MAX_RT:%d\r\n", 
+               (status >> 6) & 1, (status >> 5) & 1, (status >> 4) & 1);
+  debug_printf("  TX_FULL:%d RX_EMPTY:%d\r\n", 
+               (fifo_status >> 5) & 1, (fifo_status >> 1) & 1);
+}
+
+/**
  * @brief 硬件接口层 nRF24L01 的初始化
  *
  */

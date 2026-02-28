@@ -127,26 +127,12 @@ uint8_t App_receive_data(void)
 {
     memset(com_data, 0, 32);
     uint8_t res = Int_nRF24L01_RxPacket(com_data);
-    
+
     if (res == 0)
     {
         // 接收到数据，解析
         if (ANO_DT_ParseRC(com_data, 32, &rc_data))
         {
-            // 解析成功，构建回复帧
-            // 电压示例：假设 11.1V = 1110 (单位：0.1V)
-            ANO_DT_BuildStatusFrame(1110, 1);  // 1=四轴飞行器
-            
-            // 切换到发送模式并回复
-            Int_nRF24L01_TX_Mode();
-            uint16_t count = 100;
-            while (Int_nRF24L01_TxPacket(back_buff) == 1 && count--)
-            {
-                // 等待发送完成
-            }
-            // 切回接收模式
-            Int_nRF24L01_RX_Mode();
-            
             return 0; // 成功
         }
     }

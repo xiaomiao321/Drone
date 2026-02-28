@@ -17,8 +17,9 @@
 // 拉高使能
 #define CE_HIGH HAL_GPIO_WritePin(SI_EN_GPIO_Port, SI_EN_Pin, GPIO_PIN_SET);
 
-// 选择使用的射频通道 => 必须与遥控器通道一致（遥控器默认通道 0）
-#define CHANNEL 0
+// 选择使用的射频通道 => 必须与遥控器通道一致（遥控器默认通道 45）
+// 注意：Reference 代码使用通道 45，杜邦线测试时也使用 45
+#define CHANNEL 45
 #define TX_ADR_WIDTH 5    // 5 字节宽度的发送/接收地址
 #define TX_PLOAD_WIDTH 32 // 数据通道有效数据宽度
 
@@ -134,5 +135,11 @@ uint8_t Int_nRF24L01_TxPacket(uint8_t *txbuf);
  *
  */
 void Int_nRF24L01_Init(void); // nRF24L01 Pin Init
+
+/**
+ * @brief 读取 nRF24L01 状态并打印调试信息
+ */
+void Int_nRF24L01_Print_Status(void);
+
 //********************************************************************************************************************//
 #endif

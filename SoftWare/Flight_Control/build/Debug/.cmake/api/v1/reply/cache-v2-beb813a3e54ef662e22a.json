@@ -1155,10 +1155,10 @@
 			[
 				{
 					"name" : "HELPSTRING",
-					"value" : "The CMake toolchain file"
+					"value" : "No help, variable specified on the command line."
 				}
 			],
-			"type" : "FILEPATH",
+			"type" : "UNINITIALIZED",
 			"value" : "D:/files/25_26_winter/project/drone/SoftWare/Flight_Control/cmake/gcc-arm-none-eabi.cmake"
 		},
 		{
