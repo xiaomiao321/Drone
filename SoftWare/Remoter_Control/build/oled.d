@@ -44,5 +44,5 @@
 .\build\oled.o: .\Driver\key.h
 .\build\oled.o: .\ANO_Remoter\ANO_Param.h
 .\build\oled.o: .\Driver\ANO_Drv_Flash.h
-.\build\oled.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\build\oled.o: Driver\OLED\oledfont.h
+.\build\oled.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h

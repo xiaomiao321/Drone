@@ -3,17 +3,17 @@
         {
             "name": "ANO_Remoter_V2.0",
             "includePath": [
-                "d:\\files\\25_26_winter\\project\\drone\\SoftWare\\遥控器\\Remoter_Ctrl3.6\\ANO_Remoter",
-                "d:\\files\\25_26_winter\\project\\drone\\SoftWare\\遥控器\\Remoter_Ctrl3.6\\Driver",
-                "d:\\files\\25_26_winter\\project\\drone\\SoftWare\\遥控器\\Remoter_Ctrl3.6\\STM32_LIB\\CMSIS",
-                "d:\\files\\25_26_winter\\project\\drone\\SoftWare\\遥控器\\Remoter_Ctrl3.6\\USB_hid",
-                "d:\\files\\25_26_winter\\project\\drone\\SoftWare\\遥控器\\Remoter_Ctrl3.6\\USB_library",
-                "d:\\files\\25_26_winter\\project\\drone\\SoftWare\\遥控器\\Remoter_Ctrl3.6\\STM32_LIB\\LIB\\inc",
-                "d:\\files\\25_26_winter\\project\\drone\\SoftWare\\遥控器\\Remoter_Ctrl3.6\\Driver\\OLED",
+                "d:\\files\\25_26_winter\\project\\drone\\SoftWare\\Remoter_Control\\ANO_Remoter",
+                "d:\\files\\25_26_winter\\project\\drone\\SoftWare\\Remoter_Control\\Driver",
+                "d:\\files\\25_26_winter\\project\\drone\\SoftWare\\Remoter_Control\\STM32_LIB\\CMSIS",
+                "d:\\files\\25_26_winter\\project\\drone\\SoftWare\\Remoter_Control\\USB_hid",
+                "d:\\files\\25_26_winter\\project\\drone\\SoftWare\\Remoter_Control\\USB_library",
+                "d:\\files\\25_26_winter\\project\\drone\\SoftWare\\Remoter_Control\\STM32_LIB\\LIB\\inc",
+                "d:\\files\\25_26_winter\\project\\drone\\SoftWare\\Remoter_Control\\Driver\\OLED",
                 "D:\\Keil5\\ARM\\ARMCC\\include",
                 "D:\\Keil5\\ARM\\ARMCC\\include\\rw",
-                "d:\\files\\25_26_winter\\project\\drone\\SoftWare\\遥控器\\Remoter_Ctrl3.6\\STM32_LIB\\LIB\\src",
-                "d:\\files\\25_26_winter\\project\\drone\\SoftWare\\遥控器\\Remoter_Ctrl3.6\\doc"
+                "d:\\files\\25_26_winter\\project\\drone\\SoftWare\\Remoter_Control\\STM32_LIB\\LIB\\src",
+                "d:\\files\\25_26_winter\\project\\drone\\SoftWare\\Remoter_Control\\doc"
             ],
             "defines": [
                 "USE_STDPERIPH_DRIVER",

@@ -25,7 +25,7 @@ static void ANO_Loop_500Hz(void) // 2ms执行一次
     Usb_Hid_Send(); // 数据发到上位机
     NRF_Evnet = 0;
   }
-  oled_show();
+  // oled_show();
   ANO_Stick_Scan(); // 读取遥杆等数据
 }
 
