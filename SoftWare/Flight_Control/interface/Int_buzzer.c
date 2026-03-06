@@ -41,9 +41,9 @@ void Int_buzzer_toggle(void) { BUZZER_TOGGLE(); }
  */
 void Int_buzzer_short_beep(void) {
   Int_buzzer_on();
-  vTaskDelay(pdMS_TO_TICKS(100));
+  HAL_Delay(100);
   Int_buzzer_off();
-  vTaskDelay(pdMS_TO_TICKS(50));
+  HAL_Delay(50);
 }
 
 /**

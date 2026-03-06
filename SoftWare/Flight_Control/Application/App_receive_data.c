@@ -158,7 +158,8 @@ void App_process_connect_state(uint8_t res)
         if (retry_count >= MAX_RETRY_TIMES)
         {
             remote_state = REMOTE_DISCONNECTED;
-            retry_count = 0;
+            // 不清零 retry_count，保持 DISCONNECTED 状态
+            // 只有成功接收数据时才清零
         }
     }
 }
@@ -307,10 +308,12 @@ void App_process_flight_state(void)
         break;
 
     case FAIL:
-        // 失控处理：等待任务通知
-        // 注意：实际应用中应该执行失控保护逻辑 (如自动降落)
-        flight_state = IDLE;
-        debug_printf("Flight: IDLE (reset)\r\n");
+        // 失控保护：保持 FAIL 状态，等待遥控器恢复
+        // 只有当遥控器重新连接后才重置为 IDLE
+        if (remote_state == REMOTE_CONNECTED) {
+            flight_state = IDLE;
+            debug_printf("Flight: IDLE (RC recovered)\r\n");
+        }
         break;
 
     default:

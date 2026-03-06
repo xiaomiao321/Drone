@@ -10,7 +10,8 @@
 #define FRAME_HEAD_CHECK_3 'g'
 
 // 遥控器超时
-#define MAX_RETRY_TIMES 10
+// 通信任务周期 6ms，100 次 = 600ms 无数据才认为失联
+#define MAX_RETRY_TIMES 100
 
 // RC 通道数据结构 (ANO_DT 协议)
 typedef struct RC_Data_s

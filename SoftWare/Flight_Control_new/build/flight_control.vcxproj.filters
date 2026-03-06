@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\Core\Src\main.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\Core\Src\gpio.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\Core\Src\i2c.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\Core\Src\spi.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\Core\Src\tim.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\Core\Src\usart.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\Core\Src\stm32f1xx_it.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\Core\Src\stm32f1xx_hal_msp.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\Core\Src\sysmem.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\Core\Src\syscalls.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\common\Com_debug.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\common\Com_pid.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\common\Com_filter.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\common\Com_imu.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\FreeRTOS\croutine.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\FreeRTOS\event_groups.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\FreeRTOS\list.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\FreeRTOS\queue.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\FreeRTOS\stream_buffer.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\FreeRTOS\tasks.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\FreeRTOS\timers.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\FreeRTOS\portable\heap_4.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\FreeRTOS\portable\port.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\Application\App_freeRTOS_Task.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\Application\Init.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\Application\App_flight.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\Application\App_receive_data.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\interface\Int_led.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\interface\Int_motor.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\interface\Int_nRF24L01.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\interface\Int_mpu6050.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\interface\Int_spl06.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\interface\Int_buzzer.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\startup_stm32f103xb.s" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\build\cmake\stm32cubemx\STM32_Drivers.dir\$(Configuration)\system_stm32f1xx.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\build\cmake\stm32cubemx\STM32_Drivers.dir\$(Configuration)\stm32f1xx_hal_gpio_ex.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\build\cmake\stm32cubemx\STM32_Drivers.dir\$(Configuration)\stm32f1xx_hal_i2c.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\build\cmake\stm32cubemx\STM32_Drivers.dir\$(Configuration)\stm32f1xx_hal.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\build\cmake\stm32cubemx\STM32_Drivers.dir\$(Configuration)\stm32f1xx_hal_rcc.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\build\cmake\stm32cubemx\STM32_Drivers.dir\$(Configuration)\stm32f1xx_hal_rcc_ex.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\build\cmake\stm32cubemx\STM32_Drivers.dir\$(Configuration)\stm32f1xx_hal_gpio.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\build\cmake\stm32cubemx\STM32_Drivers.dir\$(Configuration)\stm32f1xx_hal_dma.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\build\cmake\stm32cubemx\STM32_Drivers.dir\$(Configuration)\stm32f1xx_hal_cortex.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\build\cmake\stm32cubemx\STM32_Drivers.dir\$(Configuration)\stm32f1xx_hal_pwr.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\build\cmake\stm32cubemx\STM32_Drivers.dir\$(Configuration)\stm32f1xx_hal_flash.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\build\cmake\stm32cubemx\STM32_Drivers.dir\$(Configuration)\stm32f1xx_hal_flash_ex.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\build\cmake\stm32cubemx\STM32_Drivers.dir\$(Configuration)\stm32f1xx_hal_exti.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\build\cmake\stm32cubemx\STM32_Drivers.dir\$(Configuration)\stm32f1xx_hal_spi.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\build\cmake\stm32cubemx\STM32_Drivers.dir\$(Configuration)\stm32f1xx_hal_tim.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\build\cmake\stm32cubemx\STM32_Drivers.dir\$(Configuration)\stm32f1xx_hal_tim_ex.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\files\25_26_winter\project\drone\SoftWare\Flight_Control_new\build\cmake\stm32cubemx\STM32_Drivers.dir\$(Configuration)\stm32f1xx_hal_uart.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Object Libraries">
+      <UniqueIdentifier>{17A820E5-AE24-3B4D-982C-ED35F8FDF4D3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{F5597A24-401D-332B-9006-D144DD989FB9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

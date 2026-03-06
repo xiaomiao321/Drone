@@ -1,0 +1,10 @@
+^D:\FILES\25_26_WINTER\PROJECT\DRONE\SOFTWARE\FLIGHT_CONTROL_NEW\BUILD\CMAKEFILES\E06A70C514D8B2EE0B8F97044BF5617F\GENERATE.STAMP.RULE
+setlocal
+D:\STM32CubeCLT\STM32CubeCLT_1.18.0\CMake\bin\cmake.exe -SD:/files/25_26_winter/project/drone/SoftWare/Flight_Control_new -BD:/files/25_26_winter/project/drone/SoftWare/Flight_Control_new/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file D:/files/25_26_winter/project/drone/SoftWare/Flight_Control_new/build/flight_control.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

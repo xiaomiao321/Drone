@@ -1,0 +1,1471 @@
+                                                                     Confidential Degree：Confidential
+
+
+
+
+SPL06-001
+Digital pressure sensor
+Pb-free, halogen-free and RoHS compliant
+
+
+
+
+Version7.0         Confidential in Goertek, shall not be spread if not be privileged       Page 1 / 35
+                                                                     Confidential Degree：Confidential
+
+                                       Restricted
+1. Security warning
+The information contained in this document is the exclusive property of GoerTek Inc. and
+should not be disclosed to any third party without the written consent of GoerTek Inc.
+
+2. Publication history
+      Version       Date                   Description                     Author      Approved
+
+        1.0      2016.3.14                 New design                      Wiming       Sammy
+                                ① Update outline dimensions
+                                     picture
+        2.0      2016.6.10      ② Increase specific notes                  Wiming       Sammy
+                                ③ Remove coefficient source
+                                     instructions
+                                ① Update the application circuit
+        3.0      2016.8.15      example                                    Wiming       Sammy
+                                ② Update company logo
+                                 Update performance parameter
+        4.0      2016.8.26                                                 Wiming       Sammy
+                                  Max and Min value in Table 3
+                                Update SPI/I2C communication
+        5.0      2016.12.10                                                Wiming       Sammy
+                                instruction
+                                Update relative position for
+        6.0      2017.10.30     vent hole and Pin 1 marker                 Wiming       Robin
+                                informations
+                                Update application circuit and
+        7.0      2018.1.26                                                 Bruno        Robin
+                                resistor values of table 6
+
+
+
+
+Version7.0         Confidential in Goertek, shall not be spread if not be privileged       Page 2 / 35
+                                                                                                                        Confidential Degree：Confidential
+
+                                                          Index of Contents
+1.     INTRODUCTION ..................................................................................................................................................... 5
+
+2.     TEST CONDITION .................................................................................................................................................. 6
+
+3.     ABSOLUTE MAXIMUM RATINGS ........................................................................................................................ 6
+
+4.     ELECTRICAL CHARACTERISTICS ..................................................................................................................... 6
+
+5.     OPERATION ........................................................................................................................................................... 8
+
+     5.1      OPERATING MODES ..................................................................................................................................................... 8
+     5.2      MEASUREMENT PRECISION AND RATE ........................................................................................................................ 8
+     5.3      SENSOR INTERFACE .................................................................................................................................................... 9
+       5.3.1         I2C interface ...................................................................................................................................................... 9
+       5.3.2         SPI interface .................................................................................................................................................... 10
+     5.4      INTERRUPT................................................................................................................................................................. 11
+     5.5      FIFO OPERATION ...................................................................................................................................................... 11
+     5.6      CALIBRATION AND MEASUREMENT COMPENSATION ................................................................................................. 12
+       5.6.1         How to Calculate Compensated Pressure Values ................................................................................ 12
+       5.6.2         How to Calculate Compensated Temperature Values .............................................................................. 13
+       5.6.3         Compensation Scale Factors ........................................................................................................................ 13
+
+6.     APPLICATIONS .................................................................................................................................................... 14
+
+     6.1      MEASUREMENT SETTINGS AND USE CASE EXAMPLES ............................................................................................ 14
+     6.2      APPLICATION CIRCUIT EXAMPLE ............................................................................................................................... 15
+     6.3      CALCULATING ABSOLUTE ALTITUDE AND CALCULATING PRESSURE AT SEA LEVEL .................................................... 16
+
+7.     REGISTER MAP ................................................................................................................................................... 17
+
+8.     REGISTER DESCRIPTION .................................................................................................................................. 18
+
+     8.1      PRESSURE DATA (PRS_BN) ..................................................................................................................................... 18
+       8.1.1         PRS_B2 ........................................................................................................................................................... 18
+       8.1.2         PRS_B1 ........................................................................................................................................................... 18
+       8.1.3         PRS_B0 ........................................................................................................................................................... 19
+     8.2      TEMPERATURE DATA (TMP_TN)............................................................................................................................... 19
+       8.2.1         TMP_B2 ........................................................................................................................................................... 19
+       8.2.2         TMP_B1 ........................................................................................................................................................... 20
+       8.2.3         TMP_B0 ........................................................................................................................................................... 20
+     8.3      PRESSURE CONFIGURATION (PRS_CFG) ............................................................................................................... 20
+     8.4      TEMPERATURE CONFIGURATION (TMP_CFG) ........................................................................................................ 22
+     8.5      SENSOR OPERATING MODE AND STATUS (MEAS_CFG) .................................................................................... 23
+     8.6      INTERRUPT AND FIFO CONFIGURATION (CFG_REG) ............................................................................................. 24
+     8.7      INTERRUPT STATUS (INT_STS) ............................................................................................................................... 26
+     8.8      FIFO STATUS (FIFO_STS) ...................................................................................................................................... 26
+
+
+Version7.0                          Confidential in Goertek, shall not be spread if not be privileged                                                                  Page 3 / 35
+                                                                                                                     Confidential Degree：Confidential
+     8.9       SOFT RESET AND FIFO FLUSH (RESET) ................................................................................................................. 27
+     8.10      PRODUCT AND REVISION ID (ID) .............................................................................................................................. 27
+     8.11      CALIBRATION COEFFICIENTS (COEF) ...................................................................................................................... 28
+
+9.     MECHANICAL CHARACTERISTICS .................................................................................................................. 29
+
+     9.1       PIN CONFIGURATION .................................................................................................................................................. 29
+     9.2       OUTLINE DIMENSIONS................................................................................................................................................ 30
+     9.3       MARKING INSTRUCTIONS ........................................................................................................................................... 31
+
+10.         STORAGE AND TRANSPORTATION ............................................................................................................. 32
+
+11.         SOLDERING RECOMMENDATION ................................................................................................................ 32
+
+12.         PACKAGE SPECIFICATIONS ......................................................................................................................... 33
+
+
+
+
+Version7.0                          Confidential in Goertek, shall not be spread if not be privileged                                                             Page 4 / 35
+                                                                       Confidential Degree：Confidential
+
+1. Introduction
+
+The SPL06-001 is a miniaturized Digital Barometric Air Pressure Sensor with a high accuracy and a low
+current consumption. The SPL06-001 is both a pressure and a temperature sensor. The pressure sensor
+element is based on a capacitive sensing principle which guarantees a high precision during temperature
+changes. The small package makes the SPL06-001 ideal for mobile applications and wearable devices.
+The SPL06-001‘s internal signal processor converts the output from the pressure and temperature sensor
+elements to 24-bit results. Each pressure sensor has been calibrated individually and contains calibration
+coefficients. The coefficients are used in the application to convert the measurement results to true
+pressure and temperature values.
+The SPL06-001 has a FIFO that can store the latest 32 measurements. By using the FIFO, the host
+processor can remain in a sleep mode for a longer period of time between readouts. This can reduce the
+overall system power consumption. Sensor measurements and calibration coefficients are available
+through the serial I2C interface.
+
+
+Key features
+ Pressure range: 300 ... 1100hPa (+9000m ... -500m relating to sea level)
+ Temperature Range: -40…+85°C
+ Supply voltage: 1.7 ... 3.6V (VDD), 1.2 ... 3.6V (VDDIO)
+ Package: LGA package with metal lid
+    Small footprint: 2.5mm x 2.0mm; Super-flat: 0.95mm height
+ Relative accuracy: ±0.06hPa, equiv. to ±0.5 m
+ Absolute accuracy: typ. ±1hPa (300 … 1100hPa)
+ Temperature accuracy: ± 0.5°C.
+ Pressure temperature sensitivity: < 0.5Pa/K
+   Measurement time: Typical: 28 ms. Minimum: 3 ms.
+   Average current consumption: High precision: 60 µA, Low power: 3 µA, Standby: <1 µA.
+   I2C and SPI interface, Embedded 24-bit ADC
+ FIFO: Stores latest 32 pressure or temperature measurements.
+ Pb-free, halogen-free and RoHS compliant
+ MSL 1
+Typical applications
+ Enhancement of GPS navigation (dead-reckoning, slope detection, etc.)
+ In- and out-door navigation
+ Leisure and sports
+ Weather forecast
+ Vertical velocity indication (rise/sink speed)
+Specific notes
+Particles can influence the performance of the pressure sensor, we strongly recommend you to introduce
+special measures to avoid deposition of particles on the MEMS membrane or screen particles after
+assembly as the assembly process is considered to be the main root cause for particle generation.
+
+Version7.0           Confidential in Goertek, shall not be spread if not be privileged        Page 5 / 35
+                                                                           Confidential Degree：Confidential
+
+ 2. Test condition
+
+ Table 1: Test condition
+        Standard Conditions            Temperature          Humidity                 Air pressure
+        Environment conditions          -40℃…+85℃           25%RH…75%RH              300hPa…1100hPa
+        Basic test conditions              +25℃             60%RH…70%RH              300hPa…1100hPa
+
+
+ 3. Absolute maximum ratings
+
+ Table 2: Absolute maximum ratings
+               Parameter                    Condition                Min        Max              Units
+          Storage temperature                                        -40       +125               °C
+             Supply Voltage                  All pins                           +4                 V
+          Voltage at all IO Pins             All pins                           +4                 V
+               ESD rating                 JESD22-A114                 -2        +2                kV
+              Overpressure                                                     10000             hPa
+
+
+ 4. Electrical characteristics
+
+ VDD = 1.8V, VDDIO=1.8V, T=25°C, unless otherwise noted. If not stated otherwise, the given values are
+ ±3-Sigma values over temperature/voltage range in the given operation mode.
+ Table 3: Operating conditions, output signal and mechanical characteristics
+
+      Parameter              Symbol                   Condition                Min     Type        Max         Units
+                                                     Operational               -40      25          85          °C
+Operating temperature           TA
+                                                    Full accuracy               0       25          65          °C
+  Operating Pressure            P                                              300                 1100        hPa
+    Supply voltage             VDD                                             1.7                  3.6          V
+   Interface supply
+                              VDDIO                                            1.2                  3.6          V
+        voltage
+○
+G Supply current (with                                   Low Power                          3        5
+ 1 measurement per              Idd        1 Hz          Standard                          11       15          uA
+     second.)                                            High precision                    40       50
+Note: The current consumption depends on both pressure measurement precision and rate. Please refer to the
+Pressure Configuration (PRS_CFG) register description for an overview of the current consumption in different
+combinations of measurement precision and rate.
+Peak current                  Ipeak        During conversion                               400     500          uA
+
+○
+G Standby current            Iddsbm                                                                  1          uA
+
+
+ Version7.0            Confidential in Goertek, shall not be spread if not be privileged                  Page 6 / 35
+                                                                         Confidential Degree：Confidential
+Relative     accuracy                      950…1050hPa                          -6                  6          Pa
+                               P_R
+pressure                                   +25…+40°C                           -0.5                0.5         m
+○
+G Absolute accuracy                        300...1100hPa
+                               P_A                                             -1.0                1          hPa
+pressure                                   0…+65℃
+Resolution of output                       Pressure                                        0.06                Pa
+data                                       Temperature                                     0.01                °C
+                                           Low Power mode                                    2      5
+Noise in pressure            P_Noise       Standard mode                                    0.5    1.2      PaRMS
+                                           High precision mode                              0.3    0.6
+Note: Pressure noise is measured as the average standard deviation. Please refer to the Pressure Configuration
+(PRS_CFG) register description for all precision mode options.
+Offset      temperature                    1000hPa                             -0.5    ±0.2        0.5        Pa/K
+                               TCO
+coefficient                                +25…+40°C                           -4.2    ±1.7        4.2        cm/K
+Absolute       accuracy                    @+25℃                               -0.5                0.5         °C
+temperature                                0…+65℃                               -1                 1           °C
+Pressure/Temperature
+                                 f                                              1                 128          Hz
+measurement rate
+                                           Low Power mode                                   5      8
+Pressure measurement
+                                 t         Standard mode                                    28     35          ms
+time
+                                           High precision mode                             105    115
+Note: The pressure measurement time (and thus the maximum rate) depends on the pressure
+measurement precision. Please refer to the Pressure Configuration (PRS_CFG) register description for an
+overview of the possible combinations of measurement precision and rate.
+                                           Measured with 217Hz square
+Power supply rejection       Ap_psr        wave and broad band noise,                             0.063     PaRMS
+                                           100mVpp
+Supply voltage ramp-up                     Time for supply voltage to         0.001                 5          ms
+                              tvddup
+time                                       reach 90% of final value
+                                fI2C       For I2C                                                 3.4        MHz
+Serial data clock
+                                fSPI       For SPI                                                 10         MHz
+Long term stability                        12month                              -1                  1         hPa
+                                           The SENSOR_RDY bit in
+                                           the Measurement
+Time to sensor ready       TSensor_rdy                                                             12          ms
+                                           Configuration register will be
+                                           set when the sensor is ready
+                                           The COEF_RDY bit in the
+Time to coefficients are                   Measurement Configuration
+                            TCoef_rdy                                                              40          ms
+available                                  register will be set when the
+                                           coefficients can be read out
+ Note ：○
+       G Key performance.
+
+
+
+
+ Version7.0            Confidential in Goertek, shall not be spread if not be privileged                 Page 7 / 35
+                                                                      Confidential Degree：Confidential
+
+5. Operation
+
+5.1 Operating Modes
+
+The SPL06-001 supports 3 different modes of operation: Standby, Command, and Background mode.
+ • Standby Mode
+    - Default mode after power on or reset. No measurements are performed.
+    - All registers and compensation coefficients are accessible.
+ • Command Mode
+    - One temperature or pressure measurement is performed according to the selected precision.
+    - The sensor will return to Standby Mode when the measurement is finished, and the
+      measurement result will be available in the data registers.
+ • Background Mode
+    - Pressure and/or temperature measurements are performed continuously according to the
+      selected measurement precision and rate. The temperature measurement is performed
+      immediately after the pressure measurement.
+    - The FIFO can be used to store 32 measurement results and minimize the number of times the
+      sensor must be accessed to read out the results.
+
+ Note: Operation mode and measurement type are set in the Sensor Operating Mode and Status
+ (MEAS_CFG) register.
+
+
+5.2Measurement Precision and Rate
+
+ Different applications require different measurement precision and measurement rates. Some
+ applications, like weather stations, require lower precision and measurement rates than for instance
+ indoor navigation and sports applications.
+ The SPL06-001's measurement precision and rate (in background mode) can be configured to match
+ the requirements of the application in which it is being used. This reduces current consumption of the
+ sensor and the system.
+ In order to achieve a higher precision, the SPL06-001 will read the sensor multiple times
+ (oversampling), and combine the readings into one result. This increases the current consumption and
+ the measurement time, which again reduces the maximum measurement rate.
+ The measurement precision, rate and time is set in the Pressure Configuration (PRS_CFG) and
+ Temperature Configuration (TMP_CFG) registers. The register descriptions contain information about
+ the current consumption and the possible combinations of measurement precision, time, and rate.
+ Please note that the pressure sensor is temperature dependent. Temperature measurements must be
+
+
+Version7.0          Confidential in Goertek, shall not be spread if not be privileged        Page 8 / 35
+                                                                                                                                                                            Confidential Degree：Confidential
+          made together with the pressure measurements in order to compensate for the temperature
+          dependency.      This     reduces     the    maximum pressure     measurement      rate,  since:
+          Ratetemperature*Timetemperature + Ratepressure*Timepressure< 1 second. Measurement Settings
+          and Use Case Examples contains a table with examples of combinations of pressure and temperature
+          precision and rates for different use cases.
+
+
+         5.3 Sensor Interface
+
+          The SPL06-001 can be accessed as a slave device through either SPI 3-wire, SPI 4-wire, or I2C serial
+          interface
+
+
+         5.3.1 I2C interface
+
+          -          The sensor's default interface.
+          -          The sensor's address is 0x77 (default) or 0x76 (if the SDO pin is pulled-down to GND)
+          I2C write
+          Writing is done by sending the slave address in write mode (RW=’0’), resulting in slave address
+          111011X0 (‘X’ is determined by state of SDO pin. Then the master sends pairs of register addresses
+          and register data. The transaction is ended by a stop condition.
+                                                                                                           Control byte                                                                                   Date byte
+
+
+ Start                           Slave Address                    RW     ACKS                      Register address(06h)                             ACKS                                         Register data - address 06h                            ACKS
+
+
+     S       1       1       1        0          1   1       X     0                  0    0      0         0         0   1      1          0                      bit7          bit6      bit5         bit4       bit3         bit2    bit1     bit0              …
+
+
+
+
+                                                                                                           Control byte                                                                                   Date byte
+
+
+                                                                                                   Register address(07h)                             ACKS                                         Register data - address 07h                            ACKS     STOP
+
+
+                                                                             …        0    0      0         0         0   1      1          1                      bit7          bit6      bit5         bit4       bit3         bit2    bit1     bit0              P
+
+
+
+          I2C read
+          To be able to read registers, first the register address must be sent in write mode (slave address
+          111011X0). Then either a stop or a repeated start condition must be generated. After this the slave is
+          addressed in read mode (RW=’1’) at address 111011X1, after which the salve sends out data from
+          auto-incremented register addresses until a NOACKM and stop condition occurs.
+
+
+                                                                                                      Control byte
+
+
+Start                    Slave Address                   RW      ACKS                          Register address(10h)                                        ACKS
+
+
+ S       1       1       1        0       1      1   X   0               0        0        0           1          0        0          0          0
+
+
+
+
+                                                                                                       Date byte                                                                                               Date byte
+
+
+Start                    Slave Address                   RW      ACKS                     Register data - address 10h                                       ACKS                                  Register data - address 11h                            NOACKM    STOP
+
+
+ S       1       1       1        0       1      1   X   1              bit7     bit6     bit5     bit4         bit3      bit2       bit1       bit0                      bit7      bit6      bit5        bit4        bit3       bit2    bit1     bit0                 P
+
+
+
+
+         Version7.0                                           Confidential in Goertek, shall not be spread if not be privileged                                                                                                                Page 9 / 35
+                                                                                                                              Confidential Degree：Confidential
+
+        5.3.2 SPI interface
+
+            - The sensor will switch to SPI mode, if it detects an active low on the CSB pin. SPI 4-wire is the default
+            SPI interface.
+             - To enable SPI 3-wire configuration, a bit must be set in the Interrupt and FIFO configuration
+            (CFG_REG) register after start up.
+            CSB is active low and has an integrated pull-up resistor. Data on SDA is latched by the device at SCK
+            rising edge and SDO is changed at SCK falling edge. Communication starts when CSB goes to low
+            and stops when CSB goes to high; during these transitions on CSB, SCK must be stable.
+
+
+                   CSB
+
+
+                   SCK
+
+
+                   SDA
+
+
+
+                   SDO
+
+
+                                                                           Mode 3(CPOL=1, CPHA=1)
+            In SPI mode, only 7 bits of the register addresses are used; the MSB of register address is not used
+            and replaced by a read/write bit (RW=’0’ for write and RW=’1’ for read).
+            Example: address 0x10 for read access, the byte 0x90 is transferred, for write access, the byte 0x10
+            is transferred
+
+
+            SPI write
+            Writing is done by lowering CSB and sending pairs control bytes and register data. The control bytes
+            consist of the SPI register address (=full register address without bit 7) and the write command (bit7=
+            RW=’0’). Several pairs can be written without raising CSB. The transaction is ended by a raising CSB.
+
+
+                   Control byte                                     Date byte                                    Control byte                                    Date byte
+
+
+Start   RW        Register address(06h)                Register data - address 06h                     RW       Register address(07h)               Register data - address 07h                     Stop
+
+
+CSB=0   0     0     0   0   0   1   1     0    bit7   bit6   bit5   bit4   bit3   bit2   bit1   bit0   0    0     0   0   0   1   1     1   bit7   bit6   bit5   bit4   bit3   bit2   bit1   bit0   CSB=1
+
+
+
+
+        Version7.0                            Confidential in Goertek, shall not be spread if not be privileged                                                           Page 10 / 35
+                                                                                                                  Confidential Degree：Confidential
+ SPI read
+ Reading is done by lowering CSB and first sending one control byte. The control bytes consist of the
+ SPI register address (= full register address without bit 7) and the read command (bit7=RW=’1’). After
+ writing the control byte, data is sent out of the SDO pin (SDA in 3-wire mode); the register address is
+ automatically incremented.
+
+
+                        Control byte                                    Date byte                                               Date byte
+
+
+      Start   RW       Register address(80h)               Register data - address 80h                             Register data - address 81h                     Stop
+
+
+      CSB=0   1    0     0   0     0   1   1   0   bit7   bit6   bit5   bit4   bit3   bit2   bit1   bit0   bit7   bit6   bit5   bit4   bit3   bit2   bit1   bit0   CSB=1
+
+
+
+
+5.4 Interrupt
+
+ The SPL06-001 can generate an interrupt when a new measurement result is available and/or when
+ the FIFO is full. The sensor uses the SDO pin for the interrupt signal, and interrupt is therefore not
+ supported if the interface is 4-wire SPI.
+ The interrupt is enabled and configured in the Interrupt and FIFO configuration (CFG_REG) register.
+ The SDO pin serves as both interrupt and as the least significant bit in the device address. If the SDO
+ pin is pulled low the interrupt polarity must be set to active high and vice versa.
+ The interrupt status can be read from the Interrupt Status (INT_STS) register.
+
+
+5.5 FIFO Operation
+
+ The SPL06-001 FIFO can store the last 32 measurements of pressure or temperature. This reduces
+ the overall system power consumption when the host processor does not need to continuously pull
+ data from the sensor but can go into standby mode for longer periods of time.
+ The FIFO will store any combination of temperature and pressure measurements since the
+ measurement rate of temperature and pressure can be set up independently in Background Mode.
+ The pressure rate can for instance be set 4 times higher than the temperature rate and thus only every
+ fifth result will be a temperature result. The measurement type can be seen in the result data. The
+ sensor will set the least significant bit to:
+ •   '1' if the result is a pressure measurement.
+ •   '0' if it is a temperature measurement.
+ - The sensor uses 24 bits to store the measurement result. Because this is more bits than is needed
+ to cover the full dynamic range of the pressure sensor, using the least significant bit to label the
+ measurement type will not affect the precision of the result.
+ The FIFO can be enabled in the Interrupt and FIFO configuration (CFG_REG) register. The data from
+ the FIFO is read out from the Pressure Data (PRS_Bn) registers regardless of the next result in the
+
+
+Version7.0                       Confidential in Goertek, shall not be spread if not be privileged                                                            Page 11 / 35
+                                                                       Confidential Degree：Confidential
+ FIFO is a temperature or a pressure measurement.
+ When a measurement has been read out, the FIFO will auto increment and place the next result in the
+ data register. A flag will be set in the FIFO Status (FIFO_STS) register when the FIFO is empty and
+ all following reads will return 0x800000.
+ If the FIFO runs full a flag will be set in the FIFO Status (FIFO_STS) register and the sensor will
+ generate an interrupt if this has been enabled in the Interrupt and FIFO configuration (CFG_REG)
+ register.
+
+
+5.6 Calibration and Measurement Compensation
+
+ The SPL06-001 is a calibrated sensor and contains calibration coefficients. These are used in the
+ application (for instance by the host processor) to compensate the measurement results for sensor non-
+ linearity’s.
+ The sections that follow, describe how to calculate the compensated results and convert them into Pa
+ and °C values.
+
+
+5.6.1 How to Calculate Compensated Pressure Values
+
+ 1. Read the calibration coefficients (c00, c10, c20, c30, c01, c11, and c21) from the Calibration
+ Coefficient register.
+ Note: The coefficients read from the coefficient register are 16 bit 2´s complement numbers.
+ 2. Choose scaling factors kT (for temperature) and kP (for pressure) based on the chosen precision
+ rate. The scaling factors are listed in Table 4.
+ 3.   Read the pressure and temperature result from the registers or FIFO.
+ Note: The measurements read from the result registers (or FIFO) are 24 bit 2´s complement numbers.
+ Depending on the chosen measurement rates, the temperature may not have been measured since
+ the last pressure measurement.
+ 4.   Calculate scaled measurement results.
+ Traw_sc = Traw/kT
+ Praw_sc = Praw/kP
+ 5.   Calculate compensated measurement results.
+
+      Pcomp(Pa) = c00+ Praw_sc*(c10 + Praw_sc *(c20+ Praw_sc *c30)) + Traw_sc*c01 + Traw_sc
+
+      *Praw_sc *(c11+Praw_sc*c21)
+
+
+
+
+Version7.0           Confidential in Goertek, shall not be spread if not be privileged      Page 12 / 35
+                                                                        Confidential Degree：Confidential
+
+5.6.2 How to Calculate Compensated Temperature Values
+
+ 1.   Read the calibration coefficients ( c0 and c1 ) from the Calibration Coefficients (COEF) register.
+ Note: The coefficients read from the coefficient register are 12 bit 2´s complement numbers.
+ 2. Choose scaling factor kT (for temperature) based on the chosen precision rate. The scaling factors
+ are listed in Table 4.
+ 3.   Read the temperature result from the temperature register or FIFO.
+ Note: The temperature measurements read from the temperature result register (or FIFO) are 24 bit
+ 2´s complement numbers.
+ 4.   Calculate scaled measurement results.
+ Traw_sc = Traw/kT
+ 5.   Calculate compensated measurement results
+ Tcomp (°C) = c0*0.5 + c1*Traw_sc
+
+
+5.6.3 Compensation Scale Factors
+
+Table 4       Compensation Scale Factors
+ Oversampling Rate                              Scale Factor (kP or kT)
+ 1 (single)                                     524288
+ 2 times (Low Power)                            1572864
+ 4 times                                        3670016
+ 8 times                                        7864320
+ 16 times (Standard)                            253952
+ 32 times                                       516096
+ 64 times (High Precision)                      1040384
+ 128 times                                      2088960
+
+
+
+
+Version7.0            Confidential in Goertek, shall not be spread if not be privileged        Page 13 / 35
+                                                                     Confidential Degree：Confidential
+
+6. Applications
+
+6.1 Measurement Settings and Use Case Examples
+
+Table 5 Measurement Settings and Use Case Examples (TBD)
+                                            Pressure               Temperature
+                                            Register               Register
+     Use Case          Performance                                                           Other
+                                            Configuration          Configuration
+                                            Address: 0x06          Address: 0x07
+ Weather Station    5 Pa precision.         0x01                   0x80                Start
+ (Low power,        1 pr sec.                                                          background
+ Background         6 uA                                                               measurements
+ mode)                                                                                 (addr 0x08)
+
+ Indoor             10 cm precision.        0x14                   0x80                Enable P shift
+ navigation         2 pr sec.                                                          (addr 0x09)
+ (Standard          30 uA                                                              Start
+ precision,                                                                            background
+ Background                                                                            measurements
+ mode)                                                                                 (addr 0x08)
+
+ Sports (High       5 cm precision          0x26                   0xA0                Enable P shift
+ precision, high    4 pr sec.                                                          (addr 0x09)
+ rate,              200 uA                                                             Start
+ background                                                                            background
+ mode)                                                                                 measurements
+                                                                                       (addr 0x08)
+
+
+
+
+Version7.0         Confidential in Goertek, shall not be spread if not be privileged           Page 14 / 35
+                                                                                   Confidential Degree：Confidential
+
+6.2 Application Circuit Example
+
+ The example application circuit example uses the I2C serial interface. The SDO pin can be used for
+ interrupt or to set least significant bit of the device address.
+
+                                       VDDIO
+
+
+
+
+                                  R1           R2
+               Processor                                              Pressure Sensor
+
+                         SDA                                          SDA          VDDIO
+                                                                                                    1.2~3.6V
+
+                         SCL                                          SCL           GND     GND
+
+                           INT    Interrupt (optional)                SDO          GND
+                                                                                              GND
+
+                                                                NC    CSB           VDD             1.7~3.6V
+                                                    R3
+
+                                                                                            GND
+
+                                                         GND
+
+
+
+
+                                      Figure 1: Typical application circuit
+
+Table 6      Component Values
+                                                               Values                Uni
+          Component               Symbol                                                      Note / Test Condition
+                                                     Min.      Typ.         Max.      t
+Pull-up/down Resistor            R 1, R 2                                   10       KΩ
+
+                                 R3                                         100      KΩ    R3 is optional and will set
+                                                                                           the address to 0x76
+                                                                                           instead of 0x77.
+Supply Blocking Capacitor        C1, C2              100       100                   nF    The blocking capacitors
+                                                                                           should be placed as
+                                                                                           close to the package
+                                                                                           pins as possible.
+
+
+
+
+Version7.0            Confidential in Goertek, shall not be spread if not be privileged                        Page 15 / 35
+                                                                         Confidential Degree：Confidential
+
+6.3 Calculating absolute altitude and calculating pressure at sea level
+
+ With the measured pressure P and the pressure at sea level P0=1013.25hPa, the altitude in meters
+ can be calculated with the international barometric formula:
+                                                                     𝟏
+                                                             𝐏 𝟓.𝟐𝟓𝟓.
+                                    Altitude = 44330 × [𝟏 − ( )       ]
+                                                             P0
+
+Thus, a pressure change of Δp = 1hPa corresponds to 8.43m at sea level.
+
+
+
+
+            Figure 2: Transfer function: Altitude over sea level – Barometric pressure
+With the measured pressure p and the absolute altitude the pressure at sea level can be calculated:
+                                                     𝑝
+                                      P0 =
+                                                 altitude 5.255
+                                            (1 −         )
+                                                  44330
+Thus, a difference in altitude of Δaltitude = 10m corresponds to 1.2hPa pressure change at sea level.
+
+
+
+
+Version7.0           Confidential in Goertek, shall not be spread if not be privileged        Page 16 / 35
+                                                                                  Confidential Degree：Confidential
+
+     7. Register Map
+
+     Table 7 Register Map
+                                                                                                                        Reset
+Register Name     Addr.   bit7            bit6         bit5     bit4   bit3         bit2        bit1       bit0
+                                                                                                                        State
+PSR_B2            0x00    PSR[23:16] (r)                                                                                00h
+
+PSR_B1            0x01    PSR[15:8](r)                                                                                  00h
+
+PSR_B0            0x02    PSR[7:0](r)                                                                                   00h
+
+TMP_B2            0x03    TMP[23:16] (r)                                                                                00h
+
+TMP_B1            0x04    TMP[15:8] (r)                                                                                 00h
+
+TMP_B0            0x05    TMP[7:0] (r)                                                                                  00h
+
+PRS_CFG           0x06    -               PM_RATE [2:0] (rw)           PM_PRC [3:0] (rw)                                00h
+
+                          TMP_
+TMP_CFG           0x07    EXT             TMP_RATE [2:0] (rw)          -            TM_PRC [2:0] (rw)                   00h
+
+                          (rw)
+
+
+                                          SENSOR       TMP      PRS_
+                          COEF_
+MEAS_CFG          0x08                    _RDY         _RDY     RDY    -            MEAS_CRTL [2:0] (rw)                00h
+                          RDY (r)
+                                          (r)          (r)      (r)
+
+
+                                                                       TMP_         PRS_
+                          INT_                                                                  FIFO_
+CFG_REG           0x09                    INT_ SEL [2:0] (rw)          SHIFT_       SHIFT_                 -            00h
+                          HL (rw)                                                               EN (rw)
+                                                                       EN (rw)      EN (rw)
+
+                                                                                    INT_        INT_       INT_
+
+INT_STS           0x0A    -               -            -        -      -            FIFO_       TMP        PRS          00h
+                                                                                    FULL
+                                                                                                (r)        (r)
+                                                                                        (r)
+                                                                                                FIFO_      FIFO_
+
+FIFO_STS          0x0B    -               -            -        -      -            -           FULL       EMPTY        00h
+
+                                                                                                (r)        (r)
+
+                          FIFO_
+RESET             0x0C    FLUSH           -            -        -      SOFT_RST [3:0] (w)                               00h
+
+                          (w)
+
+ID                0x0D    PROD_ID [3:0] (r)                            REV_ID [3:0] (r)                                 00h
+
+                  0x10-
+COEF                      < see register description >                                                                  XXh
+                  0x21
+
+                  0x22-
+Reserved                  Reserved                                                                                      XXh
+                  0x27
+
+
+
+     Version7.0            Confidential in Goertek, shall not be spread if not be privileged                      Page 17 / 35
+                                                                      Confidential Degree：Confidential
+
+8. Register Description
+
+8.1Pressure Data (PRS_Bn)
+
+ The Pressure Data registers contains the 24 bit (3 bytes) 2's complement pressure measurement
+ value. If the FIFO is enabled, the register will contain the FIFO pressure and/or temperature results
+ (please see FIFO Operation). Otherwise, the register contains the pressure measurement results
+ and will not be cleared after read.
+
+
+8.1.1 PRS_B2
+
+ The highest byte of the three bytes measured pressure value.
+ PRS_B2                                              Address                                          00H
+ Pressure (MSB data)                                     :
+                                                   Reset value:                                       00H
+         7         6            5             4             3             2              1        0
+
+
+    PRS23       PRS22         PRS21        PRS20         PRS19        PRS18         PRS17      PRS16
+                                                     r
+
+
+ Field                 Bits     Type       Description
+ PRS[23:16]            7:0      r          MSB of 24 bit 2´s complement pressure data.
+
+
+8.1.2 PRS_B1
+
+ The middle byte of the three bytes measured pressure value.
+ PRS_B1                                              Address                                          01H
+ Pressure (LSB data)                                     :
+                                                   Reset value:                                       00H
+         7         6            5             4             3             2              1        0
+
+
+    PRS15       PRS14         PRS13        PRS12         PRS11         PRS10            PRS9    PRS8-
+                                                     r
+
+
+ Field                 Bits     Type       Description
+ PRS[15:8]             7:0      r          LSB of 24 bit 2´s complement pressure data.
+
+
+
+
+Version7.0          Confidential in Goertek, shall not be spread if not be privileged          Page 18 / 35
+                                                                     Confidential Degree：Confidential
+
+8.1.3 PRS_B0
+
+ The lowest byte of the three bytes measured pressure value.
+ PRS_B0                                             Address                                           02H
+ Pressure (XLSB data)                                   :
+                                                  Reset value:                                        00H
+         7        6            5             4             3             2              1         0
+
+
+    PRS7        PRS6         PRS5          PRS4          PRS3          PRS2            PRS1     PRS0
+                                                    r
+ Field                Bits     Type       Description
+ PRS[7:0]             7:0      r          XLSB of 24 bit 2´s complement pressure data.
+
+
+8.2Temperature Data (TMP_Tn)
+
+
+ The Temperature Data registers contain the 24 bit (3 bytes) 2's complement temperature
+ measurement value (unless the FIFO is enabled, please see FIFO Operation) and will not be
+ cleared after the read.
+
+
+8.2.1 TMP_B2
+
+ The highest byte of the three bytes measured temperature value.
+ TMP_B2                                             Address                                           03H
+ Temperature (MSB data)                                 :
+                                                  Reset value:                                        00H
+
+
+         7        6            5             4             3             2              1         0
+
+
+    TMP23      TMP22         TMP21        TMP20         TMP19         TMP18            TMP17    TMP16
+                                                   r
+
+
+ Field                Bits     Type       Description
+ TMP[23:16]           7:0      r          MSB of 24 bit 2´s complement temperature data.
+
+
+
+
+Version7.0         Confidential in Goertek, shall not be spread if not be privileged           Page 19 / 35
+                                                                    Confidential Degree：Confidential
+
+8.2.2 TMP_B1
+
+ The middle byte of the three bytes measured temperature value.
+ TMP_B1                                            Address                                          04H
+ Temperature (LSB data)                                :
+                                                 Reset value:                                       00H
+          7      6            5             4              3            2              1        0
+
+
+    TMP15      TMP14        TMP13        TMP12          TMP11        TMP10            TMP9    TMP8
+                                                   r
+
+
+ Field               Bits     Type       Description
+ TMP[15:8]           7:0      r          LSB of 24 bit 2´s complement temperature data.
+
+
+8.2.3 TMP_B0
+
+ The lowest part of the three bytes measured temperature value.
+ TMP_B0                                            Address                                          05H
+ Temperature (XLSB data)                               :
+                                                 Reset value:                                       00H
+          7      6            5             4              3            2              1        0
+
+
+    TMP7       TMP6         TMP5          TMP4           TMP3        TMP2             TMP1    TMP0
+                                                   r
+
+
+ Field               Bits     Type       Description
+ TMP[7:0]            7:0      r          XLSB of 24 bit 2´s complement temperature data.
+
+
+8.3Pressure Configuration (PRS_CFG)
+
+ Configuration of pressure measurement rate (PM_RATE) and resolution (PM_PRC).
+ PRS_CFG                                               Address:                                     06H
+ Pressure measurement configuration              Reset value:                                       00H
+
+
+          7      6          5               4              3            2       1               0
+      -                PM_RATE[2:0]                                     PM_PRC[3:0]
+
+          -                   rw                                              rw
+
+Version7.0        Confidential in Goertek, shall not be spread if not be privileged          Page 20 / 35
+                                                                         Confidential Degree：Confidential
+
+
+  Field               Bits       Type       Description
+  -                   7          -          Reserved.
+  PM_RATE[2:0]        6:4        rw         Pressure measurement rate:
+                                            000 - 1 measurements pr. sec.
+                                            001 - 2 measurements pr. sec.
+                                            010 - 4 measurements pr. sec.
+                                            011 - 8 measurements pr. sec.
+                                            100 - 16 measurements pr. sec.
+                                            101 - 32 measurements pr. sec.
+                                            110 - 64 measurements pr. sec.
+                                            111 - 128 measurements pr. sec.
+                                            Applicable for measurements in Background mode only
+  PM_PRC[3:0]         3:0        rw         Pressure oversampling rate:
+                                            0000 - Single.
+                                            0001 - 2 times (Low Power).
+                                            0010 - 4 times.
+                                            0011 - 8 times.
+                                            0100 *)- 16 times (Standard).
+                                            0101 *) - 32 times.
+                                            0110 *) - 64 times (High Precision).
+                                            0111 *) - 128 times.
+                                            1xxx - TBD
+
+  *) Note: Use in combination with a bit shift. See Interrupt and FIFO configuration (CFG_REG) register
+
+
+
+  Table 8    Pressure measurement time (ms) and precision (PaRMS)
+
+
+                                  2          4          8          16         32         64         128
+Oversampling           Single
+                                  times      times      times      times      times      times      times
+(PRC[3:0])             (0000)
+                                  (0001)     (0010)     (0011)     (0100)     (0101)     (0110)     (0111)
+
+Measurement
+                       3.6        5.2        8.4        14.8       27.6       53.2       104.4      206.8
+time (ms)
+
+Precision
+                       5                     2.5                   1.2        0.9        0.5
+(PaRMS)
+
+
+
+
+Version7.0           Confidential in Goertek, shall not be spread if not be privileged            Page 21 / 35
+                                                                          Confidential Degree：Confidential
+
+
+Table 9      Estimated current consumption (uA)
+
+
+Oversampling
+                                         2            4          8        16       32          64           128
+(PRC[3:0])                    Single
+                                         times        times      times    times    times       times        times
+Measurements pr               (0000)
+                                         (0001)       (0010)     (0011)   (0100)   (0101)      (0110)       (0111)
+sec.(PM_RATE([2:0])
+
+1 (000)                       2.1        2.7          3.8        6.1      11       20          38           75
+2 (001)
+4 (010)
+                              Note: The current consumption can be calculated as the
+8 (011)                                                                                                     n.a.
+                              Measurement Rate * Current Consumption of 1 measurement
+16 (100)                      per. sec.                                          n.a.                       n.a.
+32 (101)                                                                           n.a.        n.a.         n.a.
+64 (110)                                                                  n.a.     n.a.        n.a.         n.a.
+128 (111)                                             n.a.       n.a.     n.a.     n.a.        n.a.         n.a.
+ Note: The table shows the possible combinations of Pressure Measurement Rate and oversampling
+ when no temperature measurements are performed. When temperature measurements are
+ performed the possible combinations are limited to Ratetemperature x Measurement
+ Timetemperature + Ratepressure x Measurement Timepressure < 1 second.
+
+
+8.4Temperature Configuration (TMP_CFG)
+
+ Configuration of temperature measurement rate (TMP_RATE) and resolution (TMP_PRC).
+
+
+ TMP_CFG                                                      Address:                                      07H
+ Temperature measurement configuration                    Reset value:                                      00H
+         7         6                5             4               3            2          1             0
+
+
+  TMP_EX                   TMP_RATE[2:0]                          -                TMP_PRC[2:0]
+  T rw                              rw                            -                       rw
+
+
+ Field                 Bits         Type       Description
+ TMP_EXT               7            rw         Temperature measurement
+                                               0 - Internal sensor (in ASIC)
+                                               1 - External sensor (in pressure sensor MEMS element)
+                                               Note: Please use the external sensor setting.
+
+
+Version7.0         Confidential in Goertek, shall not be spread if not be privileged                Page 22 / 35
+                                                                          Confidential Degree：Confidential
+
+ TMP_RATE[2:0]           6:4        rw         Temperature measurement rate:
+                                               000 - 1 measurement pr. sec.
+                                               001 - 2 measurements pr. sec.
+                                               010 - 4 measurements pr. sec.
+                                               011 - 8 measurements pr. sec.
+                                               100 - 16 measurements pr. sec.
+                                               101 - 32 measurements pr. sec.
+                                               110 - 64 measurements pr. sec.
+                                               111 - 128 measurements pr. sec.
+                                               Applicable for measurements in Background mode only
+
+ -                       3          -          Reserved.
+ TMP_PRC[2:0]            2:0        rw         Temperature oversampling (precision):
+                                               000 - single. (Default) - Measurement time 3.6 ms.
+                                               Note: Following are optional, and may not be relevant:
+                                               001 - 2 times.
+                                               010 - 4 times.
+                                               011 - 8 times.
+                                               100 - 16 times.
+                                               101 - 32 times.
+                                               110 - 64 times..
+                                               111 - 128 times.
+
+
+8.5Sensor Operating Mode and Status (MEAS_CFG)
+
+ Setup measurement mode.
+ MEAS_CFG                                                Address                                         08H
+ Measurement configuration                                   :
+                                                       Reset value:                                      00H
+         7          6               5             4             3             2             1        0
+
+
+     COEF_RDY   SENSOR_RDY       TMP_RDY      PRS_RDY           -                     MEAS_CTRL
+
+
+         r          r               r             r             -                           rw
+ Field                   Bits       Type       Description
+ COEF_RDY                7          r          Coefficients will be read to the Coefficients Registers
+                                               after start- up:
+                                               0 - Coefficients are not available yet.
+                                               1 - Coefficients are available.
+
+
+Version7.0              Confidential in Goertek, shall not be spread if not be privileged         Page 23 / 35
+                                                                     Confidential Degree：Confidential
+
+ SENSOR_RDY            6       r          The pressure sensor is running through self-initialization
+                                          after start-up.
+                                          0 - Sensor initialization not complete
+                                          1 - Sensor initialization complete
+                                          It is recommend not to start measurements until the
+                                          sensor has completed the self-initialization.
+ TMP_RDY               5       r          Temperature measurement ready
+                                          1 - New temperature measurement is ready.
+                                          Cleared when temperature measurement is read.
+ PRS_RDY               4       r          Pressure measurement ready
+                                          1 - New pressure measurement is ready.
+                                          Cleared when procurement measurement is
+                                          read.
+ -                     3       -          Reserved.
+ MEAS_CTRL             2:0     rw         Set measurement mode and type:
+                                          Standby Mode
+                                          000 - Idle / Stop background measurement
+                                          Command Mode
+                                          001 - Pressure measurement
+                                          010 - Temperature measurement
+                                          011 - na.
+                                          100 - na.
+                                          Background Mode
+                                          101 - Continuous pressure measurement
+                                          110 - Continuous temperature measurement
+                                          111 - Continuous pressure and temperature
+                                          measurement
+
+
+
+8.6Interrupt and FIFO configuration (CFG_REG)
+
+ Configuration of interrupts, measurement data shift, and FIFO enable.
+ CFG_REG                                            Address                                         09H
+ Configuration register                                 :
+                                                  Reset value:                                      00H
+       7          6            5             4             3             2             1       0
+
+
+     INT_HL   INT_FIFO INT_PRS          INT_TMP       T_SHIFT       P_SHIFT       FIFO_EN       -
+       rw         rw           rw            rw           rw            rw             rw       -
+
+Version7.0         Confidential in Goertek, shall not be spread if not be privileged        Page 24 / 35
+                                                               Confidential Degree：Confidential
+
+
+ Field        Bits       Type       Description
+ INT_HL       7          rw         Interrupt (on SDO pin) active level:
+                                    0 - Active low.
+                                    1 - Active high.
+
+ INT_FIFO     6          rw         Generate interrupt when the FIFO is full:
+                                    0 - Disable.
+                                    1 - Enable.
+ INT_PRS      5          rw         Generate interrupt when a pressure measurement is
+                                    ready:
+                                    0 - Disable.
+                                    1 - Enable.
+ INT_TMP      4          rw         Generate interrupt when a temperature measurement is
+                                    ready:
+                                    0 - Disable.
+                                    1 - Enable.
+ T_SHIFT      3          rw         Temperature result bit-shift
+                                    0 - no shift.
+                                    1 - shift result right in data register.
+                                    Note: Must be set to '1' when the oversampling rate is >8
+                                    times.
+
+ P_SHIFT      2          rw         Pressure result bit-shift
+                                    0 - no shift.
+                                    1 - shift result right in data register.
+                                    Note: Must be set to '1' when the oversampling rate is >8
+                                    times.
+
+ FIFO_EN      1          rw         Enable the FIFO:
+                                    0 - Disable.
+                                    1 - Enable.
+ SPI_MODE     0          rw         Set SPI mode:
+                                    0-4-wire interface.
+                                    1-3-wire interface.
+
+
+
+
+Version7.0   Confidential in Goertek, shall not be spread if not be privileged      Page 25 / 35
+                                                                      Confidential Degree：Confidential
+
+8.7Interrupt Status (INT_STS)
+
+ Interrupt status register. The register is cleared on read.
+ INT_STS                                              Address                                              0AH
+ Interrupt status                                        :
+                                                      Reset                                                00H
+         7          6              5          4       value:3             2               1           0
+                                   -                                INT_FIFO_FULL       INT_TMP     INT_PRS
+
+
+                                   -                                      r                r           r
+ Field                  Bits       Type    Description
+ -                      7:3        -       Reserved.
+ INT_FIFO_FULL          2          r       Status of FIFO interrupt
+                                           0 - Interrupt not active
+                                           1 - Interrupt active
+ INT_TMP                1          r       Status of temperature measurement interrupt
+                                           0 - Interrupt not active
+                                           1 - Interrupt active
+
+ INT_PRS                0          r       Status of pressure measurement interrupt
+                                           0 - Interrupt not active
+                                           1 - Interrupt active
+
+
+8.8FIFO Status (FIFO_STS)
+
+ FIFO status register
+ FIFO_STS                                            Address                                               0BH
+ FIFO status register                                    :
+                                                   Reset value:                                            00H
+
+
+         7      6              5             4           3             2        1                     0
+                                   -                                   FIFO_FUL                FIFO_EMPT
+                                                                       L                       Y
+                                   -                                       r                        r
+ Field                  Bits       Type    Description
+ -                      7:2        -       Reserved.
+ FIFO_FULL              1          r       0 - The FIFO is not full
+                                           1 - The FIFO is full
+
+
+
+
+Version7.0          Confidential in Goertek, shall not be spread if not be privileged              Page 26 / 35
+                                                                     Confidential Degree：Confidential
+
+ FIFO_EMPTY           0         r           0 - The FIFO is not empty
+                                            1 - The FIFO is empty
+
+
+
+8.9Soft Reset and FIFO flush (RESET)
+
+Flush FIFO or generate soft reset.
+ RESET                                  Address:                                                     0CH
+ FIFO flush and soft reset              Reset value:                                                 00H
+         7        6             5             4            3             2              1        0
+ FIFO_FLUSH                         -                                               -
+     w                              -                                               w
+ Field                Bits      Type        Description
+ FIFO_FLUSH           7         w           FIFO flush
+                                            1 - Empty FIFO
+                                            After reading out all data from the FIFO, write '1' to clear
+                                            all old data.
+ -                    6:4       -           Reserved.
+ SOFT_RST             3:0       w           Write '1001' to generate a soft reset. A soft reset will run
+                                            through the same sequences as in power-on reset.
+
+
+
+
+8.10 Product and Revision ID (ID)
+
+ Product and Revision ID.
+ ID                                                  Address                                         0DH
+ Product and revision ID                                 :
+                                                   Reset value:                                  0x10H
+
+
+         7       6              5             4            3             2              1        0
+                  PROD_ID                                                REV_ID
+                            r                                                   r
+
+
+ Field                Bits      Type        Description
+ PROD_ID              7:4       r           Product ID
+ REV_ID               3:0       r           Revision ID
+
+
+
+
+Version7.0         Confidential in Goertek, shall not be spread if not be privileged         Page 27 / 35
+                                                                     Confidential Degree：Confidential
+
+8.11 Calibration Coefficients (COEF)
+
+ The Calibration Coefficients register contains the 2´s complement coefficients that are used to
+ calculate the compensated pressure and temperature values.
+ Table 10 Calibration Coefficients
+ Coefficient      Addr.    bit7        bit6    bit5      bit4      bit3        bit2    bit1   bit0
+
+ c0               0x10     c0 [11:4]
+
+ c0/c1            0x11     c0 [3:0]                                c1 [11:8]
+
+ c1               0x12     c1[7:0]
+
+ c00              0x13     c00 [19:12]
+
+ c00              0x14     c00 [11:4]
+
+ c00/c10          0x15     c00 [3:0]                               c10 [19:16]
+
+ c10              0x16     c10 [15:8]
+
+ c10              0x17     c10 [7:0]
+
+ c01              0x18     c01 [15:8]
+
+ c01              0x19     c01 [7:0]
+
+ c11              0x1A     c11 [15:8]
+
+ c11              0x1B     c11 [7:0]
+
+ c20              0x1C     c20 [15:8]
+
+ c20              0x1D     c20 [7:0]
+
+ c21              0x1E     c21 [15:8]
+
+ c21              0x1F     c21 [7:0]
+
+ c30              0x20     c30 [15:8]
+
+ c30              0x21     c30 [7:0]
+
+
+
+
+Version7.0         Confidential in Goertek, shall not be spread if not be privileged          Page 28 / 35
+                                                                            Confidential Degree：Confidential
+
+    9. Mechanical characteristics
+
+    9.1 Pin configuration
+
+
+
+
+                                 Figure 3: Layout pin configuration SPL06-001
+
+    Table 11: Pin configuration of SPL06-001
+                                   SPI 3-wire
+Pin     Name     SPI 3-wire                          SPI 4-wire       I2C                     I2C with interrupt
+                                   with interrupt
+1       GND      Ground
+                                                                      Not used - open         Not used - open
+                 Chip select       Chip select       Chip select
+2       CSB                                                           (internal pull-up)      (internal pull- up) or tie
+                 – active low      – active low      – active low
+                                                                      or tie to VDDIO         to VDDIO
+                 Serial data       Serial data
+3       SDA                                          Serial data in   Serial data in/out      Serial data in/out
+                 in/out            in/out
+4       SCK      Serial Clock
+                                                                      Least significant       Interrupt pin and
+                                                    Serial data
+5       SDO      Not used          Interrupt                          bit in the device       least significant bit in
+                                                    out
+                                                                      address                 the device address
+6      VDDIO     Digital supply voltage for digital blocks and I/O interface
+7       GND      Ground
+8       VDD      Supply voltage for analog blocks
+
+
+
+
+    Version7.0            Confidential in Goertek, shall not be spread if not be privileged            Page 29 / 35
+                                                                      Confidential Degree：Confidential
+
+9.2 Outline dimensions
+
+The sensor housing is an 8Pin LGA package with metal lid. Its dimensions are 2.5mm (±0.1 mm)○
+                                                                                            Gx
+
+2.0mm (±0.1 mm)○G x0.95mm (±0.05mm)○ G , undeclared tolerance (±0.1mm).
+
+
+
+
+                                        0.825
+
+
+
+
+                                                             3
+                                                          0.
+                                                         Φ
+                     0.825
+
+
+
+
+                                                                                        2±0.10
+                                                                              1.72
+                         2   5
+                      0.                          2.22
+                4   -R                         2.5±0.10
+                                        Figure 4: Top view of SPL06-001
+
+
+                                               0.65
+                                                                               1.45
+                                 0.35
+
+
+
+
+                                                  0.35
+
+                                    Figure 5: Bottom view of SPL06-001
+
+Version7.0          Confidential in Goertek, shall not be spread if not be privileged            Page 30 / 35
+                                                                  Confidential Degree：Confidential
+
+
+
+
+                         0.95±0.05
+                                     Figure 6: Side view of SPL06-001
+
+
+
+
+9.3 Marking instructions
+
+
+
+
+    Symbol   Meaning                                      Introductions
+       A       ID          SPL06-001
+       Y      Year         One number, such as "5" on behalf of 2015
+       M     Month         One number, A ~ L for 1 ~ 12 month, such as "E" on behalf of May
+
+      DD      Day          Two numbers 01 ~ 31, such as "19" on behalf of the 19th
+              Serial       Three numbers 001-999, each batch of products occupy a serial
+      XXX
+             number        number
+
+
+
+
+Version7.0      Confidential in Goertek, shall not be spread if not be privileged      Page 31 / 35
+                                                                     Confidential Degree：Confidential
+
+10.     Storage and transportation
+
+   Keep in warehouse with less than 75% humidity and without sudden temperature change, acid air,
+    any other harmful air or strong magnetic field.
+   The MEMS pressure sensor with normal pack can be transported by ordinary conveyances. Please
+    protect products against moist, shock, sunburn and pressure during transportation.
+   Storage Temperature Range：-40℃～+125℃
+   Operating Temperature Range：-40℃～+85℃
+
+
+11.     Soldering recommendation
+
+Recommended Solder Reflow
+
+
+
+
+        Profile Feature                                        Pb-Free Assembly
+        Average ramp-up rate(TsMAX to TP)                      3℃/seconds max.
+        Preheat
+        -Temperature Min.(TsMIN)                               150℃
+        -Temperature Max.(TsMAX)                               200℃
+        -Time(TsMIN to TsMAX)(Ts)                              60～80seconds
+        Time maintained above:
+        -Temperature(TL)                                       217℃
+        -Time(tL)                                              60～150seconds
+        Peak temperature(TP)                                   260℃
+        Time within 5℃ of actual peak temperature(TP)2         20～40seconds
+        Ramp-down rate                                         4℃/seconds max.
+        Time 25℃ to peak temperature                           8 minutes max.
+
+
+
+Version7.0         Confidential in Goertek, shall not be spread if not be privileged      Page 32 / 35
+                                                                      Confidential Degree：Confidential
+
+12.     Package Specifications
+
+Carrier Tape Information [Unit: mm]
+Quantity per reel: 10kpcs.
+
+
+
+
+                                      Figure 7: Carrier Tape （1）
+
+
+
+
+Version7.0          Confidential in Goertek, shall not be spread if not be privileged      Page 33 / 35
+                                                               Confidential Degree：Confidential
+
+
+
+
+                              Figure 8: Carrier Tape （2）
+
+
+Version7.0   Confidential in Goertek, shall not be spread if not be privileged      Page 34 / 35
+                                                               Confidential Degree：Confidential
+
+
+
+
+                                  Figure 9: Packing Box
+
+
+
+
+Version7.0   Confidential in Goertek, shall not be spread if not be privileged      Page 35 / 35
+

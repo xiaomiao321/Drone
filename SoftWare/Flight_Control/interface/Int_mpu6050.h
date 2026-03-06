@@ -87,6 +87,13 @@
 void Int_MPU6050_Init(void);
 
 /**
+ * @brief 读取 MPU6050 寄存器（用于调试）
+ * @param reg 寄存器地址
+ * @param data 读取的数据
+ */
+void Int_MPU6050_Read_Reg(uint8_t reg, uint8_t *data);
+
+/**
  * @brief 获取陀螺仪数据
  *
  * @param gyro

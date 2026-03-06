@@ -69,7 +69,8 @@ void baro_task(void *args);
 void App_freeRTOS_start(void) {
   // 0. 初始化 nRF24L01 模块
   Int_nRF24L01_Init();
-
+  System_Init();
+  // App_flight_init();
   // 1. 创建任务
   xTaskCreate(flight_task, "flight", FLIGHT_TASK_STACK_SIZE, NULL,
               FLIGHT_TASK_PRIORITY, &flight_task_handle);
@@ -94,7 +95,7 @@ void flight_task(void *args) {
   // 首次运行时执行系统初始化
   static uint8_t initialized = 0;
   if (!initialized) {
-    System_Init();
+    // System_Init();
     App_flight_init();
     initialized = 1;
 
@@ -144,7 +145,7 @@ void flight_task(void *args) {
 
       // 打印堆栈水位线
       UBaseType_t stack_watermark = uxTaskGetStackHighWaterMark(NULL);
-      LOG_DEBUG("Flight stack watermark: %lu words", stack_watermark);
+      LOG_INFO("Flight stack watermark: %lu words", stack_watermark);
     }
 
     vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(FLIGHT_TASK_PERIOD));
@@ -209,14 +210,14 @@ void led_task(void *args) {
 }
 
 /**
- * @brief 通讯任务 (6ms 周期) - 使用你的 ANO_DT 协议实现
+ * @brief 通讯任务 (6ms 周期)
  */
 void com_task(void *args) {
   TickType_t xLastWakeTime = xTaskGetTickCount();
   uint8_t res;
   uint32_t rx_count = 0;
   uint32_t err_count = 0;
-  uint32_t status_print_cnt = 0;
+  uint32_t cont_err_count = 0;
 
   LOG_INFO("COM task started");
 
@@ -230,11 +231,20 @@ void com_task(void *args) {
     // 3. 调试输出
     if (res == 0) {
       rx_count++;
+      cont_err_count = 0; // 接收成功，清零连续错误计数
       if (rx_count % COM_TASK_OUTPUT_INTERVAL == 0) {
         LOG_INFO("[RC %lu] %s", rx_count, App_get_rc_string());
       }
     } else {
       err_count++;
+      cont_err_count++;
+      // 连续错误 50 次（约 300ms）后重新初始化 nRF24L01
+      if (cont_err_count >= 50) {
+        LOG_WARN("[NRF24L01] Re-init due to continuous errors=%lu",
+                 cont_err_count);
+        Int_nRF24L01_RX_Mode();
+        cont_err_count = 0;
+      }
       // 每 100 次错误打印一次 nRF24L01 状态
       if (err_count % 100 == 0) {
         LOG_WARN("[NO DATA] err=%lu", err_count);
@@ -256,17 +266,20 @@ void baro_task(void *args) {
   LOG_INFO("Baro task started");
 
   while (1) {
+    // 读取气压计数据
+    extern SPL06_Data_Struct spl06_data;
+    Int_SPL06_Read_Data(&spl06_data);
+    read_count++;
+
+    // 每 100 次读取打印一次气压计数据 (约 2.4 秒)
+    // if (read_count % 100 == 0) {
+    //   LOG_INFO("[Baro] P=%.1f Pa T=%.1f C Alt=%.2f m", spl06_data.pressure,
+    //            spl06_data.temperature, spl06_data.altitude);
+    // }
+
     // 只在定高模式下执行定高 PID
     if (flight_state == FIX_HEIGHT) {
       App_flight_fix_height_pid_process();
-      read_count++;
-
-      // 每 50 次读取打印一次气压计数据
-      if (read_count % 50 == 0) {
-        extern SPL06_Data_Struct spl06_data;
-        LOG_DEBUG("[Baro] P=%.1f Pa T=%.1f C Alt=%.2f m", spl06_data.pressure,
-                  spl06_data.temperature, spl06_data.altitude);
-      }
     }
 
     vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(BARO_TASK_PERIOD));

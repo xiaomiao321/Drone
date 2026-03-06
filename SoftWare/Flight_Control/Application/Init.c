@@ -1,7 +1,7 @@
 #include "Init.h"
+#include "../interface/Int_buzzer.h"
 #include "../interface/Int_led.h"
 #include "../interface/Int_motor.h"
-#include "../interface/Int_buzzer.h"
 #include "FreeRTOS.h"
 #include "main.h"
 #include "task.h"
@@ -32,7 +32,7 @@ void System_Init(void) {
   Int_buzzer_init();
 
   // 蜂鸣器上电提示音
-  Int_buzzer_short_beep();
+  //   Int_buzzer_short_beep();
 
   debug_printf("System_Init: Starting ESC calibration...\n");
 
@@ -52,7 +52,7 @@ void System_Init(void) {
   debug_printf("System_Init: Calibrating ESC, please wait 3.5s...\n");
 
   // 3. 延时 3500ms 等待电调校准完成（使用 FreeRTOS 延时）
-  vTaskDelay(pdMS_TO_TICKS(3500));
+  HAL_Delay(3500);
 
   // 4. 设置所有电机的目标速度
   left_top_motor.speed = 400;

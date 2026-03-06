@@ -35,9 +35,16 @@ void App_flight_init(void) {
   // 初始化 MPU6050 (I2C1)
   Int_MPU6050_Init();
 
+  // 读取 WHO_AM_I 验证
+  uint8_t who_am_i = 0;
+  Int_MPU6050_Read_Reg(0x75, &who_am_i);
+  debug_printf("[MPU6050] WHO_AM_I: 0x%02X (expected 0x68)\r\n", who_am_i);
+
   // 初始化气压计 SPL06 (I2C2)
   if (Int_SPL06_Init() != 0) {
     debug_printf("SPL06 init failed!\r\n");
+  } else {
+    debug_printf("SPL06 init OK\r\n");
   }
 
   // 电机已经在 Init.c 中初始化，这里不需要重复初始化
@@ -71,37 +78,51 @@ void App_flight_get_euler_angle(void) {
 
   // 4. 四元数解算欧拉角
   Common_IMU_GetEulerAngle(&gyro_accel_data, &euler_angle, 0.006f);
+
+  // 调试输出：每 1000 次打印一次原始数据和欧拉角 (约 6 秒)
+  static uint32_t debug_count = 0;
+  if (++debug_count % 1000 == 0) {
+    LOG_INFO("[IMU] Acc[%d,%d,%d] Gyro[%d,%d,%d]",
+             gyro_accel_data.accel.accel_x, gyro_accel_data.accel.accel_y,
+             gyro_accel_data.accel.accel_z, gyro_accel_data.gyro.gyro_x,
+             gyro_accel_data.gyro.gyro_y, gyro_accel_data.gyro.gyro_z);
+    LOG_INFO("[IMU] R=%.2f P=%.2f Y=%.2f", euler_angle.roll, euler_angle.pitch,
+             euler_angle.yaw);
+  }
 }
 
 /**
  * @brief 根据欧拉角计算 PID 的目标值
  */
 void App_flight_pid_process(void) {
-  RC_Data_t *rc = App_get_rc_data();
+  // RC_Data_t *rc = App_get_rc_data();
 
-  // 俯仰角控制 (遥控器中立位 1500，范围 1000-2000，转换到 +-10 度)
-  pitch_pid.desire = (rc->pit - 1500) / 50.0f;
-  pitch_pid.measure = euler_angle.pitch;
-  gyro_y_pid.measure = (gyro_accel_data.gyro.gyro_y * 2000.0f / 32768.0f);
-  Com_PID_Calc_Chain(&pitch_pid, &gyro_y_pid);
+  // // 俯仰角控制 (遥控器中立位 1500，范围 1000-2000，转换到 +-10 度)
+  // pitch_pid.desire = (rc->pit - 1500) / 50.0f;
+  // pitch_pid.measure = euler_angle.pitch;
+  // gyro_y_pid.measure = (gyro_accel_data.gyro.gyro_y * 2000.0f / 32768.0f);
+  // Com_PID_Calc_Chain(&pitch_pid, &gyro_y_pid);
 
-  // 横滚角控制 (遥控器中立位 1500，范围 1000-2000，转换到 +-10 度)
-  roll_pid.desire = (rc->rol - 1500) / 50.0f;
-  roll_pid.measure = euler_angle.roll;
-  gyro_x_pid.measure = (gyro_accel_data.gyro.gyro_x * 2000.0f / 32768.0f);
-  Com_PID_Calc_Chain(&roll_pid, &gyro_x_pid);
+  // // 横滚角控制 (遥控器中立位 1500，范围 1000-2000，转换到 +-10 度)
+  // roll_pid.desire = (rc->rol - 1500) / 50.0f;
+  // roll_pid.measure = euler_angle.roll;
+  // gyro_x_pid.measure = (gyro_accel_data.gyro.gyro_x * 2000.0f / 32768.0f);
+  // Com_PID_Calc_Chain(&roll_pid, &gyro_x_pid);
 
-  // 偏航角控制 (遥控器中立位 1500，范围 1000-2000，转换到 +-10 度)
-  yaw_pid.desire = (rc->yaw - 1500) / 50.0f;
-  yaw_pid.measure = euler_angle.yaw;
-  gyro_z_pid.measure = (gyro_accel_data.gyro.gyro_z * 2000.0f / 32768.0f);
-  Com_PID_Calc_Chain(&yaw_pid, &gyro_z_pid);
+  // // 偏航角控制 (遥控器中立位 1500，范围 1000-2000，转换到 +-10 度)
+  // yaw_pid.desire = (rc->yaw - 1500) / 50.0f;
+  // yaw_pid.measure = euler_angle.yaw;
+  // gyro_z_pid.measure = (gyro_accel_data.gyro.gyro_z * 2000.0f / 32768.0f);
+  // Com_PID_Calc_Chain(&yaw_pid, &gyro_z_pid);
+  gyro_y_pid.output = 0;
+  gyro_x_pid.output = 0;
+  gyro_z_pid.output = 0;
 }
 
 /**
  * @brief 根据 PID 输出值控制电机
  *
- * 电机布局 (X 型四旋翼):
+ * 电机布局 :
  *       前
  *        ^
  *   M1      M3
@@ -155,7 +176,7 @@ void App_flight_control_motor(void) {
   case FAIL:
     // 故障状态，逐渐降低转速
     for (int i = 0; i < 4; i++) {
-      motor_speed[i] = -2; // 每周期减少 2
+      motor_speed[i] -= 2; // 每周期减少 2
     }
     break;
 
@@ -177,7 +198,6 @@ void App_flight_control_motor(void) {
   }
 
   // 设置电机速度
-  // 注意：这里需要根据你的实际电机 TIM 通道配置来调用
   extern Motor_Struct left_top_motor;
   extern Motor_Struct left_bottom_motor;
   extern Motor_Struct right_top_motor;
@@ -192,6 +212,15 @@ void App_flight_control_motor(void) {
   Int_motor_set_speed(&left_bottom_motor);
   Int_motor_set_speed(&right_top_motor);
   Int_motor_set_speed(&right_bottom_motor);
+
+  // 调试输出：每 500 次打印一次电机输出 (约 3 秒)
+  static uint32_t motor_debug_count = 0;
+  if (++motor_debug_count % 500 == 0) {
+    LOG_INFO("[Motor] M1:%d M2:%d M3:%d M4:%d | THR:%d PID[%d,%d,%d]",
+             motor_speed[0], motor_speed[1], motor_speed[2], motor_speed[3],
+             thr_base, (int)gyro_y_pid.output, (int)gyro_x_pid.output,
+             (int)gyro_z_pid.output);
+  }
 }
 
 /**
@@ -200,6 +229,13 @@ void App_flight_control_motor(void) {
 void App_flight_fix_height_pid_process(void) {
   // 读取气压计数据
   Int_SPL06_Read_Data(&spl06_data);
+
+  // 调试输出：每 50 次打印一次气压计数据
+  static uint32_t baro_debug_count = 0;
+  if (++baro_debug_count % 50 == 0) {
+    LOG_DEBUG("[Baro] P=%.2f Pa T=%.2f C Alt=%.2f m", spl06_data.pressure,
+              spl06_data.temperature, spl06_data.altitude);
+  }
 
   // 目标高度：解锁定高时的高度
   height_pid.desire = (float)fix_height;

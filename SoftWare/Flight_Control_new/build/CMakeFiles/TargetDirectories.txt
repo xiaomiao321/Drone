@@ -1,0 +1,4 @@
+D:/files/25_26_winter/project/drone/SoftWare/Flight_Control_new/build/CMakeFiles/flight_control.dir
+D:/files/25_26_winter/project/drone/SoftWare/Flight_Control_new/build/CMakeFiles/ALL_BUILD.dir
+D:/files/25_26_winter/project/drone/SoftWare/Flight_Control_new/build/CMakeFiles/ZERO_CHECK.dir
+D:/files/25_26_winter/project/drone/SoftWare/Flight_Control_new/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir

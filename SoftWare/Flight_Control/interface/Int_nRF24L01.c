@@ -149,6 +149,9 @@ void Int_nRF24L01_TX_Mode(void) {
 入口参数：rxbuf:接收数据存放首地址
 返回  值：0:接收到数据 1:没有接收到数据
 *********************************************************/
+// 连续接收失败计数器（用于自动恢复）
+static uint8_t rx_fail_count = 0;
+
 uint8_t Int_nRF24L01_RxPacket(uint8_t *rxbuf) {
   uint8_t state;
   uint8_t rx_len;
@@ -156,12 +159,20 @@ uint8_t Int_nRF24L01_RxPacket(uint8_t *rxbuf) {
   // 读取状态寄存器
   state = Int_nRF24L01_Read_Reg(STATUS);
 
-  // 检查是否掉电或配置丢失 (STATUS=0x00 表示异常)
-  // if (state == 0x00) {
-  //   // 重新初始化 nRF24L01
-  //   Int_nRF24L01_RX_Mode();
-  //   return 1;
-  // }
+  // 检查是否掉电或配置丢失 (STATUS=0x00 表示 SPI 通信异常)
+  if (state == 0x00) {
+    rx_fail_count++;
+    // 连续失败 10 次后重新初始化 nRF24L01
+    if (rx_fail_count >= 10) {
+      debug_printf("[NRF24L01] Re-init after %d failures\r\n", rx_fail_count);
+      Int_nRF24L01_RX_Mode();
+      rx_fail_count = 0;
+    }
+    return 1;
+  }
+
+  // 接收成功，清零失败计数
+  rx_fail_count = 0;
 
   if (state & RX_DR) { // 接收到数据
     // 先读取有效数据长度

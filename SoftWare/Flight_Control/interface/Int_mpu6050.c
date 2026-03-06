@@ -29,7 +29,7 @@ static void Int_MPU6050_Write_Reg(uint8_t reg, uint8_t data) {
  * @param reg 寄存器地址
  * @param data 读取的数据
  */
-static void Int_MPU6050_Read_Reg(uint8_t reg, uint8_t *data) {
+void Int_MPU6050_Read_Reg(uint8_t reg, uint8_t *data) {
   // 1. 句柄 (hi2c1) 2. 设备地址 (0x68) 3. 寄存器地址 reg 4. 寄存器地址位宽 5.
   // 读数据的地址 6. 读字节个数 7. 超时时间
   HAL_I2C_Mem_Read(&hi2c1, MPU6050_ADDR_READ, reg, I2C_MEMADD_SIZE_8BIT, data,
@@ -154,15 +154,15 @@ void Int_MPU6050_Get_Gyro(Gyro_struct *gyro) {
   // X 轴
   Int_MPU6050_Read_Reg(MPU_GYRO_XOUTH_REG, &high);
   Int_MPU6050_Read_Reg(MPU_GYRO_XOUTL_REG, &low);
-  gyro->gyro_x = (int16_t)((high << 8) | low) - gyro_x_offset;
+  gyro->gyro_x = (int16_t)((high << 8) | low); // 暂时不减去偏置
   // Y 轴
   Int_MPU6050_Read_Reg(MPU_GYRO_YOUTH_REG, &high);
   Int_MPU6050_Read_Reg(MPU_GYRO_YOUTL_REG, &low);
-  gyro->gyro_y = (int16_t)((high << 8) | low) - gyro_y_offset;
+  gyro->gyro_y = (int16_t)((high << 8) | low); // 暂时不减去偏置
   // Z 轴
   Int_MPU6050_Read_Reg(MPU_GYRO_ZOUTH_REG, &high);
   Int_MPU6050_Read_Reg(MPU_GYRO_ZOUTL_REG, &low);
-  gyro->gyro_z = (int16_t)((high << 8) | low) - gyro_z_offset;
+  gyro->gyro_z = (int16_t)((high << 8) | low); // 暂时不减去偏置
 }
 
 /**
