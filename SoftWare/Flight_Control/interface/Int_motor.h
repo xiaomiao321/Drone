@@ -34,4 +34,15 @@ void Int_motor_start(Motor_Struct *motor);
  */
 void Int_motor_startup(Motor_Struct *motor, uint16_t target_speed, uint32_t startup_time_ms);
 
+/**
+ * @brief 电调油门校准（只需调用一次）
+ *        校准流程：
+ *        1. 输出 100% 油门（2000）等待电调识别最大油门
+ *        2. 5 秒内将油门降到最低（1000）
+ *        3. 等待 1 秒完成校准
+ *
+ * @param motor 电机结构体指针
+ */
+void Int_motor_calibration(Motor_Struct *motor);
+
 #endif // __INT_MOTOR__

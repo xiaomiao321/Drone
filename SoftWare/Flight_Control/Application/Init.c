@@ -35,7 +35,10 @@ void System_Init(void) {
   //   Int_buzzer_short_beep();
 
   debug_printf("System_Init: Starting ESC calibration...\n");
-
+  //   Int_motor_calibration(&left_top_motor);
+  //   Int_motor_calibration(&left_bottom_motor);
+  //   Int_motor_calibration(&right_top_motor);
+  //   Int_motor_calibration(&right_bottom_motor);
   // 1. 启动所有四个电机的 PWM 输出（50% 占空比用于电调校准）
   Int_motor_start(&left_top_motor);
   Int_motor_start(&left_bottom_motor);

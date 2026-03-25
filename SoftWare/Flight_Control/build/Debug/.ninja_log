@@ -64,3 +64,9 @@
 287	513	7945024996510402	flight_control.elf	157214a7f2fc84e3
 5	266	7945027204179713	CMakeFiles/flight_control.dir/Application/App_flight.c.obj	cc4efc11b5abcf04
 267	496	7945027206405901	flight_control.elf	157214a7f2fc84e3
+9	307	7945056081379015	CMakeFiles/flight_control.dir/Core/Src/main.c.obj	7a4ec7351d4e3f15
+32	314	7945056081448331	CMakeFiles/flight_control.dir/Application/Init.c.obj	c519771991406ac0
+52	315	7945056081448331	CMakeFiles/flight_control.dir/interface/Int_motor.c.obj	6a3de8bd990fcf5d
+42	346	7945056081759764	CMakeFiles/flight_control.dir/Application/App_flight.c.obj	cc4efc11b5abcf04
+22	346	7945056081759764	CMakeFiles/flight_control.dir/Application/App_freeRTOS_Task.c.obj	b6d212d7df85eb8
+346	647	7945056084724011	flight_control.elf	157214a7f2fc84e3

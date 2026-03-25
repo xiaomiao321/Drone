@@ -1,447 +1,464 @@
-# 四旋翼无人机项目
+# Quadcopter Drone Project
 
-基于 STM32 的自主开发四旋翼无人机飞行控制系统，支持姿态自稳、气压计定高、无线遥控等功能。
+A self-developed quadcopter flight control system based on STM32, supporting attitude stabilization, barometric altitude hold, wireless remote control, and more.
 
-## 项目演进
+## Innovations
 
-本项目共经历了三代硬件迭代，从使用开源固件到完全自主开发飞控软件：
+### 1. Three-Generation Hardware Iteration
+Complete evolution from open-source firmware user to autonomous developer:
+- **First Generation**: STM32H743 + APM open-source firmware, technology validation
+- **Second Generation**: Optimized PCB design, successfully flashed APM firmware
+- **Third Generation**: STM32F103 + self-developed flight controller, mastering core algorithms
 
-| 版本 | MCU | 固件方案 | 状态 |
+### 2. Autonomous Flight Control Software
+- Complete implementation of core algorithms including **quaternion attitude calculation**, **cascaded PID control**, and **sensor fusion**
+- FreeRTOS-based multi-task real-time scheduling with millisecond-level task cycles
+- Self-developed ANO_DT wireless communication protocol supporting multi-channel data transmission and online calibration
+
+### 3. Low-Cost Solution
+- Uses STM32F103C8T6 (CNY ¥15 / ~$2 USD) instead of H7 series (CNY ¥50+ / ~$7 USD), reducing MCU cost by 70%
+- Simplified peripherals but complete functionality, suitable for learning and secondary development
+
+---
+
+## Project Evolution
+
+This project has gone through three generations of hardware iteration, from using open-source firmware to fully autonomous flight control software development:
+
+| Version | MCU | Firmware Solution | Status |
 |------|-----|----------|------|
-| 第一版 | STM32H743VIT6 | APM 开源固件 | 已完成 |
-| 第二版 | STM32H743VIT6 | APM 开源固件 | 已完成 |
-| 第三版 | STM32F103C8T6 | 自主开发飞控 | 进行中 |
+| First Version | STM32H743VIT6 | APM Open-Source Firmware | Completed |
+| Second Version | STM32H743VIT6 | APM Open-Source Firmware | Completed |
+| Third Version | STM32F103C8T6 | Self-Developed Flight Controller | In Progress |
 
-### 第一版 & 第二版 (开源固件方案)
+### First & Second Versions (Open-Source Firmware Solution)
 
 - MCU: STM32H743VIT6 (ARM Cortex-M7, 400MHz, 2MB Flash)
-- 固件：APM (ArduPilot) 开源飞控固件
-- 状态：已完成打板焊接，成功烧录 APM 固件并实现飞控链接
-- 地面站界面：[APM 固件页面](Demo/APM 固件页面.png)
+- Firmware: APM (ArduPilot) open-source flight controller firmware
+- Status: PCB soldering completed, successfully flashed APM firmware and achieved flight controller connection
+- Ground Station Interface: [APM Firmware Page](Demo/APM 固件页面.png)
 
-### 第三版 (自主开发方案)
+### Third Version (Autonomous Development Solution)
 
 - MCU: STM32F103C8T6 (ARM Cortex-M3, 72MHz, 64KB Flash)
-- 固件：自主开发飞控软件 (基于 FreeRTOS)
-- 状态：PCB 已下单 (因春节假期尚未发货)，元器件已备齐，固件已编写完成待调试
-- 设计思路：从使用开源固件转向自主开发，旨在深入理解飞控系统的核心算法，包括姿态解算、PID 控制、传感器融合等关键技术
+- Firmware: Self-developed flight control software (based on FreeRTOS)
+- Status: PCB ordered (not yet shipped due to Spring Festival holiday), components ready, firmware written and awaiting debugging
+- Design Philosophy: Shift from using open-source firmware to autonomous development, aiming to deeply understand core algorithms of flight control systems, including attitude calculation, PID control, sensor fusion, and other key technologies
 
 ---
 
-## 硬件设计思路
+## Hardware Design Philosophy
 
-### 分电板演进
+### Power Distribution Board Evolution
 
-**第一版分电板**
+**First Version Power Distribution Board**
 
-- 设计：rzt设计焊接和调试的，外部分电板同时给电调供电和经降压给飞控板供电
-- 问题：
-  1. 尺寸和孔位与机架不匹配
-  2. 电调自带 BEC 输出，无需额外降压给飞控供电
-- 实物图：![第一版分电板](Demo/第一版分电板.jpg)
+- Design: Designed, soldered, and debugged by rzt; external power distribution board simultaneously powers ESCs and provides stepped-down voltage to flight controller board
+- Issues:
+  1. Size and mounting holes mismatch with frame
+  2. ESCs have built-in BEC output, no need for additional voltage step-down for flight controller
+- Physical Photo: ![First Version Power Distribution Board](Demo/V1_Power_Distribution.jpg)
 
-**第二版分电板**
+**Second Version Power Distribution Board**
 
-- 改进：
-  - 移除降压电路，简化设计
-  - 1 个带线 XT60 接口输入，4 个卧式 XT60 接口输出
-  - 孔位与机架匹配
-- 实物图：![第二版分电板](Demo/第二版分电板.jpg)
+- Improvements:
+  - Removed voltage step-down circuit, simplified design
+  - 1 wired XT60 connector input, 4 horizontal XT60 connector outputs
+  - Mounting holes match the frame
+- Physical Photo: ![Second Version Power Distribution Board](Demo/V2_Power_Distribution.jpg)
 
-### 飞控板演进
+### Flight Controller Board Evolution
 
-**第一版飞控板**
+**First Version Flight Controller Board**
 
-- 设计者：hqg 同学
+- Designer: hqg classmate
+- Layers: 4-layer board
+- Issues:
+  1. Some interfaces and peripherals not routed out
+  2. Size and mounting holes mismatch with frame
 
-- 板层：四层板
-
-- 问题：
-  1. 部分接口和外设没有引出
-  2. 尺寸和孔位与机架不匹配
-  
-  | 实物图 | 3D预览 |
+  | Physical Photo | 3D Preview |
   |------|------|
-  | <img src="Hardware/第一版/第一版飞控.jpg" alt="第一版" style="zoom:150%;" /> | ![3D预览](Hardware/第一版/3D预览.png) |
-  
-- 设计图：
+  | <img src="Hardware/V1/V1_Flight_Controller.jpg" alt="First Version" style="zoom:150%;" /> | ![3D Preview](Hardware/V1/3D预览.png) |
 
-  | 正面 | 背面 |
+- Design Diagrams:
+
+  | Front | Back |
   |------|------|
-  | ![第一版正面](Hardware/第一版/正面.png) | ![第一版背面](Hardware/第一版/背面.png) |
+  | ![First Version Front](Hardware/V1/Front.png) | ![First Version Back](Hardware/V1/Back.png) |
 
 
-**第二版飞控板**
+**Second Version Flight Controller Board**
 
-- 设计者：本人
-- 状态：焊接成功，成功烧录 APM 飞控固件
-- 问题：
-  1. 单纯使用开源固件学不到核心技术
-  2. 难以适配自定义遥控器
-  3. 孔位与机架仍有 1mm 偏差
-- 实物图：
-  | 实物图 | 3D预览 |
+- Designer: The author
+- Status: Soldering successful, successfully flashed APM flight controller firmware
+- Issues:
+  1. Simply using open-source firmware doesn't teach core technologies
+  2. Difficult to adapt custom remote controllers
+  3. Mounting holes still have 1mm deviation from frame
+- Physical Photos:
+  | Physical Photo | 3D Preview |
   |------|------|
-  | <img src="Hardware/第二版/第二版飞控.jpg" alt="第二版"  /> | <img src="Hardware/第二版/3D预览.png" alt="3D预览"  /> |
-- 设计图：
+  | <img src="Hardware/V2/V2_Flight_Controller.jpg" alt="Second Version"  /> | <img src="Hardware/V2/3D预览.png" alt="3D Preview"  /> |
+- Design Diagrams:
 
-  | 正面 | 背面 |
+  | Front | Back |
   |------|------|
-  | ![第二版正面](Hardware/第二版/正面.png) | ![第二版背面](Hardware/第二版/背面.png) |
+  | ![Second Version Front](Hardware/V2/Front.png) | ![Second Version Back](Hardware/V2/Back.png) |
 
 
-**第三版飞控板**
+**Third Version Flight Controller Board**
 
-- 设计者：本人
-- MCU：改用 STM32F103C8T6，简化外设
-- 改进：孔位和尺寸与机架完全适配
-- 状态：PCB 已下单 (因春节假期尚未发货)，计划开学回校后焊接、烧录、调试
-- 设计图：
+- Designer: The author
+- MCU: Changed to STM32F103C8T6, simplified peripherals
+- Improvements: Mounting holes and size fully match the frame
+- Status: PCB ordered (not yet shipped due to Spring Festival holiday), planned to solder, flash, and debug after returning to school
+- Design Diagrams:
 
-  | 正面 | 背面 |
+  | Front | Back |
   |------|------|
-  | ![第三版正面](Hardware/第三版/正面.png) | ![第三版背面](Hardware/第三版/背面.png) |
+  | ![Third Version Front](Hardware/V3/Front.png) | ![Third Version Back](Hardware/V3/Back.png) |
 
 ---
 
-## 功能描述
+## Features
 
-### 核心功能
-- 姿态自稳飞行：MPU6050 六轴传感器，四元数姿态解算
-- 气压计定高：SPL06-001 高精度气压计，高度测量精度 ±0.5m
-- 无线遥控：nRF24L01 2.4GHz 无线模块，ANO_DT 通讯协议
-- LED 状态指示：连接状态、飞行状态可视化
-- 蜂鸣器提示：解锁、模式切换、失控报警音频反馈
-- 电机控制：4 路 PWM 输出，支持好盈天行者 40A 电调
+### Core Functions
+- Attitude stabilization flight: MPU6050 6-axis sensor, quaternion attitude calculation
+- Barometric altitude hold: SPL06-001 high-precision barometer, altitude measurement accuracy ±0.5m
+- Wireless remote control: nRF24L01 2.4GHz wireless module, ANO_DT communication protocol
+- LED status indication: Connection status, flight status visualization
+- Buzzer alerts: Unlock, mode switch, failsafe audio feedback
+- Motor control: 4-channel PWM output, supporting Hobbywing Skywalker 40A ESC
 
-### 飞行模式
-| 模式 | 说明 | 进入条件 |
+### Flight Modes
+| Mode | Description | Entry Condition |
 |------|------|----------|
-| IDLE | 怠速/未解锁 | 上电默认状态 |
-| NORMAL | 姿态自稳模式 | 解锁成功后进入 |
-| FIX_HEIGHT | 定高模式 | AUX1 < 1450 或 AUX1 > 1550 |
-| FAIL | 失控保护 | 遥控器失联 |
+| IDLE | Idle/Unarmed | Default state on power-up |
+| NORMAL | Attitude stabilization mode | Enters after successful unlock |
+| FIX_HEIGHT | Altitude hold mode | AUX1 < 1450 or AUX1 > 1550 |
+| FAIL | Failsafe protection | Lost connection with remote controller |
 
-### 解锁流程 (日本手 Mode 1)
-1. 油门摇杆推到最大 (≥1900) 保持 1 秒
-2. 油门摇杆拉到最小 (≤1100) 保持 1 秒
-3. 解锁完成，电机怠速旋转，蜂鸣器长鸣提示
+### Unlock Procedure (Japanese Hand Mode 1)
+1. Push throttle stick to maximum (≥1900) and hold for 1 second
+2. Pull throttle stick to minimum (≤1100) and hold for 1 second
+3. Unlock complete, motors idle rotation, buzzer long beep indication
 
 ---
 
-## 遥控器校准
+## Remote Controller Calibration
 
-### 油门校准
-1. 油门 (右摇杆) 推到最下
-2. 长按校准按键直到灯光闪烁
-3. 重复一次
+### Throttle Calibration
+1. Push throttle (right stick) to minimum
+2. Long-press calibration button until light flashes
+3. Repeat once
 
-### 通道映射 (日本手 Mode 1)
-| 通道 | 摇杆/按键 | 范围 | 说明 |
+### Channel Mapping (Japanese Hand Mode 1)
+| Channel | Stick/Button | Range | Description |
 |------|-----------|------|------|
-| THR (油门) | 右摇杆上下 | 1000-2000 | 控制飞行器高度 |
-| YAW (偏航) | 右摇杆左右 | 1000-2000 | 控制飞行器旋转 |
-| PIT (俯仰) | 左摇杆上下 | 1000-2000 | 控制飞行器前后 |
-| ROL (横滚) | 左摇杆左右 | 1000-2000 | 控制飞行器左右 |
+| THR (Throttle) | Right stick up/down | 1000-2000 | Controls aircraft altitude |
+| YAW (Yaw) | Right stick left/right | 1000-2000 | Controls aircraft rotation |
+| PIT (Pitch) | Left stick up/down | 1000-2000 | Controls aircraft forward/backward |
+| ROL (Roll) | Left stick left/right | 1000-2000 | Controls aircraft left/right |
 
-### 微调按键说明
-| 按键 | 功能 | 说明 |
+### Trim Button Description
+| Button | Function | Description |
 |------|------|------|
-| 前按键 | PIT +10 | 俯仰通道增加 10 |
-| 后按键 | PIT -10 | 俯仰通道减少 10 |
-| 左按键 | AUX1 +10 | 辅助通道 1 增加 10 |
-| 右按键 | AUX1 -10 | 辅助通道 1 减少 10 |
+| Front Button | PIT +10 | Pitch channel increase 10 |
+| Rear Button | PIT -10 | Pitch channel decrease 10 |
+| Left Button | AUX1 +10 | Auxiliary channel 1 increase 10 |
+| Right Button | AUX1 -10 | Auxiliary channel 1 decrease 10 |
 
 ---
 
-## 软件架构
+## Software Architecture
 
-### 系统架构
+### System Architecture
 
 ```mermaid
 graph TB
-    subgraph FreeRTOS["FreeRTOS 实时操作系统"]
-        F["flight_task (6ms/优先级 3)
-MPU6050 读取、姿态解算、PID 计算、电机输出"]
-        C["com_task (6ms/优先级 2)
-nRF24L01 接收、ANO_DT 协议、解锁逻辑、状态机"]
-        L["led_task (100ms/优先级 1)
-LED1/2 连接指示、LED3/4 状态指示"]
-        B["baro_task (24ms/优先级 2)
-SPL06-001 读取、高度计算、定高 PID"]
+    subgraph FreeRTOS["FreeRTOS Real-Time Operating System"]
+        F["flight_task (6ms/Priority 3)
+MPU6050 read, attitude calculation, PID calculation, motor output"]
+        C["com_task (6ms/Priority 2)
+nRF24L01 receive, ANO_DT protocol, unlock logic, state machine"]
+        L["led_task (100ms/Priority 1)
+LED1/2 connection indication, LED3/4 status indication"]
+        B["baro_task (24ms/Priority 2)
+SPL06-001 read, altitude calculation, altitude hold PID"]
     end
 ```
 
-### 目录结构
+### Directory Structure
 
 ```
 drone/
 ├── SoftWare/
-│   ├── Flight_Control/       # 飞控固件 (STM32F103)
-│   │   ├── Application/      # 应用层 (飞行控制、遥控接收)
-│   │   ├── common/           # 通用算法 (PID、滤波、姿态解算)
-│   │   ├── interface/        # 硬件驱动层 (电机、传感器、LED)
-│   │   ├── Core/             # HAL 库
-│   │   ├── FreeRTOS/         # 实时操作系统
-│   │   └── doc/              # 技术文档
-│   ├── Remoter_Control/      # 遥控器固件
-│   ├── Test/                 # 测试程序
-│   └── 开源飞控/             # 参考资料 (APM/Pixhawk)
+│   ├── Flight_Control/       # Flight controller firmware (STM32F103)
+│   │   ├── Application/      # Application layer (flight control, remote reception)
+│   │   ├── common/           # Common algorithms (PID, filtering, attitude calculation)
+│   │   ├── interface/        # Hardware driver layer (motors, sensors, LEDs)
+│   │   ├── Core/             # HAL library
+│   │   ├── FreeRTOS/         # Real-time operating system
+│   │   └── doc/              # Technical documentation
+│   ├── Remoter_Control/      # Remote controller firmware
+│   ├── Test/                 # Test programs
+│   └── OpenSource/           # Reference materials (APM/Pixhawk)
 ├── Hardware/
-│   ├── 第一版/               # 初版原理图/PCB
-│   ├── 第二版/               # 当前版本
-│   ├── 第三版/               # 改进版本
-│   └── datasheet/            # 元器件数据手册
-├── Demo/                     # 演示图片与视频
-├── 机架/                     # 机架相关资料
-└── Learning/                 # 学习资料
+│   ├── V1/                   # First version schematics/PCB
+│   ├── V2/                   # Current version
+│   ├── V3/                   # Improved version
+│   └── datasheet/            # Component datasheets
+├── Demo/                     # Demo images and videos
+├── Rack/                     # Frame related materials
+└── Learning/                 # Learning materials
 ```
 
-### 数据流
+### Data Flow
 
 ```mermaid
 flowchart TD
-    RC["遥控器 TX"] --> NRF["nRF24L01 RX"]
+    RC["Remote Controller TX"] --> NRF["nRF24L01 RX"]
     NRF --> COM["com_task
-解析 ANO_DT 协议"]
-    COM --> RCDATA["rc_data 全局数据"]
-    
+Parse ANO_DT Protocol"]
+    COM --> RCDATA["rc_data Global Data"]
+
     RCDATA --> FT["flight_task
-6ms 周期"]
-    RCDATA --> SM["状态机处理
-解锁/模式"]
+6ms Cycle"]
+    RCDATA --> SM["State Machine Processing
+Unlock/Mode"]
     RCDATA --> BT["baro_task
-24ms 周期"]
-    
-    FT --> MPU["MPU6050 读取"]
-    MPU --> QUAT["四元数姿态解算"]
-    QUAT --> MIX["电机混合控制输出"]
-    
-    SM --> LED["LED/蜂鸣器指示"]
-    
-    BT --> SPL["SPL06 高度"]
-    SPL --> HPID["定高 PID 输出"]
-    
+24ms Cycle"]
+
+    FT --> MPU["MPU6050 Read"]
+    MPU --> QUAT["Quaternion Attitude Calculation"]
+    QUAT --> MIX["Motor Mixing Control Output"]
+
+    SM --> LED["LED/Buzzer Indication"]
+
+    BT --> SPL["SPL06 Altitude"]
+    SPL --> HPID["Altitude Hold PID Output"]
+
     QUAT --> MIX
     HPID --> MIX
     MIX --> PWM["TIMx PWM"]
-    PWM --> ESC["电调"]
-    ESC --> MOTOR["电机"]
+    PWM --> ESC["ESC"]
+    ESC --> MOTOR["Motor"]
 ```
 
-### 任务说明
+### Task Description
 
-| 任务 | 周期 | 优先级 | 功能 |
+| Task | Cycle | Priority | Function |
 |------|------|--------|------|
-| flight_task | 6ms | 3 | MPU6050 读取、姿态解算、PID 计算、电机输出 |
-| com_task | 6ms | 2 | nRF24L01 接收、ANO_DT 协议解析、解锁逻辑、状态机 |
-| led_task | 100ms | 1 | LED1/2 连接指示、LED3/4 状态指示 |
-| baro_task | 24ms | 2 | SPL06-001 读取、高度计算、定高 PID |
+| flight_task | 6ms | 3 | MPU6050 read, attitude calculation, PID calculation, motor output |
+| com_task | 6ms | 2 | nRF24L01 receive, ANO_DT protocol parsing, unlock logic, state machine |
+| led_task | 100ms | 1 | LED1/2 connection indication, LED3/4 status indication |
+| baro_task | 24ms | 2 | SPL06-001 read, altitude calculation, altitude hold PID |
 
-### 软件模块
+### Software Modules
 
-| 模块 | 文件 | 功能 |
+| Module | File | Function |
 |------|------|------|
-| 飞行控制 | Application/App_flight.c | 姿态解算、PID 控制、电机混合 |
-| 遥控接收 | Application/App_receive_data.c | nRF24L01 驱动、ANO_DT 协议、状态机 |
-| 任务调度 | Application/App_freeRTOS_Task.c | FreeRTOS 任务创建与调度 |
-| PID 算法 | common/Com_pid.c | 增量式 PID 控制器 |
-| 滤波算法 | common/Com_filter.c | 低通滤波、卡尔曼滤波 |
-| 姿态解算 | common/Com_imu.c | 四元数姿态解算 |
-| 电机驱动 | interface/Int_motor.c | TIMx PWM 输出、电调控制 |
-| 传感器驱动 | interface/Int_mpu6050.c, Int_spl06.c | I2C 传感器驱动 |
-| 无线驱动 | interface/Int_nRF24L01.c | SPI 无线模块驱动 |
-| 指示驱动 | interface/Int_led.c, Int_buzzer.c | LED、蜂鸣器控制 |
+| Flight Control | Application/App_flight.c | Attitude calculation, PID control, motor mixing |
+| Remote Reception | Application/App_receive_data.c | nRF24L01 driver, ANO_DT protocol, state machine |
+| Task Scheduling | Application/App_freeRTOS_Task.c | FreeRTOS task creation and scheduling |
+| PID Algorithm | common/Com_pid.c | Incremental PID controller |
+| Filtering Algorithm | common/Com_filter.c | Low-pass filtering, Kalman filtering |
+| Attitude Calculation | common/Com_imu.c | Quaternion attitude calculation |
+| Motor Driver | interface/Int_motor.c | TIMx PWM output, ESC control |
+| Sensor Driver | interface/Int_mpu6050.c, Int_spl06.c | I2C sensor driver |
+| Wireless Driver | interface/Int_nRF24L01.c | SPI wireless module driver |
+| Indicator Driver | interface/Int_led.c, Int_buzzer.c | LED, buzzer control |
 
 ---
 
-## PID 参数
+## PID Parameters
 
-### 串级 PID 结构
+### Cascaded PID Structure
 
-飞控采用**串级 PID**控制，外环控制角度，内环控制角速度：
+The flight controller uses **cascaded PID** control, with outer loop controlling angle and inner loop controlling angular velocity:
 
 ```
-期望角度 → [角度 PID] → 期望角速度 → [角速度 PID] → 电机输出
+Target Angle → [Angle PID] → Target Angular Velocity → [Angular Velocity PID] → Motor Output
 ```
 
-### 当前参数配置
+### Current Parameter Configuration
 
-| 控制环 | 参数 | kp | ki | kd | 说明 |
+| Control Loop | Parameter | kp | ki | kd | Description |
 |--------|------|----|----|----|----|
-| 俯仰角 | pitch_pid | -7.00 | 0.00 | 0.00 | 外环 - 角度控制 |
-| | gyro_y_pid | 3.00 | 0.00 | 0.50 | 内环 - 角速度控制 |
-| 横滚角 | roll_pid | -7.00 | 0.00 | 0.00 | 外环 - 角度控制 |
-| | gyro_x_pid | 3.00 | 0.00 | 0.50 | 内环 - 角速度控制 |
-| 偏航角 | yaw_pid | -3.00 | 0.00 | 0.00 | 外环 - 角度控制 |
-| | gyro_z_pid | -5.00 | 0.00 | 0.00 | 内环 - 角速度控制 |
-| 定高 | height_pid | -0.60 | 0.00 | -0.20 | 气压计高度控制 |
+| Pitch | pitch_pid | -7.00 | 0.00 | 0.00 | Outer Loop - Angle Control |
+| | gyro_y_pid | 3.00 | 0.00 | 0.50 | Inner Loop - Angular Velocity Control |
+| Roll | roll_pid | -7.00 | 0.00 | 0.00 | Outer Loop - Angle Control |
+| | gyro_x_pid | 3.00 | 0.00 | 0.50 | Inner Loop - Angular Velocity Control |
+| Yaw | yaw_pid | -3.00 | 0.00 | 0.00 | Outer Loop - Angle Control |
+| | gyro_z_pid | -5.00 | 0.00 | 0.00 | Inner Loop - Angular Velocity Control |
+| Altitude Hold | height_pid | -0.60 | 0.00 | -0.20 | Barometric Altitude Control |
 
-### 参数调谐建议
+### Parameter Tuning Recommendations
 
-1. 先调内环（角速度环）：
-   - 逐步增大 `kd` 直到响应快速且无超调
-   - 如有静差可加入少量 `ki`
+1. Tune inner loop (angular velocity loop) first:
+   - Gradually increase `kd` until response is fast with no overshoot
+   - Add small amount of `ki` if there is steady-state error
 
-2. 再调外环（角度环）：
-   - 逐步增大 `kp` 直到响应迅速
-   - 一般不需要 `ki` 和 `kd`
+2. Then tune outer loop (angle loop):
+   - Gradually increase `kp` until response is rapid
+   - Generally doesn't need `ki` and `kd`
 
-3. 定高 PID：
-   - 先调 `kp` 使高度跟踪响应快速
-   - 加入 `kd` 抑制超调
+3. Altitude hold PID:
+   - First tune `kp` for fast altitude tracking response
+   - Add `kd` to suppress overshoot
 
-> 注意：参数符号与电机混合控制公式相关，修改时需注意方向
+> Note: Parameter signs are related to motor mixing control formula, pay attention to direction when modifying
 
 ---
 
-## 状态切换
+## State Transitions
 
-### 状态切换流程图
+### State Transition Flowchart
 
 ```mermaid
 stateDiagram-v2
-    [*] --> 上电
-    上电 --> IDLE
+    [*] --> PowerOn
+    PowerOn --> IDLE
 
-    IDLE --> NORMAL: 解锁成功<br/>(油门最大 1 秒→最小 1 秒)<br/>长蜂鸣
-    NORMAL --> IDLE: 失控恢复
+    IDLE --> NORMAL: Unlock Successful<br/>(Throttle Max 1s→Min 1s)<br/>Long Beep
+    NORMAL --> IDLE: Failsafe Recovery
 
-    NORMAL --> FIX_HEIGHT: AUX1<1450 或>1550<br/>进入定高<br/>双蜂鸣
-    FIX_HEIGHT --> NORMAL: 1450≤AUX1≤1550<br/>退出定高<br/>单短蜂鸣
+    NORMAL --> FIX_HEIGHT: AUX1<1450 or>1550<br/>Enter Altitude Hold<br/>Double Beep
+    FIX_HEIGHT --> NORMAL: 1450≤AUX1≤1550<br/>Exit Altitude Hold<br/>Single Short Beep
 
-    NORMAL --> FAIL: 失控<br/>(连续失联>300ms)
-    FIX_HEIGHT --> FAIL: 失控<br/>(连续失联>300ms)
-    FAIL --> IDLE: 系统重置
+    NORMAL --> FAIL: Lost Connection<br/>(Continuous loss >300ms)
+    FIX_HEIGHT --> FAIL: Lost Connection<br/>(Continuous loss >300ms)
+    FAIL --> IDLE: System Reset
 
     note right of FAIL
-        连续报警
-        每 500ms 一次
+        Continuous Alarm
+        Every 500ms
     end note
 ```
 
-### 状态切换条件
+### State Transition Conditions
 
-| 切换 | 条件 | 蜂鸣器反馈 |
+| Transition | Condition | Buzzer Feedback |
 |------|------|------------|
-| IDLE → NORMAL | 油门最大 (≥1900) 保持 1 秒 → 最小 (≤1100) 保持 1 秒 | 长蜂鸣 (500ms) |
-| NORMAL → FIX_HEIGHT | AUX1 < 1450 或 AUX1 > 1550 | 双蜂鸣 (2×100ms) |
-| FIX_HEIGHT → NORMAL | 1450 ≤ AUX1 ≤ 1550 | 单短蜂鸣 (100ms) |
-| ANY → FAIL | 遥控器连续失联超过 300ms | 连续报警 (每 500ms 一次) |
-| FAIL → IDLE | 系统重置 | 无 |
+| IDLE → NORMAL | Throttle max (≥1900) hold 1s → min (≤1100) hold 1s | Long beep (500ms) |
+| NORMAL → FIX_HEIGHT | AUX1 < 1450 or AUX1 > 1550 | Double beep (2×100ms) |
+| FIX_HEIGHT → NORMAL | 1450 ≤ AUX1 ≤ 1550 | Single short beep (100ms) |
+| ANY → FAIL | Remote controller continuously lost connection >300ms | Continuous alarm (every 500ms) |
+| FAIL → IDLE | System reset | None |
 
 ---
 
-## 硬件配置
+## Hardware Configuration
 
-### 飞控板
-| 组件 | 型号 | 说明 |
+### Flight Controller Board
+| Component | Model | Description |
 |------|------|------|
 | MCU | STM32F103C8T6 | ARM Cortex-M3, 72MHz, 64KB Flash |
-| IMU | MPU6050 | 6 轴陀螺仪 + 加速度计，I2C1 接口 |
-| 气压计 | SPL06-001 | 高精度气压/温度传感器，I2C2 接口 |
-| 无线 | nRF24L01 | 2.4GHz 无线收发，SPI1 接口 |
-| 电调 | 好盈天行者 40A | 支持 2-6S 锂电池，PWM 信号控制 |
+| IMU | MPU6050 | 6-axis gyroscope + accelerometer, I2C1 interface |
+| Barometer | SPL06-001 | High-precision barometer/temperature sensor, I2C2 interface |
+| Wireless | nRF24L01 | 2.4GHz wireless transceiver, SPI1 interface |
+| ESC | Hobbywing Skywalker 40A | Supports 2-6S LiPo battery, PWM signal control |
 
-### 电机布局 (X 型四旋翼)
+### Motor Layout (X-Type Quadcopter)
 
 ```mermaid
 flowchart TB
-    subgraph 机架 ["X 型四旋翼布局"]
+    subgraph Frame ["X-Type Quadcopter Layout"]
         direction TB
-        M1["M1 左上前 - TIM3_CH1 (PA6) - 逆时针 CCW"]
-        M3["M3 右上前 - TIM2_CH2 (PA1) - 顺时针 CW"]
-        M2["M2 左下前 - TIM4_CH4 (PB9) - 顺时针 CW"]
-        M4["M4 右下前 - TIM1_CH3 (PA8) - 逆时针 CCW"]
+        M1["M1 Left Front - TIM3_CH1 (PA6) - CCW"]
+        M3["M3 Right Front - TIM2_CH2 (PA1) - CW"]
+        M2["M2 Left Rear - TIM4_CH4 (PB9) - CW"]
+        M4["M4 Right Rear - TIM1_CH3 (PA8) - CCW"]
     end
-    
-    Front[前方] -.-> M1
+
+    Front[Front] -.-> M1
     Front -.-> M3
     M1 --- M2
     M3 --- M4
 ```
 
-### 机架
+### Frame
 
-LJI X500-X4机架
+LJI X500-X4 frame
 
-### 动力系统
-| 组件 | 型号 | 参数 |
+### Power System
+| Component | Model | Parameters |
 |------|------|------|
-| 电机 | 朗宇2212 无刷电机 | 920KV, 1000W 最大功率 |
-| 电调 | 好盈天行者 30A | 2-6S LiPo, 持续 30A |
-| 螺旋桨 | 1147 桨 | 正反桨配对 |
-| 电池 | 3S LiPo | 11.1V, 2200mAh, 25C |
+| Motor | SunnySky 2212 Brushless Motor | 920KV, 1000W max power |
+| ESC | Hobbywing Skywalker 30A | 2-6S LiPo, Continuous 30A |
+| Propeller | 1147 Propeller | CW/CCW matched pair |
+| Battery | 3S LiPo | 11.1V, 2200mAh, 25C |
 
 ---
 
-## 实物图展示
+## Physical Photo Gallery
 
-### 整机实物
+### Complete Aircraft
 
-![整机实物](Demo/实物图.jpg)
+![Complete Aircraft](Demo/Drone_Physical.jpg)
 
-### 启动演示
+### Startup Demo
 
-[启动录像](Demo/启动录像.mp4)
+[Startup Video](Demo/Startup_Video.mp4)
 
-### 机架展示
+### Frame Gallery
 
-| 机架商品图 | 机架实物图 |
+| Frame Product Photo | Frame Physical Photo |
 |-----------|-----------|
-| <img src="机架/商品图/主图_02.jpg" alt="机架商品图" style="zoom: 125%;" /> | <img src="机架/实物图/实物图.jpg" alt="机架实物图" style="zoom: 33%;" /> |
+| <img src="Rack/Product/主图_02.jpg" alt="Frame Product Photo" style="zoom: 125%;" /> | <img src="Rack/Physical/实物图.jpg" alt="Frame Physical Photo" style="zoom: 33%;" /> |
 
-更多机架图片见 `机架/商品图/` 和 `机架/实物图/` 目录。
+More frame photos in `Rack/Product/` and `Rack/Physical/` directories.
 
 ---
 
-## 状态指示
+## Status Indication
 
-### LED 布局
+### LED Layout
 
 ```mermaid
 flowchart LR
-    subgraph 飞控板 ["飞控板 LED 布局"]
+    subgraph FlightController ["Flight Controller Board LED Layout"]
         direction TB
-        subgraph 前部 ["前部 - 连接状态"]
+        subgraph Front ["Front - Connection Status"]
             LED1[LED1]
             LED2[LED2]
         end
-        subgraph 后部 ["后部 - 飞行状态"]
+        subgraph Rear ["Rear - Flight Status"]
             LED3[LED3]
             LED4[LED4]
         end
     end
-    
-    Front[前方] -.-> 前部
-    后部 -.-> Rear[后方]
+
+    FrontSide[Front] -.-> Front
+    Rear -.-> RearSide[Rear]
 ```
 
-### 状态表现
+### Status Indicators
 
-| 状态 | LED1/2 (前) | LED3/4 (后) | 蜂鸣器 |
+| Status | LED1/2 (Front) | LED3/4 (Rear) | Buzzer |
 |------|-------------|-------------|--------|
-| IDLE | 连接时常亮 | 慢闪 (500ms 周期) | 无声 |
-| NORMAL | 常亮 | 快闪 (200ms 周期) | 解锁时长鸣 |
-| FIX_HEIGHT | 常亮 | 常亮 | 进出时提示音 |
-| FAIL | 熄灭 | 熄灭 | 连续报警 |
+| IDLE | Solid on when connected | Slow flash (500ms cycle) | Silent |
+| NORMAL | Solid on | Fast flash (200ms cycle) | Long beep on unlock |
+| FIX_HEIGHT | Solid on | Solid on | Entry/exit beep |
+| FAIL | Off | Off | Continuous alarm |
 
-详细状态说明见 [系统状态说明](SoftWare/Flight_Control/doc/系统状态说明.md)
+Detailed status description see [System Status Description](SoftWare/Flight_Control/doc/系统状态说明.md)
 
 
 
-## 快速开始
+## Quick Start
 
-### 首次上电
+### First Power-On
 
-1. 连接 3S 锂电池，蜂鸣器短鸣提示上电
-2. 观察 LED 状态，等待 LED1/2 常亮 (遥控器连接成功)
-3. 执行解锁流程 (油门最大 1 秒 → 最小 1 秒)
-4. 蜂鸣器长鸣表示解锁成功，电机怠速旋转
+1. Connect 3S LiPo battery, buzzer short beep indicates power-on
+2. Observe LED status, wait for LED1/2 solid on (remote controller connection successful)
+3. Execute unlock procedure (throttle max 1s → min 1s)
+4. Long beep indicates unlock successful, motors idle rotation
 
-### 调试输出
+### Debug Output
 
-通过 UART2 (PA2/PA3) 输出调试信息，波特率 115200：
+Debug information output via UART2 (PA2/PA3), baud rate 115200:
 
 ```
 ================================
@@ -457,19 +474,18 @@ Flight: FIX_HEIGHT, alt=12 m
 
 ---
 
-## 技术文档
+## Technical Documentation
 
-| 文档 | 说明 |
+| Document | Description |
 |------|------|
-| [飞控系统 README](SoftWare/Flight_Control/README.md) | 飞控固件详细说明 |
-| [系统状态说明](SoftWare/Flight_Control/doc/系统状态说明.md) | 状态切换逻辑和指示说明 |
-| [ANO_DT 通讯协议](SoftWare/Flight_Control/doc/nRF24L01_通讯协议.md) | 无线通讯协议文档 |
+| [Flight Controller README](SoftWare/Flight_Control/README.md) | Detailed flight controller firmware documentation |
+| [System Status Description](SoftWare/Flight_Control/doc/system_status.md) | State transition logic and indication description |
+| [ANO_DT Communication Protocol](SoftWare/Flight_Control/doc/nRF24L01_protocol.md) | Wireless communication protocol documentation |
 
-## 参考资料
+## References
 
-- [MPU6050 数据手册](Hardware/datasheet/MPU6050.pdf)
-- [SPL06-001 数据手册](Hardware/datasheet/2101201914_Goertek-SPL06-001_C2684428.txt)
-- [nRF24L01 数据手册](Hardware/datasheet/nRF24L01.pdf)
-- [STM32F103 数据手册](Hardware/datasheet/STM32F103C8T6.pdf)
-- [FreeRTOS 官方文档](https://www.freertos.org/)
-
+- [MPU6050 Datasheet](Hardware/datasheet/MPU6050.pdf)
+- [SPL06-001 Datasheet](Hardware/datasheet/2101201914_Goertek-SPL06-001_C2684428.txt)
+- [nRF24L01 Datasheet](Hardware/datasheet/nRF24L01.pdf)
+- [STM32F103 Datasheet](Hardware/datasheet/STM32F103C8T6.pdf)
+- [FreeRTOS Official Documentation](https://www.freertos.org/)

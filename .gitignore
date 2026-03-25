@@ -1,1 +1,32 @@
+# Video files
 video/
+
+# Build artifacts
+**/build/
+**/*.elf
+**/*.map
+**/*.hex
+**/*.bin
+**/*.o
+**/*.d
+**/*.exe
+**/*.hex
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Sensitive files (receipts, payment info)
+Reimbursement/
+baoxiao/
+
+# Chinese-only documentation (optional, keep if needed)
+# 项目技术文档.md
+# 项目介绍.md
